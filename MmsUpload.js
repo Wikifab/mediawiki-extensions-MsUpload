@@ -4,6 +4,7 @@ var MsUpload = {
 		file.li.warning.text( errorText );
 		file.li.addClass( 'yellow' );
 		file.li.type.addClass( 'error' );
+		file.li.warning.show();
 		file.li.click( function () { // Remove li at click
 			file.li.fadeOut( 'fast', function () {
 		 		$( this ).remove();
@@ -407,7 +408,7 @@ var MsUpload = {
 
 	onFilesAdded: function ( uploader, files ) {
 		$.each( files, function ( i, file ) {
-			file.name = 'pluploaded_' + file.name;
+			file.name = wgPageName + '_' + file.name;
 			// iOS6 by SLBoat
 			if ( ( navigator.platform === 'iPad' || navigator.platform === 'iPhone' ) ) {
 				if ( file.name.indexOf( 'image' ) !== -1 && file.name.length < 11 ) {
@@ -547,13 +548,11 @@ var MsUpload = {
 		emptiesInputs = inputs.filter(function() { return this.value == ""; });
 		
 		if (emptiesInputs.length > 0) {
+			// if we get an input with no value, we add filename to it
 			emptiesInputs.first().val(file.name);
+		} else {
+			MsUpload.fileError( uploader, file, 'Error: ' + 'file limit exceded' ); 
 		}
-		console.log('addImageToFormsInputs '+ uploader.uploaderId);
-		console.log('nb ' + inputs.length );
-		console.log('nb empty' + emptiesInputs.length );
-		
-		
 	},
 
 	onCheckFiles: function ( uploader ) {
