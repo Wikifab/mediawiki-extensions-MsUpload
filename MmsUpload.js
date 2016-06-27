@@ -255,6 +255,7 @@ var MsUpload = {
 			statusDiv = $( '<div>' ).attr({ 'id': uploaderId + '-status', 'class': 'msupload-status'} ).hide(),
 			uploadList = $( '<ul>' ).attr({ 'id': uploaderId + '-list', 'class': 'msupload-list'} ),
 			bottomDiv = $( '<div>' ).attr({ 'id': uploaderId + '-bottom', 'class': 'msupload-bottom'} ).hide(),
+			loadingButton = $( '<i>' ).attr({ 'id': uploaderId + '-loading-button', 'class': 'msupload-loading-button fa fa-spinner fa-spin fa-1x fa-fw'} ).hide(),
 			startButton = $( '<a>' ).attr({ 'id': uploaderId + '-files', 'class': 'msupload-files'} ).hide(),
 			cleanAll = $( '<a>' ).attr({ 'id': uploaderId + '-clean-all', 'class': 'msupload-clean-all'} ).text( mw.msg( 'msu-clean-all' ) ).hide(),
 			galleryInsert = $( '<a>' ).attr({ 'id': uploaderId + '-insert-gallery', 'class': 'msupload-insert-gallery'} ).hide(),
@@ -263,7 +264,7 @@ var MsUpload = {
 			uploadDrop = $( '<div>' ).attr({ 'id': uploaderId + '-dropzone' , 'class': 'msupload-dropzone'}).hide();
 		
 		// Add them to the DOM
-		bottomDiv.append( startButton, cleanAll);
+		bottomDiv.append( loadingButton, startButton, cleanAll );
 		//bottomDiv.append( galleryInsert, filesInsert, linksInsert );
 		uploadDiv.append( statusDiv, uploadDrop, uploadList, bottomDiv );
 		parentElement.prepend( uploadDiv );
@@ -456,6 +457,7 @@ var MsUpload = {
 			'format': 'json'
 		}; // Set multipart_params
 		$( '#' + file.id + ' .file-progress-state' ).text( '0%' );
+		$( '#'+ uploader.uploaderId + '-loading-button' ).show();
 	},
 
 	onUploadProgress: function ( uploader, file ) {
@@ -532,6 +534,8 @@ var MsUpload = {
 			MsUpload.fileError( uploader, file, 'Error: ' + success.response.replace( /(<([^>]+)>)/ig, '' ) ); // Remove html tags
 		}
 		uploader.removeFile( file ); // For preventing a second upload afterwards
+
+		$( '#'+ uploader.uploaderId + '-loading-button' ).hide();
 	},
 	
 	addImageToFormsInputs: function (uploader, file) {
