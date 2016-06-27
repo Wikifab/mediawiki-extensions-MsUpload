@@ -2,6 +2,16 @@
 
 class MsUpload {
 
+	static function addToForm($text) {
+
+		static $isStarted = false;
+		if (!$isStarted) {
+			self::start();
+			$isStarted = true;
+		}
+
+	}
+
 	static function start() {
 		global $wgOut, $wgScriptPath, $wgJsMimeType, $wgMSL_FileTypes, $wgMSU_useMsLinks, $wgMSU_showAutoCat, $wgMSU_autoIndex, $wgMSU_checkAutoCat, $wgMSU_confirmReplace, $wgMSU_useDragDrop, $wgMSU_imgParams, $wgFileExtensions;
 
@@ -35,7 +45,7 @@ class MsUpload {
 		$mediaString = strtolower( $wgContLang->getNsText( NS_FILE ) );
 		$title = $mediaString . ':' . $filename;
 		$text = "\n[[" . $category . "]]";
-		$wgEnableWriteAPI = true;    
+		$wgEnableWriteAPI = true;
 		$params = new FauxRequest(array (
 			'action' => 'edit',
 			'section'=> 'new',

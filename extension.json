@@ -22,10 +22,11 @@
 		"ext.MsUpload": {
 			"scripts": [
 				"plupload/plupload.full.min.js",
+				"MmsUpload.js",
 				"MsUpload.js"
 			],
 			"dependencies": "jquery.ui.progressbar",
-			"styles": "MsUpload.css",
+			"styles": [ "MsUpload.css","MmsUpload.css"],
 			"messages": [
 				"msu-description",
 				"msu-button-title",

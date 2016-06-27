@@ -12,10 +12,14 @@ $wgExtensionCredits['parserhook'][] = array(
 $wgResourceModules['ext.MsUpload'] = array(
 	'scripts' => array(
 		'plupload/plupload.full.min.js',
-		'MsUpload.js'
+		'MsUpload.js',
+		'MmsUpload.js'
 	),
 	'dependencies' => 'jquery.ui.progressbar',
-	'styles' => 'MsUpload.css',
+	'styles' => array(
+			'MsUpload.css',
+			'MmsUpload.css',
+	),
 	'messages' => array(
 		'msu-button-title',
 		'msu-insert-link',
@@ -42,6 +46,7 @@ $wgMessagesDirs['MsUpload'] = __DIR__ . '/i18n';
 $wgAutoloadClasses['MsUpload'] = __DIR__ . '/MsUpload.body.php';
 
 $wgHooks['EditPage::showEditForm:initial'][] = 'MsUpload::start';
+$wgHooks['DropableFileFormInput'][] = 'MsUpload::addToForm';
 
 $wgAjaxExportList[] = 'MsUpload::saveCat';
 
