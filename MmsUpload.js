@@ -262,14 +262,14 @@ var MsUpload = {
 			galleryInsert = $( '<a>' ).attr({ 'id': uploaderId + '-insert-gallery', 'class': 'msupload-insert-gallery'} ).hide(),
 			filesInsert = $( '<a>' ).attr({ 'id': uploaderId + '-insert-files', 'class': 'msupload-insert-files'} ).hide(),
 			linksInsert = $( '<a>' ).attr({ 'id': uploaderId + '-insert-links', 'class': 'msupload-insert-links'} ).hide(),
-			uploadDrop = $( '<div>' ).attr({ 'id': uploaderId + '-dropzone' , 'class': 'msupload-dropzone'}).hide();
+			uploadDrop = $( '<div>' ).attr({ 'id': uploaderId + '-dropzone' , 'class': 'msupload-dropzone'}).text(mw.msg( 'msu-dropzone' )).hide();
 		
 		// Add them to the DOM
 		bottomDiv.append( loadingButton, startButton, cleanAll );
 		//bottomDiv.append( galleryInsert, filesInsert, linksInsert );
 		uploadDiv.append( statusDiv, uploadDrop, uploadList, bottomDiv );
+		uploadDrop.prepend( uploadButton );
 		parentElement.prepend( uploadDiv );
-		uploadContainer.append( uploadButton );
 		parentElement.prepend( uploadContainer );
 		
 		// Create the Uploader object
@@ -339,7 +339,7 @@ var MsUpload = {
 			galleryInsert = $( '<a>' ).attr( 'id', 'msupload-insert-gallery' ).hide(),
 			filesInsert = $( '<a>' ).attr( 'id', 'msupload-insert-files' ).hide(),
 			linksInsert = $( '<a>' ).attr( 'id', 'msupload-insert-links' ).hide(),
-			uploadDrop = $( '<div>' ).attr( 'id', 'msupload-dropzone' ).hide();
+			uploadDrop = $( '<div>' ).attr( 'id', 'msupload-dropzone' ).text(mw.msg( 'msu-dropzone' )).hide();
 
 		// Add them to the DOM
 		bottomDiv.append( startButton, cleanAll, galleryInsert, filesInsert, linksInsert );
@@ -392,7 +392,7 @@ var MsUpload = {
 		mw.log( 'MsUpload DEBUG: runtime: ' + uploader.runtime + ' features: ' + JSON.stringify( uploader.features ) );
 		$( '#'+ uploader.uploaderId + '-container' ).removeClass( 'start-loading' );
 		if ( uploader.features.dragdrop && window.msuVars.useDragDrop ) {
-			$( '#'+ uploader.uploaderId + '-dropzone' ).text( mw.msg( 'msu-dropzone' ) ).show();
+			$( '#'+ uploader.uploaderId + '-dropzone' ).show();
 			$( '#'+ uploader.uploaderId + '-dropzone' ).bind( 'dragover',function () {
 				 $( this ).addClass( 'drop-over' ).css( 'padding', 20 );
 			}).bind( 'dragleave',function () {

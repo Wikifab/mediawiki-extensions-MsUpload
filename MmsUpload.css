@@ -9,9 +9,10 @@
 
 
 .msupload-select {
-	background: url(images/msu-upload-button.png) no-repeat 0;
-	width: 20px;
-	height: 20px;
+	float:right;
+	background: #FFF url(images/msu-upload-button.png) no-repeat 1px 2px;
+	width: 22px;
+	height: 23px;
 	cursor: pointer;
 }
 
