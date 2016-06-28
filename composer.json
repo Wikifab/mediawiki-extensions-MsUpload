@@ -1,4 +1,6 @@
 {
+    "name": "wikifab/MmsUpload",
+    "type": "mediawiki-extension",
 	"require-dev": {
 		"jakub-onderka/php-parallel-lint": "0.9.2"
 	},
