@@ -129,7 +129,7 @@ var MsUpload = {
 				file.cat = this.checked; // Save
 			}).appendTo( file.li );
 	
-			$( '<span>' ).attr( 'class', 'msupload-check-span' ).text( wgPageName.replace( /_/g, ' ' ) ).appendTo( file.li );
+			$( '<span>' ).attr( 'class', 'msupload-check-span' ).text( mw.config.get('wgPageName').replace( /_/g, ' ' ) ).appendTo( file.li );
 		}
 
 		// Insert an input field for changing the file title
@@ -315,13 +315,20 @@ var MsUpload = {
 	},
 	
 	createMultipleUploader: function () {
-		
-		var element = $( '#wfmsupload-dropzone');
-		$(".sfImagePreviewWrapper").each(function (i) {
-			MsUpload.createNamedUploader($(this));
+		$(".multipleTemplateInstance .sfImagePreviewWrapper").each(function (i) {
+			var elementCreated = $(this).find('.msupload-div');
+			// to be able to call this fonction many time to add uploader to added div :
+			// we create uploader only if not already present :
+			if (elementCreated.length == 0) {
+				MsUpload.createNamedUploader($(this));
+			}
+			// add event on add step button :
+			$(this).parents('.multipleTemplateInstance').find('.addAboveButton').click(function () {
+				// whe launch createMultipleUploader after a timeout, 
+				//to be sure news divs are created before executing
+				setTimeout(MsUpload.createMultipleUploader, 100);
+			});
 		});
-		
-		
 	},
 
 	uploader: null,
@@ -408,7 +415,8 @@ var MsUpload = {
 
 	onFilesAdded: function ( uploader, files ) {
 		$.each( files, function ( i, file ) {
-			file.name = wgPageName + '_' + file.name;
+			file.name = mw.config.get('wgPageName') + '_' + file.name;
+			console.log(mw.config);
 			// iOS6 by SLBoat
 			if ( ( navigator.platform === 'iPad' || navigator.platform === 'iPhone' ) ) {
 				if ( file.name.indexOf( 'image' ) !== -1 && file.name.length < 11 ) {
@@ -494,7 +502,7 @@ var MsUpload = {
 					$.get( mw.util.wikiScript(), {
 						action: 'ajax',
 						rs: 'MsUpload::saveCat',
-						rsargs: [ file.name, wgPageName ]
+						rsargs: [ file.name, mw.config.get('wgPageName') ]
 					}, 'json' );
 				}
 				/*
@@ -620,8 +628,21 @@ var MsUpload = {
 		}
 		if ( $.inArray( mw.config.get( 'wgAction' ), [ 'formedit' ] ) !== -1 ) {
 			MsUpload.createMultipleUploader();
+			// add event on new step button, to appli drop-zone on new steps
+			$('.multipleTemplateAdder').click(function () {
+				// whe launch createMultipleUploader after a timeout, 
+				//to be sure news divs are created before executing
+				setTimeout(MsUpload.createMultipleUploader, 100);
+			});
 		}
 	}
-}
+};
 
 $( MsUpload.init );
+
+// function called when an step is added, to apply drop zone on new fields
+msUploadReload = function () {
+	$( MsUpload.createMultipleUploader );
+	
+};
+
