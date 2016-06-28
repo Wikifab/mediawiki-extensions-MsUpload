@@ -246,8 +246,6 @@ var MsUpload = {
 		MsUpload.uploaderCount ++;
 		
 		var uploaderId = 'msupload-' + MsUpload.uploaderCount ;
-
-		parentElement.prepend('TOTO');
 		
 		// Define the GUI elements
 		var uploadDiv = $( '<div>' ).attr({ 'id':  uploaderId + '-div', 'class': 'msupload-div'} ),
@@ -315,7 +313,15 @@ var MsUpload = {
 	},
 	
 	createMultipleUploader: function () {
-		$(".multipleTemplateInstance .sfImagePreviewWrapper").each(function (i) {
+		$(".sfImagePreviewWrapper").each(function (i) {
+			var parentTemplate = $(this).parents('.multipleTemplateStarter');
+			
+			//if this div is a hidden template, do not apply uploader on it :
+			console.log('parent : ' + parentTemplate.length);
+			if (parentTemplate.length > 0) {
+				return;
+			}
+			
 			var elementCreated = $(this).find('.msupload-div');
 			// to be able to call this fonction many time to add uploader to added div :
 			// we create uploader only if not already present :
@@ -643,6 +649,5 @@ $( MsUpload.init );
 // function called when an step is added, to apply drop zone on new fields
 msUploadReload = function () {
 	$( MsUpload.createMultipleUploader );
-	
 };
 
