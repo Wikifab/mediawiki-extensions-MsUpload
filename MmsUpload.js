@@ -263,8 +263,8 @@ var MsUpload = {
 			uploadDrop = $( '<div>' ).attr({ 'id': uploaderId + '-dropzone' , 'class': 'msupload-dropzone'}).text(mw.msg( 'msu-dropzone' )).hide();
 		
 		// Add them to the DOM
-		bottomDiv.append( loadingButton, startButton, cleanAll );
-		//bottomDiv.append( galleryInsert, filesInsert, linksInsert );
+		bottomDiv.append( loadingButton, startButton  );
+		//bottomDiv.append( galleryInsert, filesInsert, linksInsert, cleanAll );
 		uploadDiv.append( statusDiv, uploadDrop, uploadList, bottomDiv );
 		uploadDrop.prepend( uploadButton );
 		parentElement.prepend( uploadDiv );
@@ -309,15 +309,74 @@ var MsUpload = {
 		// Initialise
 		MsUpload.uploaders[uploaderId].init();
 		
+		MsUpload.initWithSemanticFormsFields(MsUpload.uploaders[uploaderId]);
 		
 	},
 	
+	// get the file allready set in fields, add them to the list and hide Form fields to show only upload list 
+	initWithSemanticFormsFields: function(uploader) {
+		
+		var inputs = $('#' + uploader.uploaderId  +'-container' ).parent().find('input.createboxInput');
+		
+		noneEmptiesInputs = inputs.filter(function() { return this.value != ""; });
+		
+		noneEmptiesInputs.each(function() {
+
+			
+			var image = $(this).parentsUntil('div').nextAll('.sfImagePreviewWrapper').find('img');
+			
+			if(image.length > 0) {
+				image = image.first().attr('src');
+				if (image.indexOf('No-image-yet') > -1  ) {
+					image = null;
+				}
+			} else {
+				image = null;
+			}
+			
+			var filename = $(this).val();
+			
+			if (filename == 'No-image-yet.jpg') {
+				return;
+			}
+			
+			var li = $( '<li>' ).addClass( 'file' ).appendTo( $( '#'+ uploader.uploaderId + '-list' ) );
+			li.filename = filename;
+			if (image) {
+				$( '<img>' ).addClass( 'file-thumb' ).attr('src',image).appendTo( li );
+			} else {
+				$( '<span>' ).addClass( 'file-type' ).appendTo( li );
+				$( '<span>' ).addClass( 'file-name' ).text( filename ).appendTo( li );
+			}
+			//$( '<span>' ).addClass( 'file-size' ).text( plupload.formatSize( file.size ) ).appendTo( file.li );
+			//$( '<span>' ).addClass( 'file-loading' ).appendTo( li );
+			var cancelButton = $( '<span>' ).addClass( 'file-cancel' ).attr('title',mw.msg( 'msu-remove-image' ));
+			cancelButton.click( function () {
+				li.fadeOut( 'fast', function () {
+					$( this ).remove();
+					uploader.trigger( 'CheckFiles' );
+				});
+				inputs.filter(function() { return this.value == li.filename; }).val("");
+			});
+			cancelButton.appendTo( li );
+			
+			$( '<span>' ).addClass( 'file-warning' ).appendTo( li );
+			
+			
+			//MsUpload.checkExtension( file, uploader );
+		});
+		
+		$('#' + uploader.uploaderId  +'-container' ).next().nextAll().hide();
+		//inputs.parent().hide();
+		uploader.refresh(); // Reposition Flash/Silverlight
+		uploader.trigger( 'CheckFiles' );
+	},
+	
 	createMultipleUploader: function () {
-		$(".sfImagePreviewWrapper").each(function (i) {
+		$(".sfImagePreviewWrapper").parent('.msuploadContainer').each(function (i) {
 			var parentTemplate = $(this).parents('.multipleTemplateStarter');
 			
 			//if this div is a hidden template, do not apply uploader on it :
-			console.log('parent : ' + parentTemplate.length);
 			if (parentTemplate.length > 0) {
 				return;
 			}
@@ -422,7 +481,7 @@ var MsUpload = {
 	onFilesAdded: function ( uploader, files ) {
 		$.each( files, function ( i, file ) {
 			file.name = mw.config.get('wgPageName') + '_' + file.name;
-			console.log(mw.config);
+
 			// iOS6 by SLBoat
 			if ( ( navigator.platform === 'iPad' || navigator.platform === 'iPhone' ) ) {
 				if ( file.name.indexOf( 'image' ) !== -1 && file.name.length < 11 ) {

@@ -244,6 +244,17 @@
 	background-color: #ccc;
 }
 
+.msupload-list .file:first-of-type .file-thumb {
+	padding: 0px;
+	max-width: 80%;
+	/*position: absolute;*/
+}
+.msupload-list .file .file-thumb {
+	padding: 0px;
+	max-width: 30%;
+	/*position: absolute;*/
+}
+
 #wikiEditor-section-advanced .options {
 	z-index: 1;
 }
