@@ -340,7 +340,7 @@ var MsUpload = {
 				return;
 			}
 			
-			var li = $( '<li>' ).addClass( 'file' ).appendTo( $( '#'+ uploader.uploaderId + '-list' ) );
+			var li = $( '<li>' ).addClass( 'file' ).addClass( 'file-existing' ).appendTo( $( '#'+ uploader.uploaderId + '-list' ) );
 			li.filename = filename;
 			if (image) {
 				$( '<img>' ).addClass( 'file-thumb' ).attr('src',image).appendTo( li );
@@ -490,7 +490,7 @@ var MsUpload = {
 					file.name = fileNameApple + '_' + i + '.' + file.name.split( '.' ).pop(); // image_Y-M-D_0.jpg
 				}
 			}
-			file.li = $( '<li>' ).attr( 'id', file.id ).addClass( 'file' ).appendTo( $( '#'+ uploader.uploaderId + '-list' ) );
+			file.li = $( '<li>' ).attr( 'id', file.id ).addClass( 'file' ).addClass( 'file-uploading' ).appendTo( $( '#'+ uploader.uploaderId + '-list' ) );
 			file.li.type = $( '<span>' ).addClass( 'file-type' ).appendTo( file.li );
 			file.li.title = $( '<span>' ).addClass( 'file-name' ).text( file.name ).appendTo( file.li );
 			file.li.size = $( '<span>' ).addClass( 'file-size' ).text( plupload.formatSize( file.size ) ).appendTo( file.li );
