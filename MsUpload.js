@@ -298,13 +298,13 @@ var MsUpload = {
 		mw.log( 'MsUpload DEBUG: runtime: ' + uploader.runtime + ' features: ' + JSON.stringify( uploader.features ) );
 		$( '#msupload-container' ).removeClass( 'start-loading' );
 		if ( uploader.features.dragdrop && window.msuVars.useDragDrop ) {
-			$( '#msupload-dropzone' ).text( mw.msg( 'msu-dropzone' ) ).show();
+			uploadDrop.text( mw.msg( 'msu-dropzone' ) ).show();
 			$( '#msupload-dropzone' ).bind( 'dragover',function () {
-				 $( this ).addClass( 'drop-over' ).css( 'padding', 20 );
+				 $( this ).addClass( 'drop-over' );
 			}).bind( 'dragleave',function () {
-				 $( this ).removeClass( 'drop-over' ).css( 'padding', 0 );
+				 $( this ).removeClass( 'drop-over' );
 			}).bind( 'drop',function () {
-				 $( this ).removeClass( 'drop-over' ).css( 'padding', 0 );
+				 $( this ).removeClass( 'drop-over' );
 			});
 	 	} else {
 	 		$( '#msupload-div' ).addClass( 'nodragdrop' );

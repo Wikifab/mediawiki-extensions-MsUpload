@@ -466,11 +466,11 @@ var MsUpload = {
 		if ( uploader.features.dragdrop && window.msuVars.useDragDrop ) {
 			$( '#'+ uploader.uploaderId + '-dropzone' ).show();
 			$( '#'+ uploader.uploaderId + '-dropzone' ).bind( 'dragover',function () {
-				 $( this ).addClass( 'drop-over' ).css( 'padding', 20 );
+				 $( this ).addClass( 'drop-over' );
 			}).bind( 'dragleave',function () {
-				 $( this ).removeClass( 'drop-over' ).css( 'padding', 0 );
+				 $( this ).removeClass( 'drop-over' );
 			}).bind( 'drop',function () {
-				 $( this ).removeClass( 'drop-over' ).css( 'padding', 0 );
+				 $( this ).removeClass( 'drop-over' );
 			});
 			
 	 	} else {
