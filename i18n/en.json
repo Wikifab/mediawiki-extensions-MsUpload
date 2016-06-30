@@ -21,5 +21,6 @@
 	"msu-upload-this": "Upload this file",
 	"msu-upload-all": "Upload all files",
 	"msu-dropzone": "Drop images here",
-	"msu-comment": "File uploaded with MsUpload"
+	"msu-comment": "File uploaded with MsUpload",
+	"msu-upload-nbfile-exceed": "File limit per step exceeded, please remove an image before add another."
 }

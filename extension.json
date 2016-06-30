@@ -43,7 +43,8 @@
 				"msu-upload-this",
 				"msu-upload-all",
 				"msu-dropzone",
-				"msu-comment"
+				"msu-comment",
+				"msu-upload-nbfile-exceed"
 			]
 		}
 	},

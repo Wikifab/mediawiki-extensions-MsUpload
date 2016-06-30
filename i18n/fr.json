@@ -26,5 +26,6 @@
 	"msu-upload-this": "Téléverser ce fichier",
 	"msu-upload-all": "Téléverser tous les fichiers",
 	"msu-dropzone": "Glisser ici les fichiers",
-	"msu-comment": "Fichier téléversé avec MsUpload"
+	"msu-comment": "Fichier téléversé avec MsUpload",
+	"msu-upload-nbfile-exceed": "Nombre limite de fichiers par étape dépassé. Veuillez en supprimer."
 }

@@ -263,7 +263,7 @@ var MsUpload = {
 			uploadDrop = $( '<div>' ).attr({ 'id': uploaderId + '-dropzone' , 'class': 'msupload-dropzone'}).text(mw.msg( 'msu-dropzone' )).hide();
 		
 		// Add them to the DOM
-		bottomDiv.append( loadingButton, startButton  );
+		bottomDiv.append( loadingButton, startButton );
 		//bottomDiv.append( galleryInsert, filesInsert, linksInsert, cleanAll );
 		uploadDiv.append( statusDiv, uploadDrop, uploadList, bottomDiv );
 		uploadDrop.prepend( uploadButton );
@@ -276,7 +276,7 @@ var MsUpload = {
 			'browse_button': uploaderId + '-select',
 			'container': uploaderId + '-container',
 			'max_file_size': '100mb',
-			'drop_element': uploaderId + '-dropzone',
+			'drop_element': uploaderId + '-div',
 			'url': window.msuVars.scriptPath + '/api.php',
 			'flash_swf_url': window.msuVars.scriptPath + '/extensions/MsUpload/plupload/Moxie.swf',
 			'silverlight_xap_url': window.msuVars.path + '/extensions/MsUpload/plupload/Moxie.xap'
@@ -490,7 +490,7 @@ var MsUpload = {
 					file.name = fileNameApple + '_' + i + '.' + file.name.split( '.' ).pop(); // image_Y-M-D_0.jpg
 				}
 			}
-			file.li = $( '<li>' ).attr( 'id', file.id ).addClass( 'file' ).addClass( 'file-uploading' ).appendTo( $( '#'+ uploader.uploaderId + '-list' ) );
+			file.li = $( '<li>' ).attr( 'id', file.id ).addClass( 'file' ).addClass( 'file-upload' ).appendTo( $( '#'+ uploader.uploaderId + '-list' ) );
 			file.li.type = $( '<span>' ).addClass( 'file-type' ).appendTo( file.li );
 			file.li.title = $( '<span>' ).addClass( 'file-name' ).text( file.name ).appendTo( file.li );
 			file.li.size = $( '<span>' ).addClass( 'file-size' ).text( plupload.formatSize( file.size ) ).appendTo( file.li );
@@ -542,7 +542,7 @@ var MsUpload = {
 		mw.log( error );
 		$( '#' + error.file.id + ' .file-warning' ).html(
 			'Error ' + error.code + ', ' + error.message + ( error.file ? ', File: ' + error.file.name : '' )
-		);
+		).show();
 		$( '#'+ uploader.uploaderId + '-status' ).append( error.message );
 		uploader.refresh(); // Reposition Flash/Silverlight
 	},
@@ -562,6 +562,22 @@ var MsUpload = {
 				file.li.type.addClass( 'ok' );
 				file.li.addClass( 'green' );
 				file.li.warning.fadeOut( 'fast' );
+				
+				var imageUrl = result.upload.imageinfo.url;
+				if (imageUrl) {
+					$( '<img>' ).addClass( 'file-thumb' ).attr('src',imageUrl).prependTo( file.li );
+					$(file.li).find('.file-type').hide();
+					$(file.li).find('.file-name').hide();
+					var cancelButton = $( '<span>' ).addClass( 'file-cancel' ).attr('title',mw.msg( 'msu-remove-image' ));
+					cancelButton.click( function () {
+						file.li.fadeOut( 'fast', function () {
+							$( this ).remove();
+							uploader.trigger( 'CheckFiles' );
+						});
+						inputs.filter(function() { return this.value == file.li.filename; }).val("");
+					});
+					cancelButton.appendTo( file.li );
+				} 
 
 				if ( file.cat && mw.config.get( 'wgNamespaceNumber' ) === 14 ) { // Should the categroy be set?
 					$.get( mw.util.wikiScript(), {
@@ -570,36 +586,7 @@ var MsUpload = {
 						rsargs: [ file.name, mw.config.get('wgPageName') ]
 					}, 'json' );
 				}
-				/*
-				$( '<a>' ).text( mw.msg( 'msu-insert-link' ) ).click( function () {
-					if ( window.msuVars.useMsLinks === true ) {
-						mw.toolbar.insertTags( '{{#l:' + file.name + '}}', '', '', '' ); // Insert link
-					} else {
-						mw.toolbar.insertTags( '[[:File:' + file.name + ']]', '', '', '' ); // Insert link
-					}
-				}).appendTo( file.li );
-				// function use to insert link into standart (non-form) wikipage with toolbar
-				if ( file.group === 'image' ) {
-					MsUpload.galleryArray.push( file.name );
-					if ( MsUpload.galleryArray.length === 2 ) { // Bind click function only the first time
-						$( '#'+ uploader.uploaderId + '-insert-gallery' ).click( MsUpload.insertGallery ).text( mw.msg( 'msu-insert-gallery' ) ).show();
-					}
-					$( '<span>' ).text( ' | ' ).appendTo( file.li );
-					$( '<a>' ).text( mw.msg( 'msu-insert-image' ) ).click( function () {
-						mw.toolbar.insertTags( '[[File:' + file.name + window.msuVars.imgParams + ']]', '', '', '' );
-					}).appendTo( file.li );
-				} else if ( file.group === 'video' ) {
-					$( '<span>' ).text( ' | ' ).appendTo( file.li );
-					$( '<a>' ).text( mw.msg( 'msu-insert-video' ) ).click( function () {
-						mw.toolbar.insertTags( '[[File:' + file.name + ']]', '', '', '' );
-					}).appendTo( file.li );
-				}*/
 				MsUpload.filesArray.push( file.name );
-				/*
-				if ( MsUpload.filesArray.length === 2 ) { // Bind click function only the first time
-					$( '#'+ uploader.uploaderId + '-insert-files' ).click( MsUpload.insertFiles ).text( mw.msg( 'msu-insert-files' ) ).show();
-					$( '#'+ uploader.uploaderId + '-insert-links' ).click( MsUpload.insertLinks ).text( mw.msg( 'msu-insert-links' ) ).show();
-				}*/
 				// automatically add image to forms inputs.
 				MsUpload.addImageToFormsInputs(uploader,file);
 				// look 
@@ -618,14 +605,24 @@ var MsUpload = {
 		
 		var inputs = $('#' + uploader.uploaderId  +'-container' ).parents('.col-pic-step').find('input.createboxInput');
 		
-		emptiesInputs = inputs.filter(function() { return this.value == ""; });
+		console.log(inputs.length + ' inputs  max');
+		emptiesInputs = inputs.filter(function() { 
+			console.log('value : ' + this.value);
+			return this.value == "" || this.value == 'No-image-yet.jpg'; 
+		});
+		console.log(emptiesInputs.length + ' inputs  empties');
+		
+		
 		
 		if (emptiesInputs.length > 0) {
 			// if we get an input with no value, we add filename to it
 			emptiesInputs.first().val(file.name);
 		} else {
-			MsUpload.fileError( uploader, file, 'Error: ' + 'file limit exceded' ); 
+			MsUpload.fileError( uploader, file, mw.msg( 'msu-upload-nbfile-exceed' ) );
+			file.li.warning.fadeIn( 'fast' );
+			return false;
 		}
+		return true;
 	},
 
 	onCheckFiles: function ( uploader ) {
