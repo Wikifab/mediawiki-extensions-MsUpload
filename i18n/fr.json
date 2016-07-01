@@ -23,9 +23,9 @@
 	"msu-replace-file": "Remplacer le fichier ?",
 	"msu-clean-all": "Effacer la liste",
 	"msu-ext-not-allowed": "Seulement {{PLURAL:$1|le type de fichier suivant est autorisé|les types de fichiers suivants sont autorisés}} :",
-	"msu-upload-this": "Téléverser cette image",
-	"msu-upload-all": "Téléverser tous les images",
-	"msu-dropzone": "Glisser ici les images",
+	"msu-upload-this": "Téléverser ce fichier",
+	"msu-upload-all": "Téléverser tous les fichiers",
+	"msu-dropzone": "Glisser ici les fichiers",
 	"msu-comment": "Fichier téléversé avec MsUpload",
 	"msu-upload-nbfile-exceed": "Nombre limite de fichiers par étape dépassé. Veuillez en supprimer."
 }
