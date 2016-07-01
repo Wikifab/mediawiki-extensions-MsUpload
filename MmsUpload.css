@@ -65,13 +65,13 @@
 	float:left;
 }
 
-.msupload-list .file:first-of-type {
+.msupload-list .file-existing .file:first-of-type {
     border-bottom: none;
     margin: 0;
     padding: 0px;
 }
 
-.msupload-list .file:first-of-type .file-cancel {
+.msupload-list .file-existing .file:first-of-type .file-cancel {
 	position:absolute;
     right: 1.3%;
     top: 2%;
@@ -150,17 +150,29 @@
     overflow: hidden;
     white-space: nowrap;
 }
+
+.msupload-list .file-upload .file-name {
+    padding: 4px 30px 4px 4px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-top: -4px;
 }
 
-.msupload-list .file .file-name:hover {
-	background-color: white;
+.msupload-list .file-upload .file-name-input {
+    padding: 4px 30px 4px 4px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-top: -4px;
+}
+
+.msupload-list .file .file-name:hover, .msupload-list .file-upload .file-name-input:hover {
+	background-color: #f1f1f1;
 }
 
 .msupload-list .file .file-size {
 	color: #f1f1f1;
 	margin: 0 7px;
 }
-
 
 .msupload-list .file-progress-state {
 	float: right;
@@ -272,7 +284,7 @@
 
 .msupload-bottom .msupload-files:hover {
 	text-decoration: none;
-	background:red;
+	background-color: #2b6e87;
 }
 
 .msupload-bottom .spacer {
@@ -282,11 +294,17 @@
 	background-color: #ccc;
 }
 
-.msupload-list .file:first-of-type .file-thumb {
+.msupload-list .file-existing .file:first-of-type .file-thumb {
 	padding: 0px;
 	max-width: 100%;
 	/*position: absolute;*/
 }
+
+.msupload-list .file-upload .file:first-of-type .file-thumb {
+    padding: 0px;
+    max-width: 80%;
+}
+
 .msupload-list .file .file-thumb {
 	padding: 0px;
 	max-width: 30%;
