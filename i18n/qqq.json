@@ -22,5 +22,6 @@
 	"msu-upload-this": "Button for uploading the selected file.",
 	"msu-upload-all": "Button for uploading all the selected files.",
 	"msu-dropzone": "Message in the area where files can be dropped.",
-	"msu-comment": "Comment left as an edit summary when uploading a file, and in the page of the uploaded file."
+	"msu-comment": "Comment left as an edit summary when uploading a file, and in the page of the uploaded file.",
+	"msu-upload-nbfile-exceed": "Message in the area when user try to upload more files than possible in a step."
 }
