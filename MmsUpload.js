@@ -603,7 +603,7 @@ var MsUpload = {
 		
 		// file.name : nom du fichier à ajouter :
 		
-		var inputs = $('#' + uploader.uploaderId  +'-container' ).parents('.col-pic-step').find('input.createboxInput');
+		var inputs = $('#' + uploader.uploaderId  +'-container' ).parents('.msuploadContainer').find('input.createboxInput');
 		
 		console.log(inputs.length + ' inputs  max');
 		emptiesInputs = inputs.filter(function() { 
