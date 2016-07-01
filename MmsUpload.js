@@ -313,6 +313,30 @@ var MsUpload = {
 		
 	},
 	
+	addRemoveButton: function (uploader, li) {
+		var cancelButton = $( '<span>' ).addClass( 'file-cancel' ).attr('title',mw.msg( 'msu-remove-image' ));
+		cancelButton.click( function () {
+			li.fadeOut( 'fast', function () {
+				$( this ).remove();
+				uploader.trigger( 'CheckFiles' );
+			});
+			// remove file in inputs
+			var inputs = $('#' + uploader.uploaderId  +'-container' ).parent().find('input.createboxInput');
+			inputs.filter(function() { return this.value == li.filename; }).val("");
+			// if file are waiting to be added casue off nb file limit, we ca add it now
+			if (typeof uploader.filesToAdd != 'undefined' && uploader.filesToAdd.length >0) {
+				file = uploader.filesToAdd.shift();
+
+				MsUpload.addImageToFormsInputs(uploader, file);
+				file.li.type.addClass( 'ok' );
+				file.li.removeClass( 'yellow' );
+				file.li.addClass( 'green' );
+				file.li.warning.fadeOut( 'fast' );
+			}
+		});
+		cancelButton.appendTo( li );
+	},
+	
 	// get the file allready set in fields, add them to the list and hide Form fields to show only upload list 
 	initWithSemanticFormsFields: function(uploader) {
 		
@@ -350,17 +374,11 @@ var MsUpload = {
 			}
 			//$( '<span>' ).addClass( 'file-size' ).text( plupload.formatSize( file.size ) ).appendTo( file.li );
 			//$( '<span>' ).addClass( 'file-loading' ).appendTo( li );
-			var cancelButton = $( '<span>' ).addClass( 'file-cancel' ).attr('title',mw.msg( 'msu-remove-image' ));
-			cancelButton.click( function () {
-				li.fadeOut( 'fast', function () {
-					$( this ).remove();
-					uploader.trigger( 'CheckFiles' );
-				});
-				inputs.filter(function() { return this.value == li.filename; }).val("");
-			});
-			cancelButton.appendTo( li );
+			
 			
 			$( '<span>' ).addClass( 'file-warning' ).appendTo( li );
+			
+			MsUpload.addRemoveButton(uploader, li);
 			
 			
 			//MsUpload.checkExtension( file, uploader );
@@ -568,15 +586,8 @@ var MsUpload = {
 					$( '<img>' ).addClass( 'file-thumb' ).attr('src',imageUrl).prependTo( file.li );
 					$(file.li).find('.file-type').hide();
 					$(file.li).find('.file-name').hide();
-					var cancelButton = $( '<span>' ).addClass( 'file-cancel' ).attr('title',mw.msg( 'msu-remove-image' ));
-					cancelButton.click( function () {
-						file.li.fadeOut( 'fast', function () {
-							$( this ).remove();
-							uploader.trigger( 'CheckFiles' );
-						});
-						inputs.filter(function() { return this.value == file.li.filename; }).val("");
-					});
-					cancelButton.appendTo( file.li );
+					
+					MsUpload.addRemoveButton(uploader, file.li);
 				} 
 
 				if ( file.cat && mw.config.get( 'wgNamespaceNumber' ) === 14 ) { // Should the categroy be set?
@@ -605,12 +616,9 @@ var MsUpload = {
 		
 		var inputs = $('#' + uploader.uploaderId  +'-container' ).parents('.msuploadContainer').find('input.createboxInput');
 		
-		console.log(inputs.length + ' inputs  max');
 		emptiesInputs = inputs.filter(function() { 
-			console.log('value : ' + this.value);
 			return this.value == "" || this.value == 'No-image-yet.jpg'; 
 		});
-		console.log(emptiesInputs.length + ' inputs  empties');
 		
 		
 		
@@ -619,6 +627,11 @@ var MsUpload = {
 			emptiesInputs.first().val(file.name);
 		} else {
 			MsUpload.fileError( uploader, file, mw.msg( 'msu-upload-nbfile-exceed' ) );
+			if (typeof uploader.filesToAdd != 'undefined') {
+				uploader.filesToAdd.push(file);
+			} else {
+				uploader.filesToAdd = [file];
+			}
 			file.li.warning.fadeIn( 'fast' );
 			return false;
 		}
