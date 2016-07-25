@@ -39,7 +39,7 @@ $wgResourceModules['ext.MsUpload'] = array(
 		'msu-upload-nbfile-exceed',
 	),
 	'localBasePath' => __DIR__,
-	'remoteExtPath' => 'MsUpload',
+	'remoteExtPath' => 'MmsUpload',
 );
 
 $wgMessagesDirs['MsUpload'] = __DIR__ . '/i18n';
