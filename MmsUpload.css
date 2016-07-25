@@ -300,7 +300,7 @@
 	/*position: absolute;*/
 }
 
-.msupload-list .file-upload .file:first-of-type .file-thumb {
+.msupload-list .file:first-of-type .file-thumb {
     padding: 0px;
     max-width: 80%;
 }
