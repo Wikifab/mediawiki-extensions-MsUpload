@@ -146,13 +146,13 @@
     margin-left: 35px;
     float: left;
     font-size: 13.5px;
-    max-width: 350px;
+    max-width: 323px;
     overflow: hidden;
     white-space: nowrap;
 }
 
 .msupload-list .file-upload .file-name {
-    padding: 4px 30px 4px 4px;
+    padding: 5px;
     border: 1px solid #ccc;
     border-radius: 3px;
     margin-top: -4px;
@@ -228,14 +228,21 @@
 
 .msupload-list .file .file-name-input {
 	background: white;
-	border: none;
 	display: inline;
 	font: inherit;
 	font-weight: bold;
 	line-height: normal;
 	margin-left: 35px;
 	outline: none;
-	padding: 3px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-top: -4px;
+    float: left;
+    font-size: 13.5px;
+    max-width: 323px;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .msupload-list .file .file-extension {
@@ -244,6 +251,11 @@
 
 .msupload-list .file .file-size {
 	color: #666;
+	float: right;
+}
+
+.col-pic-detail .msupload-list .file .file-name, .col-pic-detail .msupload-list .file .file-name-input { {
+	max-width:50%;
 }
 
 .msupload-list .file .file-error {
