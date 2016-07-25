@@ -185,6 +185,9 @@
 	height: 20px;
 	margin-left: 5px;
 	padding: 5px 10px;
+    position: absolute;
+    right: 7px;
+    top: 7px;
 }
 
 .msupload-list .file .file-cancel:hover {
@@ -308,19 +311,25 @@
 
 .msupload-list .file-existing .file:first-of-type .file-thumb {
 	padding: 0px;
-	max-width: 100%;
-	/*position: absolute;*/
+    max-width: 100%;
+    position: relative;
+}
+
+.msupload-list .file:first-of-type {
+	padding:0px;
 }
 
 .msupload-list .file:first-of-type .file-thumb {
     padding: 0px;
-    max-width: 80%;
+    max-width: 100%;
+	border: none;
+    position: relative;
 }
 
 .msupload-list .file .file-thumb {
-	padding: 0px;
-	max-width: 30%;
-	/*position: absolute;*/
+    padding: 0px;
+    max-width: 20%;
+    border: 3px solid #eee;
 }
 
 #wikiEditor-section-advanced .options {
