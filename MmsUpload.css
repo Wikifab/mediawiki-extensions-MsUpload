@@ -10,8 +10,9 @@
 .msupload-select {
 	float:right;
 	background: url(images/msu-upload-button.png) no-repeat 1px 2px;
-	width: 25px;
-	height: 23px;
+    width: 32px;
+    height: 29px;
+    top: -4px;
 	cursor: pointer;
 }
 
@@ -237,7 +238,8 @@
 .msupload-list .file .file-warning div.thumb {
 	display: none;
 	position: absolute;
-	right: 10px;
+	right: 0px;
+	bottom: 0px;
 }
 .msupload-list .file .file-warning div.thumbinner {
 	background: none;
