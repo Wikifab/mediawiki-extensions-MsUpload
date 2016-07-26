@@ -325,11 +325,11 @@
 	background-color: #ccc;
 }
 
-.msupload-list .file-existing .file:first-of-type .file-load {
+.msupload-list .file:first-of-type .file-load {
 	top: 0px;
 }
 
-.msupload-list .file-existing .file:first-of-type .file-name {
+.msupload-list .file:first-of-type .file-name {
     margin-left: 40px;
     width: 60%;
     margin-bottom: 10px;
