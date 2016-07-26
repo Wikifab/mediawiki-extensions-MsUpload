@@ -9,8 +9,8 @@
 
 .msupload-select {
 	float:right;
-	background: #FFF url(images/msu-upload-button.png) no-repeat 1px 2px;
-	width: 22px;
+	background: url(images/msu-upload-button.png) no-repeat 1px 2px;
+	width: 25px;
 	height: 23px;
 	cursor: pointer;
 }
@@ -155,7 +155,6 @@
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 3px;
-    margin-top: -4px;
 }
 
 .msupload-list .file-upload .file-name-input {
@@ -173,7 +172,11 @@
 	color: #666;
     float: right;
     padding-top: 5px;
-    margin: 0 31px 0px 3px;
+    margin: 0 40px 0px 3px;
+}
+
+.msupload-list .green .file-size {
+	display:none;
 }
 
 .msupload-list .file-progress-state {
@@ -184,12 +187,13 @@
 	background: url(images/msu-close.png) no-repeat 0 0;
 	cursor: pointer;
 	float: right;
-	height: 20px;
+    height: 26px;
+    width: 26px;
 	margin-left: 5px;
 	padding: 5px 10px;
     position: absolute;
-    right: 9px;
-    top: 10px;
+    right: 6px;
+    top: 6px;
 }
 
 .msupload-list .file .file-cancel:hover {
