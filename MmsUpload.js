@@ -701,7 +701,10 @@ var MsUpload = {
 				}
 			});
 		}
-		if ( $.inArray( mw.config.get( 'wgAction' ), [ 'formedit' ] ) !== -1 ) {
+		// if edit with forms, or creation of new page with forms
+		if ( $.inArray( mw.config.get( 'wgAction' ), [ 'formedit' ] ) !== -1
+				||
+				$.inArray( mw.config.get( 'wgCanonicalSpecialPageName' ), [ 'FormEdit' ] ) !== -1 ) {
 			MsUpload.createMultipleUploader();
 			// add event on new step button, to appli drop-zone on new steps
 			$('.multipleTemplateAdder').click(function () {
