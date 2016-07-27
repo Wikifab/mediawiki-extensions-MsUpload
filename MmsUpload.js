@@ -499,6 +499,8 @@ var MsUpload = {
 	onFilesAdded: function ( uploader, files ) {
 		$.each( files, function ( i, file ) {
 			file.name = mw.config.get('wgPageName') + '_' + file.name;
+			// remove start of url if on creation page (keep only the string after the last '/')
+			file.name = file.name.replace(/(.*)\//g,"");
 
 			// iOS6 by SLBoat
 			if ( ( navigator.platform === 'iPad' || navigator.platform === 'iPhone' ) ) {
