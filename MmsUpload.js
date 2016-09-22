@@ -501,6 +501,8 @@ var MsUpload = {
 			file.name = mw.config.get('wgPageName') + '_' + file.name;
 			// remove start of url if on creation page (keep only the string after the last '/')
 			file.name = file.name.replace(/(.*)\//g,"");
+			// remove specialChars
+			file.name = file.name.replace(/([^A-Za-z0-9\-_\.]*)\//g,"_");
 
 			// iOS6 by SLBoat
 			if ( ( navigator.platform === 'iPad' || navigator.platform === 'iPhone' ) ) {
