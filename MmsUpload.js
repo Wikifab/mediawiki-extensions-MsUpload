@@ -499,7 +499,6 @@ var MsUpload = {
 	onFilesAdded: function ( uploader, files ) {
 		$.each( files, function ( i, file ) {
 			file.name = mw.config.get('wgPageName') + '_' + file.name;
-			alert(mw.config.get('wgPageName'));
 			// remove start of url if on creation page (keep only the string after the last '/')
 			file.name = file.name.replace(/(.*)\//g,"");
 			// remove specialChars
