@@ -58,3 +58,5 @@ $wgMSU_checkAutoCat = true;
 $wgMSU_useMsLinks = false;
 $wgMSU_confirmReplace = true;
 $wgMSU_imgParams = '400px';
+$wgMSU_wrapperClass = '';
+$wgMSU_secondaryWrapperClass = '';
