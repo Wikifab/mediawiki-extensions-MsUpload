@@ -15,7 +15,12 @@ $wgResourceModules['ext.MsUpload'] = array(
 		'MsUpload.js',
 		'MmsUpload.js'
 	),
-	'dependencies' => 'jquery.ui.progressbar',
+	'dependencies' => array(
+			'jquery.ui.draggable',
+			'jquery.ui.droppable',
+			'jquery.ui.sortable',
+			'jquery.ui.progressbar'
+	),
 	'styles' => array(
 			'MsUpload.css',
 			'MmsUpload.css',

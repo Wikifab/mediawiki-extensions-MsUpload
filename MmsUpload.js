@@ -281,10 +281,13 @@ var MsUpload = {
 			'browse_button': uploaderId + '-select',
 			'container': uploaderId + '-container',
 			'max_file_size': '100mb',
+			'width': 1200,
+		    'height': 1200,
 			'drop_element': dropElement,
 			'url': window.msuVars.scriptPath + '/api.php',
 			'flash_swf_url': window.msuVars.scriptPath + '/extensions/MsUpload/plupload/Moxie.swf',
-			'silverlight_xap_url': window.msuVars.path + '/extensions/MsUpload/plupload/Moxie.xap'
+			'silverlight_xap_url': window.msuVars.path + '/extensions/MsUpload/plupload/Moxie.xap',
+			'sortable': true,
 		});
 		
 		MsUpload.uploaders[uploaderId].uploaderId = uploaderId;
@@ -757,7 +760,87 @@ var MsUpload = {
 			//uploader.start();
 		}
 	},
+	
+	dropableAreaCount: 0,
 
+	dropableAreas: [],
+		
+		
+	initDraggableImg: function () {
+		$(".msupload-list ul").draggable();
+	},
+
+	initDropableArea: function (msUploadContainer) {
+		// init ol item :
+		MsUpload.dropableAreaCount ++;
+		var areaId = 'msupload-drop-' + MsUpload.dropableAreaCount ;
+		var picturesList = $( '<ol>' ).attr( 'class', 'msupload-dropableImgList ' ).attr('data-target','#myCarousel1');
+
+		picturesList.attr('id', areaId);
+		$(msUploadContainer).prepend(picturesList);
+
+		var p = $( '<img>' ).attr( 'src', 'http://wikifab-build.localtest.me/skins/wikifabStyleModule/wiki.png' );
+		var pI = $( '<li>' ).attr( 'class', 'msupload-dropableImgItem' ).append(p);
+		picturesList.append(pI);
+		var p2 = $( '<img>' ).attr( 'src', 'http://wikifab-build.localtest.me/skins/wikifabStyleModule/wiki.png' );
+		var pI2 = $( '<li>' ).attr( 'class', 'msupload-dropableImgItem' ).append(p2);
+		picturesList.append(pI2);
+
+	    $("#" + areaId).sortable({
+			revert : true
+		});
+		$("#" + areaId + " ul").draggable({
+			connectToSortable : "#" + areaId,
+			helper : "clone",
+			revert : "invalid"
+		});
+		$("ul, li").disableSelection();
+	      
+		
+		
+		/*var inputs = $(msUploadContainer).parent().find('input.createboxInput');
+		noneEmptiesInputs = inputs.filter(function() { return this.value != ""; });
+		noneEmptiesInputs.each(function() {
+			var image = $(this).parentsUntil('div').nextAll('.' + window.msuVars.wrapperClass).find('img');
+			
+			if(image.length > 0) {
+				image = image.first().attr('src');
+				if (image.indexOf('No-image-yet') > -1  ) {
+					image = null;
+				}
+			} else {
+				image = null;
+			}
+			
+			var filename = $(this).val();
+			
+			if (filename == 'No-image-yet.jpg' || filename == null) {
+				return;
+			}
+			
+			var picturesItem = $( '<li>' ).attr( 'class', 'msupload-dropableImgItem' );
+			picturesItem.append(image);
+			
+			
+			
+			picturesList.append(picturesItem);
+		});*/
+		
+		//$('#' + uploader.uploaderId  +'-container' ).next().nextAll().hide();
+		
+			
+			/*
+		}
+			<ol class="carousel-indicators">
+			<li class="active" data-slide-to="0" data-target="#myCarousel1">
+			<li data-slide-to="1" data-target="#myCarousel1">
+			<a class="image" href="/index.php/Fichier:Cr%C3%A9er_du_tissu_%C3%A0_partir_de_levures_et_de_bact%C3%A9ries_Step01.jpg">
+			</li>
+			<li data-slide-to="2" data-target="#myCarousel1">
+			<li data-slide-to="3" data-target="#myCarousel1">
+			</ol>*/
+	},
+	
 	init: function () {
 		if ( $.inArray( mw.config.get( 'wgAction' ), [ 'edit', 'submit' ] ) !== -1 ) {
 			mw.loader.using( 'user.options', function () {
@@ -782,7 +865,16 @@ var MsUpload = {
 				setTimeout(MsUpload.createMultipleUploader, 100);
 			});
 		}
+
+		// manage secondary dropable area :
+		$('.' + window.msuVars.secondaryWrapperClass).parents('.msuploadContainer').each(function () {
+			MsUpload.initDropableArea(this);
+		});
+		
+		
+		
 	}
+	
 };
 
 $( MsUpload.init );

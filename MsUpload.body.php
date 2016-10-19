@@ -32,7 +32,7 @@ class MsUpload {
 			$wgMSU_wrapperClass = 'wfImagePreviewGalleryWrapper';
 		}
 		if ( ! $wgMSU_secondaryWrapperClass) {
-			$wgMSU_secondaryWrapperClass = 'sfImagePreviewWrapper';
+			$wgMSU_secondaryWrapperClass = 'sfImagePreview';
 		}
 
 		$msuVars = array(
@@ -50,6 +50,7 @@ class MsUpload {
 
 		$msuVars = json_encode( $msuVars );
 		$wgOut->addScript( "<script type=\"$wgJsMimeType\">window.msuVars = $msuVars;</script>\n" );
+		//$wgOut->addScript( '<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>' . "\n");
 
 		return true;
 	}
