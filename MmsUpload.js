@@ -349,7 +349,7 @@ var MsUpload = {
 	
 	initAddExistingFile: function(uploader, filename, imageurl) {
 		
-		var li = $( '<li>' ).addClass( 'file' ).addClass( 'file-existing' ).appendTo( $( '#'+ uploader.uploaderId + '-list' ) );
+		var li = $( '<li>' ).attr('data-filename', filename).addClass( 'file' ).addClass( 'file-existing' ).appendTo( $( '#'+ uploader.uploaderId + '-list' ) );
 		li.filename = filename;
 		if (imageurl) {
 			$( '<img>' ).addClass( 'file-thumb' ).attr('src',imageurl).appendTo( li );
@@ -362,6 +362,8 @@ var MsUpload = {
 		
 		
 		$( '<span>' ).addClass( 'file-warning' ).appendTo( li );
+		
+		
 		
 		MsUpload.addRemoveButton(uploader, li);
 	},
@@ -423,8 +425,11 @@ var MsUpload = {
 		uploader.trigger( 'CheckFiles' );
 	},
 	
-	
-	createUploaderOnElement: function(element) {
+	/**
+	 * create an uploade on a page element
+	 * if 'primaryUploader' is true, this will be the primary uploader, from wich we can drag drop images
+	 */
+	createUploaderOnElement: function(element, primaryUploader = false) {
 		var parentTemplate = $(element).parents('.multipleTemplateStarter');
 		
 		//if this div is a hidden template, do not apply uploader on it :
@@ -444,6 +449,7 @@ var MsUpload = {
 			//to be sure news divs are created before executing
 			setTimeout(MsUpload.createMultipleUploader, 100);
 		});
+		
 		return uploader;
 	},
 	
@@ -678,7 +684,7 @@ var MsUpload = {
 		
 		// this function automaticaly add image to forminputs included in container div
 		// if all inputs are allready filled, it mark file as error, because not possible to add more
-		// if thes is no input in container div, , no check , just return OK (case of page gallery)
+		// if there is no input in container div, , no check , just return OK (case of page gallery)
 		
 		// file.name : nom du fichier à ajouter :
 		
@@ -771,6 +777,8 @@ var MsUpload = {
 	},
 
 	initDropableArea: function (msUploadContainer) {
+		
+		/*
 		// init ol item :
 		MsUpload.dropableAreaCount ++;
 		var areaId = 'msupload-drop-' + MsUpload.dropableAreaCount ;
@@ -794,7 +802,13 @@ var MsUpload = {
 			helper : "clone",
 			revert : "invalid"
 		});
+		$("#" + areaId + " ul").draggable({
+			connectToSortable : ".msupload-list",
+			helper : "clone",
+			revert : "invalid"
+		});
 		$("ul, li").disableSelection();
+		*/
 	      
 		
 		
