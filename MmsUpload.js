@@ -760,12 +760,18 @@ var MsUpload = {
 		}
 		uploader.refresh(); // Reposition Flash/Silverlight
 		
+		if (MsUpload.onRefresh) {
+				MsUpload.onRefresh(uploader);
+		}
+		
 		// auto-start upload
 		if (filesLength && ! MsUpload.unconfirmedReplacements ) {
 			console.log('autoStarting !');
 			//uploader.start();
 		}
 	},
+	
+	onRefresh: null,
 	
 	dropableAreaCount: 0,
 
