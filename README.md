@@ -21,6 +21,16 @@ $wgMSU_useMsLinks = false;
 $wgMSU_confirmReplace = true; // Show the "Replace file?" checkbox
 $wgMSU_imgParams = '400px';
 
+Advanced configuration for wikifab-like :
+$wgMSU_wrapperClass = '';
+$wgMSU_secondaryWrapperClass = '';
+$wgMSU_useDragDropAllContainer = true;
+
+wrapperClass is used to name a class to automaticaly set upload on it
+Configuration to activate it an a wikifab site (without PageMediaGallery extension) :
+$wgMSU_wrapperClass = 'sfImagePreviewWrapper';
+$wgMSU_useDragDropAllContainer = false;
+
 Credits
 -------
 * Developed and coded by Martin Schwindl (wiki@ratin.de)

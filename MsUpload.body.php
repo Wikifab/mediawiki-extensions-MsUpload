@@ -45,7 +45,7 @@ class MsUpload {
 			'imgParams' => $wgMSU_imgParams,
 			'wrapperClass' => $wgMSU_wrapperClass,
 			'secondaryWrapperClass' => $wgMSU_secondaryWrapperClass,
-			'useDragDropAllContainer' => true,
+			'useDragDropAllContainer' => $wgMSU_useDragDropAllContainer,
 		);
 
 		$msuVars = json_encode( $msuVars );

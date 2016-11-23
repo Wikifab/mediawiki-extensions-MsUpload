@@ -65,3 +65,4 @@ $wgMSU_confirmReplace = true;
 $wgMSU_imgParams = '400px';
 $wgMSU_wrapperClass = '';
 $wgMSU_secondaryWrapperClass = '';
+$wgMSU_useDragDropAllContainer = true;
