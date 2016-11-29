@@ -16,7 +16,7 @@ class MsUpload {
 		global $wgOut, $wgScriptPath, $wgJsMimeType, $wgMSL_FileTypes, $wgMSU_useMsLinks,
 			$wgMSU_showAutoCat, $wgMSU_autoIndex, $wgMSU_checkAutoCat, $wgMSU_confirmReplace,
 			$wgMSU_useDragDrop, $wgMSU_imgParams, $wgFileExtensions,
-			$wgMSU_wrapperClass,$wgMSU_secondaryWrapperClass;
+			$wgMSU_wrapperClass,$wgMSU_secondaryWrapperClass, $wgMSU_useDragDropAllContainer;
 
 		$wgOut->addModules( 'ext.MsUpload' );
 		$wgOut->addJsConfigVars( array(
