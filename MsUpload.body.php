@@ -13,7 +13,10 @@ class MsUpload {
 	}
 
 	static function start() {
-		global $wgOut, $wgScriptPath, $wgJsMimeType, $wgMSL_FileTypes, $wgMSU_useMsLinks, $wgMSU_showAutoCat, $wgMSU_autoIndex, $wgMSU_checkAutoCat, $wgMSU_confirmReplace, $wgMSU_useDragDrop, $wgMSU_imgParams, $wgFileExtensions;
+		global $wgOut, $wgScriptPath, $wgJsMimeType, $wgMSL_FileTypes, $wgMSU_useMsLinks,
+			$wgMSU_showAutoCat, $wgMSU_autoIndex, $wgMSU_checkAutoCat, $wgMSU_confirmReplace,
+			$wgMSU_useDragDrop, $wgMSU_imgParams, $wgFileExtensions,
+			$wgMSU_wrapperClass,$wgMSU_secondaryWrapperClass, $wgMSU_useDragDropAllContainer;
 
 		$wgOut->addModules( 'ext.MsUpload' );
 		$wgOut->addJsConfigVars( array(
@@ -24,6 +27,14 @@ class MsUpload {
 			$wgMSU_imgParams = '|' . $wgMSU_imgParams;
 		}
 
+		if ( ! $wgMSU_wrapperClass) {
+			//$wgMSU_WrapperClass = 'sfImagePreviewWrapper';
+			$wgMSU_wrapperClass = 'wfImagePreviewGalleryWrapper';
+		}
+		if ( ! $wgMSU_secondaryWrapperClass) {
+			$wgMSU_secondaryWrapperClass = 'sfImagePreview';
+		}
+
 		$msuVars = array(
 			'scriptPath' => $wgScriptPath,
 			'useDragDrop' => $wgMSU_useDragDrop,
@@ -32,10 +43,14 @@ class MsUpload {
 			'useMsLinks' => $wgMSU_useMsLinks,
 			'confirmReplace' => $wgMSU_confirmReplace,
 			'imgParams' => $wgMSU_imgParams,
+			'wrapperClass' => $wgMSU_wrapperClass,
+			'secondaryWrapperClass' => $wgMSU_secondaryWrapperClass,
+			'useDragDropAllContainer' => $wgMSU_useDragDropAllContainer,
 		);
 
 		$msuVars = json_encode( $msuVars );
 		$wgOut->addScript( "<script type=\"$wgJsMimeType\">window.msuVars = $msuVars;</script>\n" );
+		//$wgOut->addScript( '<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>' . "\n");
 
 		return true;
 	}

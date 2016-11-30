@@ -15,7 +15,12 @@ $wgResourceModules['ext.MsUpload'] = array(
 		'MsUpload.js',
 		'MmsUpload.js'
 	),
-	'dependencies' => 'jquery.ui.progressbar',
+	'dependencies' => array(
+			'jquery.ui.draggable',
+			'jquery.ui.droppable',
+			'jquery.ui.sortable',
+			'jquery.ui.progressbar'
+	),
 	'styles' => array(
 			'MsUpload.css',
 			'MmsUpload.css',
@@ -58,3 +63,6 @@ $wgMSU_checkAutoCat = true;
 $wgMSU_useMsLinks = false;
 $wgMSU_confirmReplace = true;
 $wgMSU_imgParams = '400px';
+$wgMSU_wrapperClass = '';
+$wgMSU_secondaryWrapperClass = '';
+$wgMSU_useDragDropAllContainer = true;
