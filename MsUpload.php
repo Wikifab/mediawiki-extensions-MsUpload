@@ -42,6 +42,7 @@ $wgResourceModules['ext.MsUpload'] = array(
 		'msu-dropzone',
 		'msu-comment',
 		'msu-upload-nbfile-exceed',
+		'msu-upload-error-file-too-large',
 	),
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'MmsUpload',

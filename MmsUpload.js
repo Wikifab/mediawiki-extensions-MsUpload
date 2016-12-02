@@ -645,7 +645,12 @@ var MsUpload = {
 		try {
 			var result = $.parseJSON( success.response );
 			if ( result.error ) {
-				MsUpload.fileError( uploader, file, result.error.info );
+				errorMessage = result.error.info;
+				errorCode = result.error.code;
+				if(mw.msg( 'msu-upload-error-' + errorCode ).substring(0, 1) != '<' ) {
+					errorMessage = mw.msg( 'msu-upload-error-' + errorCode );
+				}
+				MsUpload.fileError( uploader, file, errorMessage );
 			} else {
 				file.li.type.addClass( 'ok' );
 				file.li.addClass( 'green' );

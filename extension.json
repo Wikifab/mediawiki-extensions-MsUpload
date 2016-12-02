@@ -44,7 +44,8 @@
 				"msu-upload-all",
 				"msu-dropzone",
 				"msu-comment",
-				"msu-upload-nbfile-exceed"
+				"msu-upload-nbfile-exceed",
+				"msu-upload-error-file-too-large"
 			]
 		}
 	},
