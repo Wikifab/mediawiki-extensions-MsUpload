@@ -429,7 +429,7 @@ var MsUpload = {
 	 * create an uploade on a page element
 	 * if 'primaryUploader' is true, this will be the primary uploader, from wich we can drag drop images
 	 */
-	createUploaderOnElement: function(element, primaryUploader = false) {
+	createUploaderOnElement: function(element, primaryUploader) {
 		var parentTemplate = $(element).parents('.multipleTemplateStarter');
 		
 		//if this div is a hidden template, do not apply uploader on it :
