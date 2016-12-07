@@ -456,7 +456,7 @@ var MsUpload = {
 	createMultipleUploader: function () {
 		$('.' + window.msuVars.wrapperClass).parent('.msuploadContainer').each(function (i) {
 			
-			MsUpload.createUploaderOnElement(this);
+			MsUpload.createUploaderOnElement(this, false);
 			
 			// add event on add step button :
 			$(this).parents('.multipleTemplateInstance').find('.addAboveButton').click(function () {
