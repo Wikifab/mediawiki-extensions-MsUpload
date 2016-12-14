@@ -53,6 +53,7 @@ $wgMessagesDirs['MsUpload'] = __DIR__ . '/i18n';
 $wgAutoloadClasses['MsUpload'] = __DIR__ . '/MsUpload.body.php';
 
 $wgHooks['EditPage::showEditForm:initial'][] = 'MsUpload::start';
+$wgHooks['FormEdit::showEditForm:initial'][] = 'MsUpload::start';
 $wgHooks['sfRenderingEnd'][] = 'MsUpload::addToForm';
 
 $wgAjaxExportList[] = 'MsUpload::saveCat';
