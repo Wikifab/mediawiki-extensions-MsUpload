@@ -343,6 +343,7 @@ var MsUpload = {
 				file.li.addClass( 'green' );
 				file.li.warning.fadeOut( 'fast' );
 			}
+			mw.hook('msupload.fileRemoved').fire(li);
 		});
 		cancelButton.appendTo( li );
 	},
@@ -685,7 +686,7 @@ var MsUpload = {
 						//if this is a video
 						$( '<video>' ).addClass( 'file-thumb' ).attr('src',imageUrl).attr('width','100%').prependTo( file.li );
 					}
-					
+
 					$(file.li).find('.file-type').hide();
 					$(file.li).find('.file-name').hide();
 

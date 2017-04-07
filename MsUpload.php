@@ -41,6 +41,7 @@ $wgResourceModules['ext.MsUpload'] = array(
 		'msu-upload-all',
 		'msu-dropzone',
 		'msu-comment',
+		'msu-remove-image',
 		'msu-upload-nbfile-exceed',
 		'msu-upload-error-file-too-large',
 	),

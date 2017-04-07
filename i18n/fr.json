@@ -27,6 +27,7 @@
 	"msu-upload-all": "Téléverser tous les fichiers",
 	"msu-dropzone": "Glisser ici vos images",
 	"msu-comment": "Fichier téléversé avec MsUpload",
+	"msu-remove-image": "Supprimer l'image de la gallerie",
 	"msu-upload-error-file-too-large": "L'image que vous avez envoyé est trop lourde",
 	"msu-upload-nbfile-exceed": "Nombre limite de fichiers par étape dépassé. Veuillez en supprimer."
 }
