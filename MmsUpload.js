@@ -347,12 +347,28 @@ var MsUpload = {
 		cancelButton.appendTo( li );
 	},
 
+
+	isVideo: function (imageurl) {
+		fileExt = imageurl.split('.').pop().toLowerCase();
+		videoExtensions = ['mp4','webm'];
+		if (videoExtensions.indexOf(fileExt) == -1) {
+			return false;
+		} else {
+			return true;
+		}
+	},
+
 	initAddExistingFile: function(uploader, filename, imageurl) {
 
 		var li = $( '<li>' ).attr('data-filename', filename).addClass( 'file' ).addClass( 'file-existing' ).appendTo( $( '#'+ uploader.uploaderId + '-list' ) );
 		li.filename = filename;
 		if (imageurl) {
-			$( '<img>' ).addClass( 'file-thumb' ).attr('src',imageurl).appendTo( li );
+			if (MsUpload.isVideo(imageurl) == false ) {
+				$( '<img>' ).addClass( 'file-thumb' ).attr('src',imageurl).appendTo( li );
+			} else {
+				//if this is a video
+				$( '<video>' ).addClass( 'file-thumb' ).attr('src',imageurl).attr('width','100%').appendTo( li );
+			}
 		} else {
 			$( '<span>' ).addClass( 'file-type' ).appendTo( li );
 			$( '<span>' ).addClass( 'file-name' ).text( filename ).appendTo( li );
@@ -661,8 +677,15 @@ var MsUpload = {
 				file.li.warning.fadeOut( 'fast' );
 
 				var imageUrl = result.upload.imageinfo.url;
+				console.log(imageUrl);
 				if (imageUrl) {
-					$( '<img>' ).addClass( 'file-thumb' ).attr('src',imageUrl).prependTo( file.li );
+					if (MsUpload.isVideo(imageUrl) == false ) {
+						$( '<img>' ).addClass( 'file-thumb' ).attr('src',imageUrl).prependTo( file.li );
+					} else {
+						//if this is a video
+						$( '<video>' ).addClass( 'file-thumb' ).attr('src',imageUrl).attr('width','100%').prependTo( file.li );
+					}
+					
 					$(file.li).find('.file-type').hide();
 					$(file.li).find('.file-name').hide();
 
