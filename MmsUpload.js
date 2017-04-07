@@ -11,7 +11,7 @@ var MsUpload = {
 		 		uploader.trigger( 'CheckFiles' );
 		 	});
 		});
-	}, 
+	},
 
 	galleryArray: [],
 	insertGallery: function () {
@@ -128,7 +128,7 @@ var MsUpload = {
 			}).change( function () {
 				file.cat = this.checked; // Save
 			}).appendTo( file.li );
-	
+
 			$( '<span>' ).attr( 'class', 'msupload-check-span' ).text( mw.config.get('wgPageName').replace( /_/g, ' ' ) ).appendTo( file.li );
 		}
 
@@ -236,17 +236,17 @@ var MsUpload = {
 			$( '#'+ uploader.uploaderId + '-bottom' ).hide();
 		});
 	},
-	
+
 	uploaderCount: 0,
 
 	uploaders: [],
 	//  clone of createUploader, to allow multiple uploader on the same page
 	createNamedUploader: function (parentElement) {
-		
+
 		MsUpload.uploaderCount ++;
-		
+
 		var uploaderId = 'msupload-' + MsUpload.uploaderCount ;
-		
+
 		// Define the GUI elements
 		var uploadDiv = $( '<div>' ).attr({ 'id':  uploaderId + '-div', 'class': 'msupload-div'} ),
 			uploadContainer = $( '<div>' ).attr({ 'id': uploaderId + '-container', 'class': 'start-loading', 'title': mw.msg( 'msu-button-title' ) }),
@@ -261,7 +261,7 @@ var MsUpload = {
 			filesInsert = $( '<a>' ).attr({ 'id': uploaderId + '-insert-files', 'class': 'msupload-insert-files'} ).hide(),
 			linksInsert = $( '<a>' ).attr({ 'id': uploaderId + '-insert-links', 'class': 'msupload-insert-links'} ).hide(),
 			uploadDrop = $( '<div>' ).attr({ 'id': uploaderId + '-dropzone' , 'class': 'msupload-dropzone'}).text(mw.msg( 'msu-dropzone' )).hide();
-		
+
 		// Add them to the DOM
 		bottomDiv.append( loadingButton, startButton );
 		//bottomDiv.append( galleryInsert, filesInsert, linksInsert, cleanAll );
@@ -269,8 +269,8 @@ var MsUpload = {
 		uploadDrop.prepend( uploadButton );
 		parentElement.prepend( uploadDiv );
 		parentElement.prepend( uploadContainer );
-		
-		
+
+
 		var dropElement = uploaderId + '-div';
 		if ( window.msuVars.useDragDropAllContainer) {
 			dropElement = $(parentElement).attr('id');
@@ -289,7 +289,7 @@ var MsUpload = {
 			'silverlight_xap_url': window.msuVars.path + '/extensions/MsUpload/plupload/Moxie.xap',
 			'sortable': true,
 		});
-		
+
 		MsUpload.uploaders[uploaderId].uploaderId = uploaderId;
 
 		// Bind events
@@ -316,13 +316,13 @@ var MsUpload = {
 
 		// Initialise
 		MsUpload.uploaders[uploaderId].init();
-		
+
 		MsUpload.initWithSemanticFormsFields(MsUpload.uploaders[uploaderId]);
-		
+
 		return MsUpload.uploaders[uploaderId];
-		
+
 	},
-	
+
 	addRemoveButton: function (uploader, li) {
 		var cancelButton = $( '<span>' ).addClass( 'file-cancel' ).attr('title',mw.msg( 'msu-remove-image' ));
 		cancelButton.click( function () {
@@ -346,9 +346,9 @@ var MsUpload = {
 		});
 		cancelButton.appendTo( li );
 	},
-	
+
 	initAddExistingFile: function(uploader, filename, imageurl) {
-		
+
 		var li = $( '<li>' ).attr('data-filename', filename).addClass( 'file' ).addClass( 'file-existing' ).appendTo( $( '#'+ uploader.uploaderId + '-list' ) );
 		li.filename = filename;
 		if (imageurl) {
@@ -359,27 +359,27 @@ var MsUpload = {
 		}
 		//$( '<span>' ).addClass( 'file-size' ).text( plupload.formatSize( file.size ) ).appendTo( file.li );
 		//$( '<span>' ).addClass( 'file-loading' ).appendTo( li );
-		
-		
+
+
 		$( '<span>' ).addClass( 'file-warning' ).appendTo( li );
-		
-		
-		
+
+
+
 		MsUpload.addRemoveButton(uploader, li);
 	},
-	
-	// get the file allready set in fields, add them to the list and hide Form fields to show only upload list 
+
+	// get the file allready set in fields, add them to the list and hide Form fields to show only upload list
 	initWithSemanticFormsFields: function(uploader) {
-		
+
 		var inputs = $('#' + uploader.uploaderId  +'-container' ).parent().find('input.createboxInput');
-		
+
 		noneEmptiesInputs = inputs.filter(function() { return this.value != ""; });
-		
+
 		noneEmptiesInputs.each(function() {
 
-			
+
 			var image = $(this).parentsUntil('div').nextAll('.' + window.msuVars.wrapperClass).find('img');
-			
+
 			if(image.length > 0) {
 				image = image.first().attr('src');
 				if (image.indexOf('No-image-yet') > -1  ) {
@@ -388,55 +388,55 @@ var MsUpload = {
 			} else {
 				image = null;
 			}
-			
+
 			var filename = $(this).val();
-			
+
 			if (filename == 'No-image-yet.jpg') {
 				return;
 			}
-			
+
 			MsUpload.initAddExistingFile(uploader, filename, image);
-			
-			
+
+
 			//MsUpload.checkExtension( file, uploader );
 		});
-		
+
 		$('#' + uploader.uploaderId  +'-container' ).next().nextAll().hide();
 		//inputs.parent().hide();
 		uploader.refresh(); // Reposition Flash/Silverlight
 		uploader.trigger( 'CheckFiles' );
 	},
-	
+
 	initWithImgElement: function(uploader) {
-		
+
 		var elements = $('#' + uploader.uploaderId  +'-container' ).parent().find('img');
-		
+
 		elements.each(function() {
 
 			var filename = $(this).attr('alt');
 			var imageurl = $(this).attr('src');
-			
+
 			MsUpload.initAddExistingFile(uploader, filename, imageurl);
-			
-			
+
+
 			//MsUpload.checkExtension( file, uploader );
 		});
 		uploader.refresh(); // Reposition Flash/Silverlight
 		uploader.trigger( 'CheckFiles' );
 	},
-	
+
 	/**
 	 * create an uploade on a page element
 	 * if 'primaryUploader' is true, this will be the primary uploader, from wich we can drag drop images
 	 */
 	createUploaderOnElement: function(element, primaryUploader) {
 		var parentTemplate = $(element).parents('.multipleTemplateStarter');
-		
+
 		//if this div is a hidden template, do not apply uploader on it :
 		if (parentTemplate.length > 0) {
 			return;
 		}
-		
+
 		var elementCreated = $(element).find('.msupload-div');
 		// to be able to call this fonction many time to add uploader to added div :
 		// we create uploader only if not already present :
@@ -445,22 +445,22 @@ var MsUpload = {
 		}
 		// add event on add step button :
 		$(this).parents('.multipleTemplateInstance').find('.addAboveButton').click(function () {
-			// whe launch createMultipleUploader after a timeout, 
+			// whe launch createMultipleUploader after a timeout,
 			//to be sure news divs are created before executing
 			setTimeout(MsUpload.createMultipleUploader, 100);
 		});
-		
+
 		return uploader;
 	},
-	
+
 	createMultipleUploader: function () {
 		$('.' + window.msuVars.wrapperClass).parent('.msuploadContainer').each(function (i) {
-			
+
 			MsUpload.createUploaderOnElement(this, false);
-			
+
 			// add event on add step button :
 			$(this).parents('.multipleTemplateInstance').find('.addAboveButton').click(function () {
-				// whe launch createMultipleUploader after a timeout, 
+				// whe launch createMultipleUploader after a timeout,
 				//to be sure news divs are created before executing
 				setTimeout(MsUpload.createMultipleUploader, 100);
 			});
@@ -469,7 +469,7 @@ var MsUpload = {
 
 	uploader: null,
 	createUploader: function () {
-		
+
 		// Define the GUI elements
 		var uploadDiv = $( '<div>' ).attr( 'id', 'msupload-div' ),
 			uploadContainer = $( '<div>' ).attr({ 'id': 'msupload-container', 'class': 'start-loading', 'title': mw.msg( 'msu-button-title' ) }),
@@ -490,10 +490,10 @@ var MsUpload = {
 		//$( '#wikiEditor-ui-toolbar' ).after( uploadDiv );
 		uploadContainer.append( uploadButton );
 		//$( '#wikiEditor-ui-toolbar .group-insert' ).append( uploadContainer );
-		
+
 		$( '#bodyContent').prepend( uploadDiv );
 		$( '#bodyContent' ).prepend( uploadContainer );
-		
+
 
 		// Create the Uploader object
 		MsUpload.uploader = new plupload.Uploader({
@@ -506,7 +506,7 @@ var MsUpload = {
 			'flash_swf_url': window.msuVars.scriptPath + '/extensions/MsUpload/plupload/Moxie.swf',
 			'silverlight_xap_url': window.msuVars.path + '/extensions/MsUpload/plupload/Moxie.xap'
 		});
-		
+
 		MsUpload.uploader.uploaderId = 'msupload' ;
 
 		// Bind events
@@ -535,7 +535,7 @@ var MsUpload = {
 		mw.log( 'MsUpload DEBUG: runtime: ' + uploader.runtime + ' features: ' + JSON.stringify( uploader.features ) );
 		$( '#'+ uploader.uploaderId + '-container' ).removeClass( 'start-loading' );
 		if ( uploader.features.dragdrop && window.msuVars.useDragDrop ) {
-			
+
 			if (window.msuVars.useDragDropAllContainer) {
 				$( '#'+ uploader.uploaderId + '-dropzone' ).show();
 				$( '#PageGallery' ).bind( 'dragover',function () {
@@ -555,7 +555,7 @@ var MsUpload = {
 					 $( this ).removeClass( 'drop-over' );
 				});
 			}
-			
+
 	 	} else {
 	 		$( '#'+ uploader.uploaderId + '-div' ).addClass( 'nodragdrop' );
 	 	}
@@ -563,11 +563,15 @@ var MsUpload = {
 
 	onFilesAdded: function ( uploader, files ) {
 		$.each( files, function ( i, file ) {
+
+			// remove specialChars
+			file.name = file.name.replace(/[^A-Za-z0-9\-_\.]+/g,"_");
+
+			// prefiw with page name
 			file.name = mw.config.get('wgPageName') + '_' + file.name;
 			// remove start of url if on creation page (keep only the string after the last '/')
 			file.name = file.name.replace(/(.*)\//g,"");
-			// remove specialChars
-			file.name = file.name.replace(/[^A-Za-z0-9\-_\.]+/g,"_");
+
 
 			// iOS6 by SLBoat
 			if ( ( navigator.platform === 'iPad' || navigator.platform === 'iPhone' ) ) {
@@ -625,7 +629,7 @@ var MsUpload = {
 	onUploadProgress: function ( uploader, file ) {
 		$( '#' + file.id + ' .file-progress-state' ).text( file.percent + '%' );
 	},
-	
+
 	onError: function ( uploader, error ) {
 		mw.log( error );
 		$( '#' + error.file.id + ' .file-warning' ).html(
@@ -655,15 +659,15 @@ var MsUpload = {
 				file.li.type.addClass( 'ok' );
 				file.li.addClass( 'green' );
 				file.li.warning.fadeOut( 'fast' );
-				
+
 				var imageUrl = result.upload.imageinfo.url;
 				if (imageUrl) {
 					$( '<img>' ).addClass( 'file-thumb' ).attr('src',imageUrl).prependTo( file.li );
 					$(file.li).find('.file-type').hide();
 					$(file.li).find('.file-name').hide();
-					
+
 					MsUpload.addRemoveButton(uploader, file.li);
-				} 
+				}
 
 				if ( file.cat && mw.config.get( 'wgNamespaceNumber' ) === 14 ) { // Should the categroy be set?
 					$.get( mw.util.wikiScript(), {
@@ -675,7 +679,7 @@ var MsUpload = {
 				MsUpload.filesArray.push( file.name );
 				// automatically add image to forms inputs.
 				MsUpload.addImageToFormsInputs(uploader,file);
-				// look 
+				// look
 			}
 		} catch( error ) {
 			MsUpload.fileError( uploader, file, 'Error: ' + success.response.replace( /(<([^>]+)>)/ig, '' ) ); // Remove html tags
@@ -684,27 +688,27 @@ var MsUpload = {
 
 		$( '#'+ uploader.uploaderId + '-loading-button' ).hide();
 	},
-	
+
 	addImageToFormsInputs: function (uploader, file) {
-		
+
 		// this function automaticaly add image to forminputs included in container div
 		// if all inputs are allready filled, it mark file as error, because not possible to add more
 		// if there is no input in container div, , no check , just return OK (case of page gallery)
-		
+
 		// file.name : nom du fichier à ajouter :
-		
+
 		var inputs = $('#' + uploader.uploaderId  +'-container' ).parents('.msuploadContainer').find('input.createboxInput');
-		
+
 		if (inputs.length == 0) {
 			return true;
 		}
-		
-		emptiesInputs = inputs.filter(function() { 
-			return this.value == "" || this.value == 'No-image-yet.jpg'; 
+
+		emptiesInputs = inputs.filter(function() {
+			return this.value == "" || this.value == 'No-image-yet.jpg';
 		});
-		
-		
-		
+
+
+
 		if (emptiesInputs.length > 0) {
 			// if we get an input with no value, we add filename to it
 			emptiesInputs.first().val(file.name);
@@ -764,32 +768,32 @@ var MsUpload = {
 			$( '#'+ uploader.uploaderId + '-bottom' ).hide();
 		}
 		uploader.refresh(); // Reposition Flash/Silverlight
-		
+
 		if (MsUpload.onRefresh) {
 				MsUpload.onRefresh(uploader);
 		}
-		
+
 		// auto-start upload
 		if (filesLength && ! MsUpload.unconfirmedReplacements ) {
 			console.log('autoStarting !');
 			//uploader.start();
 		}
 	},
-	
+
 	onRefresh: null,
-	
+
 	dropableAreaCount: 0,
 
 	dropableAreas: [],
-		
-		
+
+
 	initDraggableImg: function () {
 		$(".msupload-list ul").draggable();
 	},
 
 	initDropableArea: function (msUploadContainer) {
 	},
-	
+
 	init: function () {
 		if ( $.inArray( mw.config.get( 'wgAction' ), [ 'edit', 'submit' ] ) !== -1 ) {
 			mw.loader.using( 'user.options', function () {
@@ -809,7 +813,7 @@ var MsUpload = {
 			MsUpload.createMultipleUploader();
 			// add event on new step button, to appli drop-zone on new steps
 			$('.multipleTemplateAdder').click(function () {
-				// whe launch createMultipleUploader after a timeout, 
+				// whe launch createMultipleUploader after a timeout,
 				//to be sure news divs are created before executing
 				setTimeout(MsUpload.createMultipleUploader, 100);
 			});
@@ -819,11 +823,11 @@ var MsUpload = {
 		$('.' + window.msuVars.secondaryWrapperClass).parents('.msuploadContainer').each(function () {
 			MsUpload.initDropableArea(this);
 		});
-		
-		
-		
+
+
+
 	}
-	
+
 };
 
 $( MsUpload.init );
