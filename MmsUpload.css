@@ -148,12 +148,13 @@
     position: inherit;
     float: left;
     margin: 4px;
+    border: 1Px solid #ccc;
 }
 
 .msupload-list .file .file-load canvas {
 	display: block;
-	max-width: 30px;
-	min-height: 30px;
+	max-width: 28px;
+	min-height: 28px;
 }
 
 .msupload-list .file .file-name {
@@ -166,6 +167,10 @@
     background: #f7f7f7;
     overflow: hidden;
     white-space: nowrap;
+}
+
+.msupload-loading-button {
+	color:#fff;
 }
 
 .msupload-list .file-upload .file-name {
@@ -281,9 +286,10 @@
 }
 
 .msupload-list .file .file-extension {
-	font-weight: bold;
-    padding: 4px 0px 0px 3px;
+    padding: 11px 0px 0px 2px;
     float: left;
+    color: #777;
+    font-size: .9em;
 }
 
 .col-pic-detail .msupload-list .file .file-name, .col-pic-detail .msupload-list .file .file-name-input {
@@ -310,7 +316,6 @@
 	transition: all ease .15s;
 }
 
-
 .msupload-bottom a {
 	color: white;
 	font-weight: bold;
@@ -318,12 +323,12 @@
 }
 
 .msupload-bottom .msupload-files {
-	padding: 6px 11px 6px 32px;
-	    background: url(http://preprod2.wikifab.org/extensions/MsUpload/images/msu-upload-icon.png?e5352) no-repeat 5px 4px;
-	    background-color: #337ab7;
-	    border-radius: 3px;
-	    font-size: 14px;
-	    font-weight: normal;
+	padding: 6px 7px;
+	background-color: #337ab7;
+	border-radius: 3px;
+	font-weight: normal;
+	font-size: 1em;
+    margin-right: 0px;
 }
 
 .msupload-bottom .msupload-files:hover {
@@ -336,16 +341,6 @@
 	margin: 0 8px;
 	width: 1px;
 	background-color: #ccc;
-}
-
-.msupload-list .file:first-of-type .file-load {
-	top: 0px;
-}
-
-.msupload-list .file:first-of-type .file-name {
-    margin-left: 40px;
-    width: 60%;
-    margin-bottom: 10px;
 }
 
 .msupload-list .file-existing .file:first-of-type .file-thumb {
