@@ -228,6 +228,10 @@
 	opacity: 0.7; 
 }
 
+.msuploadContainer {
+	margin-bottom: 10px;
+}
+
 .msuploadContainer .moxie-shim-html5 {
 	display:none;
 }
