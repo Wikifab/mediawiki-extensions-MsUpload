@@ -582,12 +582,12 @@ var MsUpload = {
 		$.each( files, function ( i, file ) {
 
 			// remove specialChars
-			file.name = file.name.replace(/[^A-Za-z0-9\-_\.]+/g,"_");
+			file.name = file.name.replace(/[^A-Za-z0-9\-_\.:]+/g,"_");
 
-			// prefiw with page name
-			file.name = mw.config.get('wgPageName') + '_' + file.name;
+			// prefix with page name
 			// remove start of url if on creation page (keep only the string after the last '/')
-			file.name = file.name.replace(/(.*)\//g,"");
+			// and change ":" in case a page in a namespace (ex Group:toto)
+			file.name = mw.config.get('wgPageName').replace(/(.*)\//g,"").replace(":","-") + '_' + file.name;
 
 
 			// iOS6 by SLBoat
