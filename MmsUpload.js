@@ -581,14 +581,16 @@ var MsUpload = {
 	onFilesAdded: function ( uploader, files ) {
 		$.each( files, function ( i, file ) {
 
-			// remove specialChars
-			file.name = file.name.replace(/[^A-Za-z0-9\-_\.:]+/g,"_");
-
-			// prefix with page name
-			// remove start of url if on creation page (keep only the string after the last '/')
-			// and change ":" in case a page in a namespace (ex Group:toto)
-			file.name = mw.config.get('wgPageName').replace(/(.*)\//g,"").replace(":","-") + '_' + file.name;
-
+			
+			if (mw.config.get('wgPageName') != 'TestUploadPage') {
+				// remove specialChars
+				file.name = file.name.replace(/[^A-Za-z0-9\-_\.:]+/g,"_");
+	
+				// prefix with page name
+				// remove start of url if on creation page (keep only the string after the last '/')
+				// and change ":" in case a page in a namespace (ex Group:toto)
+				file.name = mw.config.get('wgPageName').replace(/(.*)\//g,"").replace(":","-") + '_' + file.name;
+			}
 
 			// iOS6 by SLBoat
 			if ( ( navigator.platform === 'iPad' || navigator.platform === 'iPhone' ) ) {
