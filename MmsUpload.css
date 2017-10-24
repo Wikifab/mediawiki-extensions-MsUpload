@@ -236,6 +236,36 @@
 	display:none;
 }
 
+.msuploadContainer .formmediagallery li .pfImagePreviewWrapper span.video-player {
+    background-image: url(images/msu-play-verysmall.png);
+    position: absolute;
+    z-index: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+}
+
+.msuploadContainer .formmediagallery li:first-child .pfImagePreviewWrapper span.video-player {
+    background-image: url(images/msu-play-big.png);
+    position: absolute;
+    z-index: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+}
+
+#PageGallery span.video-player {
+    background-image: url(images/msu-play-small.png);
+    position: absolute;
+    z-index: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+}
+
 .msupload-list .file .file-loading {
 	background: url(images/msu-loading.png) no-repeat 0 0;
 	margin: 0 5px;
