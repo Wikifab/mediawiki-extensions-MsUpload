@@ -192,7 +192,6 @@ var MsUpload = {
 
 				case 'mov': case 'avi':
 					file.group = 'video';
-//					$('video').add('span').addClass('video-player');
 					file.li.type.addClass( 'video' );
 					break;
 
@@ -370,10 +369,7 @@ var MsUpload = {
 				
 			} else {
 				//if this is a video
-				// ajout d'un span avec la class "video-player" dans la gallerie 
-				$('<span>').addClass('video-player').prependTo(li);
 				$( '<video>' ).addClass( 'file-thumb' ).attr('src',imageurl).attr('width','100%').appendTo( li );
-				//$('<video').after("<span class='test'></span>");
 
 			}
 		} else {
@@ -693,6 +689,8 @@ var MsUpload = {
 					} else {
 						//if this is a video
 						$( '<video>' ).addClass( 'file-thumb' ).attr('src',imageUrl).attr('width','100%').prependTo( file.li );
+						$('<span>').addClass('video-player').prependTo(file.li);
+
 					}
 
 					$(file.li).find('.file-type').hide();
