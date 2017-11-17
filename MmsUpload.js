@@ -192,7 +192,6 @@ var MsUpload = {
 
 				case 'mov': case 'avi':
 					file.group = 'video';
-//					$('video').add('span').addClass('video-player');
 					file.li.type.addClass( 'video' );
 					break;
 
@@ -363,6 +362,7 @@ var MsUpload = {
 	initAddExistingFile: function(uploader, filename, imageurl) {
 
 		var li = $( '<li>' ).attr('data-filename', filename).addClass( 'file' ).addClass( 'file-existing' ).appendTo( $( '#'+ uploader.uploaderId + '-list' ) );
+
 		li.filename = filename;
 		if (imageurl) {
 			if (MsUpload.isVideo(imageurl) == false ) {
@@ -370,10 +370,8 @@ var MsUpload = {
 				
 			} else {
 				//if this is a video
-				// ajout d'un span avec la class "video-player" dans la gallerie 
-				$('<span>').addClass('video-player').prependTo(li);
 				$( '<video>' ).addClass( 'file-thumb' ).attr('src',imageurl).attr('width','100%').appendTo( li );
-				//$('<video').after("<span class='test'></span>");
+				$('<span>').addClass('video-player').prependTo(li);
 
 			}
 		} else {
@@ -612,6 +610,8 @@ var MsUpload = {
 			file.li.size = $( '<span>' ).addClass( 'file-size' ).text( plupload.formatSize( file.size ) ).appendTo( file.li );
 			file.li.loading = $( '<span>' ).addClass( 'file-loading' ).appendTo( file.li );
 			file.li.warning = $( '<span>' ).addClass( 'file-warning' ).appendTo( file.li );
+			//file.li.video = $('<span>').addClass('video-player').prependTo(file.li);
+
 			MsUpload.checkExtension( file, uploader );
 		});
 		uploader.refresh(); // Reposition Flash/Silverlight
@@ -693,6 +693,8 @@ var MsUpload = {
 					} else {
 						//if this is a video
 						$( '<video>' ).addClass( 'file-thumb' ).attr('src',imageUrl).attr('width','100%').prependTo( file.li );
+						$('<span>').addClass('video-player').prependTo(file.li);
+
 					}
 
 					$(file.li).find('.file-type').hide();
