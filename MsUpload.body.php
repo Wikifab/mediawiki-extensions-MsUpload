@@ -65,10 +65,10 @@ class MsUpload {
 				<div class="modal-content">
 				<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" >Erreur</h4>
+				<h4 class="modal-title" >'.wfMessage('error').'</h4>
 				</div>
 				<div class="modal-body">
-				Le fichier que vous essayer d\'uploader est trop volumineux
+				'.wfMessage('msu-upload-error-file-too-large').'
 				</div>
 				</div>
 				</div>
