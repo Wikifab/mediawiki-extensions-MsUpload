@@ -52,7 +52,27 @@ class MsUpload {
 		$wgOut->addScript( "<script type=\"$wgJsMimeType\">window.msuVars = $msuVars;</script>\n" );
 		//$wgOut->addScript( '<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>' . "\n");
 
+
+		$modal = self::getmodalHtml();
+		$wgOut->addHTML($modal);
 		return true;
+	}
+
+	static function getmodalHtml() {
+		return '
+				<div class="modal fade" id="msUploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" >Erreur</h4>
+				</div>
+				<div class="modal-body">
+				Le fichier que vous essayer d\'uploader est trop volumineux
+				</div>
+				</div>
+				</div>
+				</div>';
 	}
 
 	static function saveCat( $filename, $category ) {

@@ -612,6 +612,21 @@ var MsUpload = {
 			file.li.warning = $( '<span>' ).addClass( 'file-warning' ).appendTo( file.li );
 			//file.li.video = $('<span>').addClass('video-player').prependTo(file.li);
 
+			
+			// check file size : 
+			//TODO : get max file size from config
+
+			var maxFileSize = 10; // Mo
+			if (file.size > maxFileSize * 1024*1024) {
+				$('#msUploadModal').modal('show'); 	
+				console.log('File too big');
+				/*file.li.loading.hide( 'fast', function () {
+					uploader.removeFile( file );
+					uploader.refresh();
+				});*/
+				MsUpload.fileError( uploader, file, mw.msg( 'msu-ext-too_big' ));
+
+			}
 			MsUpload.checkExtension( file, uploader );
 		});
 		uploader.refresh(); // Reposition Flash/Silverlight
