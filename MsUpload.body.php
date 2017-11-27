@@ -35,6 +35,8 @@ class MsUpload {
 			$wgMSU_secondaryWrapperClass = 'sfImagePreview';
 		}
 
+		// get max upload file size :
+		$file_upload_max_size = self::file_upload_max_size();
 		$msuVars = array(
 			'scriptPath' => $wgScriptPath,
 			'useDragDrop' => $wgMSU_useDragDrop,
@@ -46,6 +48,7 @@ class MsUpload {
 			'wrapperClass' => $wgMSU_wrapperClass,
 			'secondaryWrapperClass' => $wgMSU_secondaryWrapperClass,
 			'useDragDropAllContainer' => $wgMSU_useDragDropAllContainer,
+			'fileUploadMaxSize' => $file_upload_max_size,
 		);
 
 		$msuVars = json_encode( $msuVars );
@@ -58,7 +61,45 @@ class MsUpload {
 		return true;
 	}
 
+	static function file_upload_max_size() {
+		static $max_size = -1;
+
+		if ($max_size < 0) {
+			// Start with post_max_size.
+			$post_max_size = self::parse_size(ini_get('post_max_size'));
+			if ($post_max_size > 0) {
+				$max_size = $post_max_size;
+			}
+
+			// If upload_max_size is less, then reduce. Except if upload_max_size is
+			// zero, which indicates no limit.
+			$upload_max = self::parse_size(ini_get('upload_max_filesize'));
+			if ($upload_max > 0 && $upload_max < $max_size) {
+				$max_size = $upload_max;
+			}
+			if($max_size > 0) {
+				// conversion in MB :
+				$max_size = intval($max_size / (1024 * 1024));
+			}
+		}
+
+		return $max_size;
+	}
+
+	static function parse_size($size) {
+		$unit = preg_replace('/[^bkmgtpezy]/i', '', $size); // Remove the non-unit characters from the size.
+		$size = preg_replace('/[^0-9\.]/', '', $size); // Remove the non-numeric characters from the size.
+		if ($unit) {
+			// Find the position of the unit in the ordered string which is the power of magnitude to multiply a kilobyte by.
+			return round($size * pow(1024, stripos('bkmgtpezy', $unit[0])));
+		}
+		else {
+			return round($size);
+		}
+	}
+
 	static function getmodalHtml() {
+		$maxSize = self::file_upload_max_size();
 		return '
 				<div class="modal fade" id="msUploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 				<div class="modal-dialog" role="document">
@@ -68,7 +109,7 @@ class MsUpload {
 				<h4 class="modal-title" >'.wfMessage('error').'</h4>
 				</div>
 				<div class="modal-body">
-				'.wfMessage('msu-upload-error-file-too-large').'
+				'.wfMessage('msu-upload-error-file-too-large', $maxSize).'
 				</div>
 				</div>
 				</div>

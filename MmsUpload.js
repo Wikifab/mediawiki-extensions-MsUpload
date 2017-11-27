@@ -5,6 +5,7 @@ var MsUpload = {
 		file.li.addClass( 'yellow' );
 		file.li.type.addClass( 'error' );
 		file.li.warning.show();
+		//console.log('MsUpload.fileError : ' + errorText);
 		file.li.click( function () { // Remove li at click
 			file.li.fadeOut( 'fast', function () {
 		 		$( this ).remove();
@@ -275,12 +276,25 @@ var MsUpload = {
 		if ( window.msuVars.useDragDropAllContainer) {
 			dropElement = $(parentElement).attr('id');
 		}
+		/**
+		 * when using this limitation, there is no message in case of file too big,
+		 * so we allow more, and the error will be managed elsewhere
+		var maxFileSize = window.msuVars.fileUploadMaxSize;
+		if (maxFileSize) {
+			maxFileSize = maxFileSize + 'mb';
+		} else {
+			maxFileSize = '100mb';
+		}
+		*/
+		maxFileSize = '100mb';
+		//console.log('max file size ' + maxFileSize);
+
 		// Create the Uploader object
 		MsUpload.uploaders[uploaderId] = new plupload.Uploader({
 			'runtimes': 'html5,flash,silverlight,html4',
 			'browse_button': uploaderId + '-select',
 			'container': uploaderId + '-container',
-			'max_file_size': '100mb',
+			'max_file_size': maxFileSize,
 			'width': 1200,
 		    'height': 1200,
 			'drop_element': dropElement,
@@ -583,6 +597,7 @@ var MsUpload = {
 	},
 
 	onFilesAdded: function ( uploader, files ) {
+		//console.log('MmsUpload.onFileAdded');
 		$.each( files, function ( i, file ) {
 
 			
@@ -612,22 +627,20 @@ var MsUpload = {
 			file.li.warning = $( '<span>' ).addClass( 'file-warning' ).appendTo( file.li );
 			//file.li.video = $('<span>').addClass('video-player').prependTo(file.li);
 
-			
-			// check file size : 
-			//TODO : get max file size from config
 
-			var maxFileSize = 10; // Mo
-			if (file.size > maxFileSize * 1024*1024) {
-				$('#msUploadModal').modal('show'); 	
-				console.log('File too big');
-				/*file.li.loading.hide( 'fast', function () {
-					uploader.removeFile( file );
-					uploader.refresh();
-				});*/
-				MsUpload.fileError( uploader, file, mw.msg( 'msu-ext-too_big' ));
-
-			}
 			MsUpload.checkExtension( file, uploader );
+			
+			// check file size :
+			var maxFileSize = window.msuVars.fileUploadMaxSize;
+			if (maxFileSize > 0 && file.size > maxFileSize * 1024*1024) {
+				$('#msUploadModal').modal('show');
+				MsUpload.fileError( uploader, file, mw.msg( 'msu-ext-too_big' ));
+				
+				setTimeout(function () {
+					uploader.removeFile(file);
+				}, 500);
+				
+			}
 		});
 		uploader.refresh(); // Reposition Flash/Silverlight
 		uploader.trigger( 'CheckFiles' );
@@ -638,6 +651,7 @@ var MsUpload = {
 	},
 
 	onStateChanged: function ( uploader ) {
+		//console.log('onStateChanged ' + uploader.state);
 		mw.log( uploader.state );
 		if ( uploader.files.length === ( uploader.total.uploaded + uploader.total.failed ) ) {
 			//mw.log( 'State: ' + uploader.files.length ) // All files uploaded
@@ -701,7 +715,6 @@ var MsUpload = {
 				file.li.warning.fadeOut( 'fast' );
 
 				var imageUrl = result.upload.imageinfo.url;
-				console.log(imageUrl);
 				if (imageUrl) {
 					if (MsUpload.isVideo(imageUrl) == false ) {
 						$( '<img>' ).addClass( 'file-thumb' ).attr('src',imageUrl).prependTo( file.li );
@@ -824,7 +837,7 @@ var MsUpload = {
 
 		// auto-start upload
 		if (filesLength && ! MsUpload.unconfirmedReplacements ) {
-			console.log('autoStarting !');
+			//console.log('autoStarting !');
 			//uploader.start();
 		}
 	},
