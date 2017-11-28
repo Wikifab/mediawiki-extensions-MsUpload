@@ -23,6 +23,8 @@
 	"msu-dropzone": "Drop images here",
 	"msu-comment": "File uploaded with MsUpload",
 	"msu-remove-image": "Remove image from gallery",
+	"msu-messagetitle-file-too-large" : "File exceed the maximum allowable size.",
+	"msu-upload-error-file-too-large" : "Warning, the file you are trying to upload exceed  the maximum allowable size ( $1 Mo ).",
 	"msu-upload-nbfile-exceed": "File limit per step exceeded, please remove an image before add another.",
 	"close": "Close"
 }

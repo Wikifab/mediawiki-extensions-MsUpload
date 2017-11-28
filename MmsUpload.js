@@ -638,6 +638,7 @@ var MsUpload = {
 				
 				setTimeout(function () {
 					uploader.removeFile(file);
+					file.li.remove();
 				}, 500);
 				
 			}
