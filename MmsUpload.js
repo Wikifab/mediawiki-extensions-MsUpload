@@ -276,25 +276,13 @@ var MsUpload = {
 		if ( window.msuVars.useDragDropAllContainer) {
 			dropElement = $(parentElement).attr('id');
 		}
-		/**
-		 * when using this limitation, there is no message in case of file too big,
-		 * so we allow more, and the error will be managed elsewhere
-		var maxFileSize = window.msuVars.fileUploadMaxSize;
-		if (maxFileSize) {
-			maxFileSize = maxFileSize + 'mb';
-		} else {
-			maxFileSize = '100mb';
-		}
-		*/
-		maxFileSize = '100mb';
-		//console.log('max file size ' + maxFileSize);
 
 		// Create the Uploader object
 		MsUpload.uploaders[uploaderId] = new plupload.Uploader({
 			'runtimes': 'html5,flash,silverlight,html4',
 			'browse_button': uploaderId + '-select',
 			'container': uploaderId + '-container',
-			'max_file_size': maxFileSize,
+			//'max_file_size': maxFileSize,
 			'width': 1200,
 		    'height': 1200,
 			'drop_element': dropElement,
