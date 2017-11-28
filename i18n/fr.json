@@ -29,5 +29,6 @@
 	"msu-comment": "Fichier téléversé avec MsUpload",
 	"msu-remove-image": "Supprimer l'image de la gallerie",
 	"msu-upload-error-file-too-large": "Attention, le media que vous essayez d'uploader est supérieur à la taille maximale autorisée ( $1 Mo ).",
-	"msu-upload-nbfile-exceed": "Nombre limite de fichiers par étape dépassé. Veuillez en supprimer."
+	"msu-upload-nbfile-exceed": "Nombre limite de fichiers par étape dépassé. Veuillez en supprimer.",
+	"close": "Fermer"
 }

@@ -23,5 +23,6 @@
 	"msu-dropzone": "Drop images here",
 	"msu-comment": "File uploaded with MsUpload",
 	"msu-remove-image": "Remove image from gallery",
-	"msu-upload-nbfile-exceed": "File limit per step exceeded, please remove an image before add another."
+	"msu-upload-nbfile-exceed": "File limit per step exceeded, please remove an image before add another.",
+	"close": "Close"
 }

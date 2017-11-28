@@ -111,6 +111,11 @@ class MsUpload {
 				<div class="modal-body">
 				'.wfMessage('msu-upload-error-file-too-large', $maxSize).'
 				</div>
+
+				<div class="modal-footer">
+				<a><button type="button"  class="btn btn-primary" data-dismiss="modal" aria-label="Close">'.wfMessage('close').'</button></a>
+				</div>
+
 				</div>
 				</div>
 				</div>';
