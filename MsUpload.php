@@ -9,9 +9,16 @@ $wgExtensionCredits['parserhook'][] = array(
 	'author' => array( '[mailto:wiki@ratin.de Martin Schwindl]', '[mailto:wiki@keyler-consult.de Martin Keyler]', '[https://www.mediawiki.org/wiki/User:Luis_Felipe_Schenone Luis Felipe Schenone]' ),
 );
 
-$wgResourceModules['ext.MsUpload'] = array(
+$wgResourceModules['ext.MsUploadplupload'] = array(
 	'scripts' => array(
 		'plupload/plupload.full.min.js',
+	),
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'MmsUpload',
+);
+
+$wgResourceModules['ext.MsUpload'] = array(
+	'scripts' => array(
 		'MsUpload.js',
 		'MmsUpload.js'
 	),
@@ -19,7 +26,8 @@ $wgResourceModules['ext.MsUpload'] = array(
 			'jquery.ui.draggable',
 			'jquery.ui.droppable',
 			'jquery.ui.sortable',
-			'jquery.ui.progressbar'
+			'jquery.ui.progressbar',
+			'ext.MsUploadplupload'
 	),
 	'styles' => array(
 			'MsUpload.css',
