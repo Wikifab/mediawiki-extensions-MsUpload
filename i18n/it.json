@@ -1,24 +1,33 @@
 {
 	"@metadata": {
 		"authors": [
-			"teokraba",
-			"Fringio",
-			"The Polish",
-			"F. Cosoleto",
-			"Beta16"
+			"Marc MORA",
+			"Windes",
+			"Wladek92",
+			"TomT0m",
+			"Orlodrim",
+			"Gomoko",
+			"Brenloch56",
+			"Yzelf"
 		]
 	},
-	"msu-desc": "Consente il caricamento veloce per uno o più file contemporaneamente",
-	"msu-button-title": "Seleziona files",
-	"msu-insert-link": "Inserisci link",
-	"msu-insert-gallery": "Inserisci immagini come galleria",
-	"msu-insert-image": "Inserisci come immagine",
-	"msu-insert-video": "Inserisci video",
-	"msu-cancel-upload": "Annulla caricamento",
-	"msu-clean-all": "Pulisci elenco",
-	"msu-ext-not-allowed": "Solo {{PLURAL:$1|il seguente tipo di file è permesso|i seguenti tipi di file sono permessi}}:",
-	"msu-upload-this": "Carica questo file",
-	"msu-upload-all": "Carica tutti i file",
-	"msu-dropzone": "Posiziona i file qui",
-	"msu-comment": "MsUpload"
+	"msu-desc": "Consente di caricare facilmente uno o più file contemporaneamente",
+	"msu-button-title": "Seleziona i file ",
+	"msu-insert-link": "Inserire il link ",
+	"msu-insert-gallery": "Inserire tutto come galleria ",
+	"msu-insert-files": "Inserire tutto come file ",
+	"msu-insert-links": "Inserire tutto come link ",
+	"msu-insert-image": "Inserire tutto come immagine ",
+	"msu-insert-video": "Inserire un video ",
+	"msu-cancel-upload": "Annullare il caricamento ",
+	"msu-replace-file": "Sostituire il file? ",
+	"msu-clean-all": "Eliminare l'elenco ",
+	"msu-ext-not-allowed": "Solo {{PLURAL:$1|il tipo di file seguente è consentito|i tipi di file seguente sono consentiti}} :\n",
+	"msu-upload-this": "Caricare questo file ",
+	"msu-upload-all": "Caricare tutti i file ",
+	"msu-dropzone": "Trascina qui le tue immagini",
+	"msu-comment": "File caricato con MsUpload ",
+	"msu-remove-image": "Eliminare l'immagine dalla galleria ",
+	"msu-upload-error-file-too-large": "L' immagine inviata è troppo pesante",
+	"msu-upload-nbfile-exceed": "Hai superato il numero limite di file Eliminala "
 }
