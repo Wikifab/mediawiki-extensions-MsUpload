@@ -1,24 +1,33 @@
 {
 	"@metadata": {
 		"authors": [
-			"Martin Schwindl <martin.schwindl@ratin.de>",
-			"Metalhead64"
+			"Marc MORA",
+			"Windes",
+			"Wladek92",
+			"TomT0m",
+			"Orlodrim",
+			"Gomoko",
+			"Brenloch56",
+			"Yzelf"
 		]
 	},
-	"msu-desc": "Ermöglicht einfache Uploads für eine oder mehrere Dateien gleichzeitig",
-	"msu-button-title": "Datei(en) auswählen",
-	"msu-insert-link": "als Link einfügen",
-	"msu-insert-gallery": "Alle als Gallerie einfügen",
-	"msu-insert-files": "Alle als Bild einfügen",
-	"msu-insert-links": "Alle als Link einfügen",
-	"msu-insert-image": "als Bild einfügen",
-	"msu-insert-video": "Video einfügen",
+	"msu-desc": "Ermöglicht einfache Uploads von einer oder mehreren Dateien gleichzeitig",
+	"msu-button-title": "Wähle die Dateien aus",
+	"msu-insert-link": "Link einfügen",
+	"msu-insert-gallery": "Alle zusammen als Galerie einfügen",
+	"msu-insert-files": "Alle als Dateien einfügen",
+	"msu-insert-links": "Alle als Links einfügen",
+	"msu-insert-image": "Als Bild einfügen",
+	"msu-insert-video": "Ein Video einfügen",
 	"msu-cancel-upload": "Upload abbrechen",
-	"msu-replace-file": "Datei ersetzen?",
-	"msu-clean-all": "Liste leeren",
+	"msu-replace-file": "Die Datei ersetzen?",
+	"msu-clean-all": "Löschen der Liste",
 	"msu-ext-not-allowed": "Es {{PLURAL:$1|ist nur folgender Dateityp|sind nur folgende Dateitypen}} erlaubt:",
-	"msu-upload-this": "Diese Datei hochladen",
-	"msu-upload-all": "Alle Dateien hochladen",
-	"msu-dropzone": "Datei(en) hier ablegen",
-	"msu-comment": "Datei hochgeladen mit MsUpload"
+	"msu-upload-this": "Diese Datei uploaden",
+	"msu-upload-all": "Alle Dateien uploaden",
+	"msu-dropzone": "Ziehe deine Bilder hierher",
+	"msu-comment": "Mit MsUpload hochgeladene Datei",
+	"msu-remove-image": "Das Bild aus der Galerie entfernen",
+	"msu-upload-error-file-too-large": "Dein gesendetes Bild ist zu groß",
+	"msu-upload-nbfile-exceed": "Anzahl der zulässigen Dateien je Upload überschritten. Bitte löschen."
 }

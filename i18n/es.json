@@ -1,24 +1,33 @@
 {
 	"@metadata": {
 		"authors": [
-			"Hernan Hegykozi",
-			"Macofe"
+			"Marc MORA",
+			"Windes",
+			"Wladek92",
+			"TomT0m",
+			"Orlodrim",
+			"Gomoko",
+			"Brenloch56",
+			"Yzelf"
 		]
 	},
-	"msu-desc": "Permite la subida sencilla de uno o varios archivos al mismo tiempo",
-	"msu-button-title": "Seleccionar archivos",
+	"msu-desc": "Permite subir fácilmente uno o más archivos al mismo tiempo",
+	"msu-button-title": "Seleccione los archivos",
 	"msu-insert-link": "Insertar enlace",
-	"msu-insert-gallery": "Insertar todos como una galería",
+	"msu-insert-gallery": "Insertar el conjunto como una galería",
 	"msu-insert-files": "Insertar todos como archivos",
 	"msu-insert-links": "Insertar todos como enlaces",
 	"msu-insert-image": "Insertar como imagen",
-	"msu-insert-video": "Insertar vídeo",
+	"msu-insert-video": "Insertar un vídeo",
 	"msu-cancel-upload": "Cancelar la subida",
-	"msu-replace-file": "¿Reemplazar archivo?",
-	"msu-clean-all": "Vaciar la lista",
-	"msu-ext-not-allowed": "Sólo se {{PLURAL:$1|permite el siguiente tipo|permiten los siguientes tipos}} de archivos:",
+	"msu-replace-file": "¿Reemplazar el archivo?",
+	"msu-clean-all": "Borrar la lista",
+	"msu-ext-not-allowed": "Solo {{PLURAL:$1|está permitido el siguiente tipo de archivo|están permitidos los siguientes tipos de archivos}} :",
 	"msu-upload-this": "Subir este archivo",
 	"msu-upload-all": "Subir todos los archivos",
-	"msu-dropzone": "Soltar los archivos aquí",
-	"msu-comment": "Archivo subido con MsUpload"
+	"msu-dropzone": "Arrastre sus imágenes aquí",
+	"msu-comment": "Archivo subido con MsUpload",
+	"msu-remove-image": "Eliminar imagen de la galería",
+	"msu-upload-error-file-too-large": "La imagen que envió es demasiado pesada",
+	"msu-upload-nbfile-exceed": "Número límite de archivos por paso excedido. Por favor, elimine."
 }
