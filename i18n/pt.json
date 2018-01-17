@@ -1,15 +1,33 @@
 {
 	"@metadata": {
 		"authors": [
-			"Vitorvicentevalente",
-			"Macofe",
-			"Fúlvio"
+			"Marc MORA",
+			"Windes",
+			"Wladek92",
+			"TomT0m",
+			"Orlodrim",
+			"Gomoko",
+			"Brenloch56",
+			"Yzelf"
 		]
 	},
+	"msu-desc": "Permite o upload fácil de um ou mais ficheiros ao mesmo tempo ",
+	"msu-button-title": "Selecione os ficheiros",
+	"msu-insert-link": "Inserir o link",
+	"msu-insert-gallery": "Inserir o conjunto como uma galeria",
+	"msu-insert-files": "Inserir todos como ficheiros",
+	"msu-insert-links": "Inserir todos como links",
 	"msu-insert-image": "Inserir como imagem",
-	"msu-insert-video": "Inserir vídeo",
-	"msu-cancel-upload": "Cancelar carregamento",
-	"msu-ext-not-allowed": "Apenas {{PLURAL:$1|o seguinte tipo de ficheiro é permitido|os seguintes tipos de ficheiro são permitidos}}:",
+	"msu-insert-video": "Inserir um vídeo",
+	"msu-cancel-upload": "Cancelar o upload",
+	"msu-replace-file": "Substituir o ficheiro?",
+	"msu-clean-all": "Apagar a lista",
+	"msu-ext-not-allowed": "Apenas {{PLURAL:$1|é permitido o seguinte tipo de ficheiro|são permitidos os seguintes tipos de ficheiros}}:",
 	"msu-upload-this": "Carregar este ficheiro",
-	"msu-upload-all": "Carregar todos os ficheiros"
+	"msu-upload-all": "Carregar todos os ficheiros",
+	"msu-dropzone": "Arraste para aqui as suas imagens",
+	"msu-comment": "Ficheiro carregado com o MsUpload",
+	"msu-remove-image": "Remova a imagem da galeria",
+	"msu-upload-error-file-too-large": "A imagem que enviou é muito pesada",
+	"msu-upload-nbfile-exceed": "Excedido o número limite de ficheiros por etapa. Por favor, remova."
 }
