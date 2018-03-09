@@ -132,7 +132,8 @@
 	background: url(images/msu-error.png) no-repeat 0 0;
 }
 
-.msupload-list .file .file-load {
+.msupload-list .file .file-load,
+.msupload-list .file .stl {
 	background: none;
 	cursor: pointer;
 	display: block;
@@ -142,13 +143,22 @@
 	left: 5px;
 }
 
-.msupload-div .msupload-list .file .file-load {
+.msupload-div .msupload-list .file .file-load,
+.msupload-div .msupload-list .file .stl {
     top: inherit;
     left: inherit;
     position: inherit;
     float: left;
     margin: 4px;
     border: 1Px solid #ccc;
+}
+
+.msupload-div .msupload-list .file .stl{
+	height: 30px;
+	width: 30px;
+	background-image: url(images/msu-3D.png);
+	background-size: 100%;
+	background-repeat: none;
 }
 
 .msupload-list .file .file-load canvas {
@@ -236,34 +246,64 @@
 	display:none;
 }
 
-.msuploadContainer .formmediagallery li .pfImagePreviewWrapper span.video-player {
-    background-image: url(images/msu-play-verysmall.png);
+.msuploadContainer .formmediagallery li .pfImagePreviewWrapper span.video-player,
+.msuploadContainer .formmediagallery li .pfImagePreviewWrapper span.stl-file{
     position: absolute;
     z-index: 0;
     background-repeat: no-repeat;
-    background-position: center;
     width: 100%;
     height: 100%;
 }
 
-.msuploadContainer .formmediagallery li:first-child .pfImagePreviewWrapper span.video-player {
-    background-image: url(images/msu-play-big.png);
+.msuploadContainer .formmediagallery li .pfImagePreviewWrapper span.video-player{
+	background-image: url(images/msu-play-verysmall.png);
+	background-position: center;
+}
+
+.msuploadContainer .formmediagallery li .pfImagePreviewWrapper span.stl-file{
+	background-image: url(images/msu-3D.png);
+	background-position: 2% 2%;
+	background-size: 30%;
+}
+
+.msuploadContainer .formmediagallery li:first-child .pfImagePreviewWrapper span.video-player,
+.msuploadContainer .formmediagallery li:first-child .pfImagePreviewWrapper span.stl-file {
     position: absolute;
     z-index: 0;
     background-repeat: no-repeat;
-    background-position: center;
     width: 100%;
     height: 100%;
 }
 
-#PageGallery span.video-player {
-    background-image: url(images/msu-play-small.png);
+.msuploadContainer .formmediagallery li:first-child .pfImagePreviewWrapper span.video-player{
+	background-image: url(images/msu-play-big.png);
+	background-position: center;
+}
+
+.msuploadContainer .formmediagallery li:first-child .pfImagePreviewWrapper span.stl-file{
+	background-image: url(images/msu-3D.png);
+	background-position: 2% 2%;
+	background-size: 8%;
+}
+
+#PageGallery span.video-player,
+#PageGallery span.stl-file {
     position: absolute;
     z-index: 0;
     background-repeat: no-repeat;
-    background-position: center;
     width: 100%;
     height: 100%;
+}
+
+#PageGallery span.video-player{
+	background-image: url(images/msu-play-small.png);
+	background-position: center;
+}
+
+#PageGallery span.stl-file{
+	background-image: url(images/msu-3D.png);
+	background-position: 2% 2%;
+	background-size: 16%;
 }
 
 .msupload-list .file .file-loading {
