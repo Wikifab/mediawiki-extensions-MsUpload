@@ -197,6 +197,10 @@ var MsUpload = {
 				case 'pdf':
 					file.li.type.addClass( 'pdf' );
 					break;
+
+				case 'stl':
+					file.li.type.addClass( 'stl' );
+				break;
 			}
 			MsUpload.checkUploadWarning( file.name, file.li, uploader );
 
