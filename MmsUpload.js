@@ -199,6 +199,8 @@ var MsUpload = {
 				case 'pdf':
 					file.li.type.addClass( 'pdf' );
 					break;
+				case 'stl':
+					file.li.type.addClass( 'stl' );
 			}
 			MsUpload.checkUploadWarning( file.name, file.li, uploader );
 
@@ -361,20 +363,31 @@ var MsUpload = {
 		}
 	},
 
+	isStl: function (imageurl) {
+		fileExt = imageurl.split('.').pop().toLowerCase();
+		videoExtensions = ['stl'];
+		if (videoExtensions.indexOf(fileExt) == -1) {
+			return false;
+		} else {
+			return true;
+		}
+	},
+
 	initAddExistingFile: function(uploader, filename, imageurl) {
 
 		var li = $( '<li>' ).attr('data-filename', filename).addClass( 'file' ).addClass( 'file-existing' ).appendTo( $( '#'+ uploader.uploaderId + '-list' ) );
 
 		li.filename = filename;
 		if (imageurl) {
-			if (MsUpload.isVideo(imageurl) == false ) {
-				$( '<img>' ).addClass( 'file-thumb' ).attr('src',imageurl).appendTo( li );
-				
-			} else {
+			if (MsUpload.isVideo(imageurl)) {
 				//if this is a video
 				$( '<video>' ).addClass( 'file-thumb' ).attr('src',imageurl).attr('width','100%').appendTo( li );
 				$('<span>').addClass('video-player').prependTo(li);
-
+			} else {
+				$( '<img>' ).addClass( 'file-thumb' ).attr('src',imageurl).appendTo( li );
+			}
+			if(MsUpload.isStl(filename)){
+				 $('<span>').addClass('stl-file').prependTo(li);
 			}
 		} else {
 			$( '<span>' ).addClass( 'file-type' ).appendTo( li );
@@ -705,13 +718,44 @@ var MsUpload = {
 
 				var imageUrl = result.upload.imageinfo.url;
 				if (imageUrl) {
-					if (MsUpload.isVideo(imageUrl) == false ) {
-						$( '<img>' ).addClass( 'file-thumb' ).attr('src',imageUrl).prependTo( file.li );
-					} else {
+					if (MsUpload.isVideo(imageUrl)) {
 						//if this is a video
 						$( '<video>' ).addClass( 'file-thumb' ).attr('src',imageUrl).attr('width','100%').prependTo( file.li );
 						$('<span>').addClass('video-player').prependTo(file.li);
+					} else if(MsUpload.isStl(imageUrl)){
 
+						/* The site will query the file which was uploaded and not the thumbnail 
+						(generated after the page is sent) resulting in the stl file not being properly
+						displayed. 
+						*/
+
+						//if stl, query to the db which fetch the file created on-the-fly
+						$.ajax({
+							type: "POST",
+							url: mw.util.wikiScript('api'),
+							data: {
+								iiprop: 'url',
+								action:'query',
+								format:'json',
+								titles: 'File:' + file.name,
+								iiurlwidth: '400px',
+								prop: 'imageinfo'
+							},
+						    dataType: 'json',
+						    // Function to be called if the request succeeds
+							success: function( jsondata ){
+
+								var pages = jsondata['query']['pages'];
+								for (var firstkey in pages);
+								var thumbnail = pages[firstkey]['imageinfo'][0]['thumburl'];
+								$( '<img>' ).addClass( 'file-thumb' ).attr('src', thumbnail).prependTo( file.li );
+								$('<span>').addClass('stl-file').prependTo(file.li);
+								
+								
+							}
+						});
+					} else {
+						$( '<img>' ).addClass( 'file-thumb' ).attr('src',imageUrl).prependTo( file.li );
 					}
 
 					$(file.li).find('.file-type').hide();
