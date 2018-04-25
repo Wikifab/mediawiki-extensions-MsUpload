@@ -199,6 +199,8 @@ var MsUpload = {
 				case 'pdf':
 					file.li.type.addClass( 'pdf' );
 					break;
+				case 'stl':
+					file.li.type.addClass( 'stl' );
 			}
 			MsUpload.checkUploadWarning( file.name, file.li, uploader );
 
@@ -256,7 +258,9 @@ var MsUpload = {
 			uploadList = $( '<ul>' ).attr({ 'id': uploaderId + '-list', 'class': 'msupload-list'} ),
 			bottomDiv = $( '<div>' ).attr({ 'id': uploaderId + '-bottom', 'class': 'msupload-bottom'} ).hide(),
 			loadingButton = $( '<i>' ).attr({ 'id': uploaderId + '-loading-button', 'class': 'msupload-loading-button fa fa-spinner fa-spin fa-1x fa-fw'} ).hide(),
-			startButton = $( '<a>' ).attr({ 'id': uploaderId + '-files', 'class': 'msupload-files'} ).hide(),
+			uploadBtn = $( '<i>' ).attr({ 'id': uploaderId + '-upload-btn', 'class': 'msupload-upload-btn fa fa-upload'} ),
+			txtUploadBtn = $( '<span>' ).attr({ 'id': uploaderId + '-txt-upload-btn', 'class': 'msupload-txt-upload-btn'} );
+			startButton = $( '<a>' ).attr({ 'id': uploaderId + '-files', 'class': 'btn btn-primary'} ).hide(),
 			cleanAll = $( '<a>' ).attr({ 'id': uploaderId + '-clean-all', 'class': 'msupload-clean-all'} ).text( mw.msg( 'msu-clean-all' ) ).hide(),
 			galleryInsert = $( '<a>' ).attr({ 'id': uploaderId + '-insert-gallery', 'class': 'msupload-insert-gallery'} ).hide(),
 			filesInsert = $( '<a>' ).attr({ 'id': uploaderId + '-insert-files', 'class': 'msupload-insert-files'} ).hide(),
@@ -264,7 +268,9 @@ var MsUpload = {
 			uploadDrop = $( '<div>' ).attr({ 'id': uploaderId + '-dropzone' , 'class': 'msupload-dropzone'}).text(mw.msg( 'msu-dropzone' )).hide();
 
 		// Add them to the DOM
-		bottomDiv.append( loadingButton, startButton );
+		startButton.append(loadingButton, uploadBtn, txtUploadBtn);
+		bottomDiv.append( startButton );
+		console.log(startButton);
 		//bottomDiv.append( galleryInsert, filesInsert, linksInsert, cleanAll );
 		uploadDiv.append( statusDiv, uploadDrop, uploadList, bottomDiv );
 		uploadDrop.prepend( uploadButton );
@@ -361,20 +367,31 @@ var MsUpload = {
 		}
 	},
 
+	isStl: function (imageurl) {
+		fileExt = imageurl.split('.').pop().toLowerCase();
+		videoExtensions = ['stl'];
+		if (videoExtensions.indexOf(fileExt) == -1) {
+			return false;
+		} else {
+			return true;
+		}
+	},
+
 	initAddExistingFile: function(uploader, filename, imageurl) {
 
 		var li = $( '<li>' ).attr('data-filename', filename).addClass( 'file' ).addClass( 'file-existing' ).appendTo( $( '#'+ uploader.uploaderId + '-list' ) );
 
 		li.filename = filename;
 		if (imageurl) {
-			if (MsUpload.isVideo(imageurl) == false ) {
-				$( '<img>' ).addClass( 'file-thumb' ).attr('src',imageurl).appendTo( li );
-				
-			} else {
+			if (MsUpload.isVideo(imageurl)) {
 				//if this is a video
 				$( '<video>' ).addClass( 'file-thumb' ).attr('src',imageurl).attr('width','100%').appendTo( li );
 				$('<span>').addClass('video-player').prependTo(li);
-
+			} else {
+				$( '<img>' ).addClass( 'file-thumb' ).attr('src',imageurl).appendTo( li );
+			}
+			if(MsUpload.isStl(filename)){
+				 $('<span>').addClass('stl-file').prependTo(li);
 			}
 		} else {
 			$( '<span>' ).addClass( 'file-type' ).appendTo( li );
@@ -666,6 +683,7 @@ var MsUpload = {
 			'format': 'json'
 		}; // Set multipart_params
 		$( '#' + file.id + ' .file-progress-state' ).text( '0%' );
+		$( '#'+ uploader.uploaderId + '-upload-btn' ).hide();
 		$( '#'+ uploader.uploaderId + '-loading-button' ).show();
 	},
 
@@ -694,6 +712,7 @@ var MsUpload = {
 			if ( result.error ) {
 				errorMessage = result.error.info;
 				errorCode = result.error.code;
+				console.log(errorMessage);
 				if(mw.msg( 'msu-upload-error-' + errorCode ).substring(0, 1) != '<' ) {
 					errorMessage = mw.msg( 'msu-upload-error-' + errorCode );
 				}
@@ -705,13 +724,44 @@ var MsUpload = {
 
 				var imageUrl = result.upload.imageinfo.url;
 				if (imageUrl) {
-					if (MsUpload.isVideo(imageUrl) == false ) {
-						$( '<img>' ).addClass( 'file-thumb' ).attr('src',imageUrl).prependTo( file.li );
-					} else {
+					if (MsUpload.isVideo(imageUrl)) {
 						//if this is a video
 						$( '<video>' ).addClass( 'file-thumb' ).attr('src',imageUrl).attr('width','100%').prependTo( file.li );
 						$('<span>').addClass('video-player').prependTo(file.li);
+					} else if(MsUpload.isStl(imageUrl)){
 
+						/* The site will query the file which was uploaded and not the thumbnail 
+						(generated after the page is sent) resulting in the stl file not being properly
+						displayed. 
+						*/
+
+						//if stl, query to the db which fetch the file created on-the-fly
+						$.ajax({
+							type: "POST",
+							url: mw.util.wikiScript('api'),
+							data: {
+								iiprop: 'url',
+								action:'query',
+								format:'json',
+								titles: 'File:' + file.name,
+								iiurlwidth: '400px',
+								prop: 'imageinfo'
+							},
+						    dataType: 'json',
+						    // Function to be called if the request succeeds
+							success: function( jsondata ){
+
+								var pages = jsondata['query']['pages'];
+								for (var firstkey in pages);
+								var thumbnail = pages[firstkey]['imageinfo'][0]['thumburl'];
+								$( '<img>' ).addClass( 'file-thumb' ).attr('src', thumbnail).prependTo( file.li );
+								$('<span>').addClass('stl-file').prependTo(file.li);
+								
+								
+							}
+						});
+					} else {
+						$( '<img>' ).addClass( 'file-thumb' ).attr('src',imageUrl).prependTo( file.li );
 					}
 
 					$(file.li).find('.file-type').hide();
@@ -738,6 +788,7 @@ var MsUpload = {
 		uploader.removeFile( file ); // For preventing a second upload afterwards
 
 		$( '#'+ uploader.uploaderId + '-loading-button' ).hide();
+		$( '#'+ uploader.uploaderId + '-upload-btn' ).show();
 	},
 
 	addImageToFormsInputs: function (uploader, file) {
@@ -785,9 +836,11 @@ var MsUpload = {
 		if ( filesLength ) {
 			$( '#'+ uploader.uploaderId + '-bottom' ).show();
 			if ( filesLength === 1 ) {
-				$( '#'+ uploader.uploaderId + '-files' ).text( mw.msg( 'msu-upload-this' ) ).show();
+				$( '#'+ uploader.uploaderId + '-txt-upload-btn' ).text(mw.msg( 'msu-upload-this' ));
+				$( '#'+ uploader.uploaderId + '-files' ).show();
 			} else {
-				$( '#'+ uploader.uploaderId + '-files' ).text( mw.msg( 'msu-upload-all' ) ).show();
+				$( '#'+ uploader.uploaderId + '-txt-upload-btn' ).text(mw.msg( 'msu-upload-all' ));
+				$( '#'+ uploader.uploaderId + '-files' ).show();
 			}
 		} else {
 			$( '#'+ uploader.uploaderId + '-files' ).hide();
