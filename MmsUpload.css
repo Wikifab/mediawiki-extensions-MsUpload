@@ -345,15 +345,19 @@
 }
 
 .msupload-bottom {
-	padding: 9px 0px 5px;
 	float: left;
 	transition: all ease .15s;
+	padding: 10px;
+    width: 100%;
 }
 
 .msupload-bottom a {
-	color: white;
-	font-weight: bold;
-	margin-right: 20px;
+    width: 100%;
+    padding: 6px 12px 6px 9px;
+}
+
+.msupload-bottom a .fa {
+    width:23px;
 }
 
 .msupload-bottom .msupload-files {
