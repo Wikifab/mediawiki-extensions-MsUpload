@@ -258,7 +258,9 @@ var MsUpload = {
 			uploadList = $( '<ul>' ).attr({ 'id': uploaderId + '-list', 'class': 'msupload-list'} ),
 			bottomDiv = $( '<div>' ).attr({ 'id': uploaderId + '-bottom', 'class': 'msupload-bottom'} ).hide(),
 			loadingButton = $( '<i>' ).attr({ 'id': uploaderId + '-loading-button', 'class': 'msupload-loading-button fa fa-spinner fa-spin fa-1x fa-fw'} ).hide(),
-			startButton = $( '<a>' ).attr({ 'id': uploaderId + '-files', 'class': 'msupload-files'} ).hide(),
+			uploadBtn = $( '<i>' ).attr({ 'id': uploaderId + '-upload-btn', 'class': 'msupload-upload-btn fa fa-upload'} ),
+			txtUploadBtn = $( '<span>' ).attr({ 'id': uploaderId + '-txt-upload-btn', 'class': 'msupload-txt-upload-btn'} );
+			startButton = $( '<a>' ).attr({ 'id': uploaderId + '-files', 'class': 'btn btn-primary'} ).hide(),
 			cleanAll = $( '<a>' ).attr({ 'id': uploaderId + '-clean-all', 'class': 'msupload-clean-all'} ).text( mw.msg( 'msu-clean-all' ) ).hide(),
 			galleryInsert = $( '<a>' ).attr({ 'id': uploaderId + '-insert-gallery', 'class': 'msupload-insert-gallery'} ).hide(),
 			filesInsert = $( '<a>' ).attr({ 'id': uploaderId + '-insert-files', 'class': 'msupload-insert-files'} ).hide(),
@@ -266,7 +268,9 @@ var MsUpload = {
 			uploadDrop = $( '<div>' ).attr({ 'id': uploaderId + '-dropzone' , 'class': 'msupload-dropzone'}).text(mw.msg( 'msu-dropzone' )).hide();
 
 		// Add them to the DOM
-		bottomDiv.append( loadingButton, startButton );
+		startButton.append(loadingButton, uploadBtn, txtUploadBtn);
+		bottomDiv.append( startButton );
+		console.log(startButton);
 		//bottomDiv.append( galleryInsert, filesInsert, linksInsert, cleanAll );
 		uploadDiv.append( statusDiv, uploadDrop, uploadList, bottomDiv );
 		uploadDrop.prepend( uploadButton );
@@ -679,6 +683,7 @@ var MsUpload = {
 			'format': 'json'
 		}; // Set multipart_params
 		$( '#' + file.id + ' .file-progress-state' ).text( '0%' );
+		$( '#'+ uploader.uploaderId + '-upload-btn' ).hide();
 		$( '#'+ uploader.uploaderId + '-loading-button' ).show();
 	},
 
@@ -707,6 +712,7 @@ var MsUpload = {
 			if ( result.error ) {
 				errorMessage = result.error.info;
 				errorCode = result.error.code;
+				console.log(errorMessage);
 				if(mw.msg( 'msu-upload-error-' + errorCode ).substring(0, 1) != '<' ) {
 					errorMessage = mw.msg( 'msu-upload-error-' + errorCode );
 				}
@@ -782,6 +788,7 @@ var MsUpload = {
 		uploader.removeFile( file ); // For preventing a second upload afterwards
 
 		$( '#'+ uploader.uploaderId + '-loading-button' ).hide();
+		$( '#'+ uploader.uploaderId + '-upload-btn' ).show();
 	},
 
 	addImageToFormsInputs: function (uploader, file) {
@@ -829,9 +836,11 @@ var MsUpload = {
 		if ( filesLength ) {
 			$( '#'+ uploader.uploaderId + '-bottom' ).show();
 			if ( filesLength === 1 ) {
-				$( '#'+ uploader.uploaderId + '-files' ).text( mw.msg( 'msu-upload-this' ) ).show();
+				$( '#'+ uploader.uploaderId + '-txt-upload-btn' ).text(mw.msg( 'msu-upload-this' ));
+				$( '#'+ uploader.uploaderId + '-files' ).show();
 			} else {
-				$( '#'+ uploader.uploaderId + '-files' ).text( mw.msg( 'msu-upload-all' ) ).show();
+				$( '#'+ uploader.uploaderId + '-txt-upload-btn' ).text(mw.msg( 'msu-upload-all' ));
+				$( '#'+ uploader.uploaderId + '-files' ).show();
 			}
 		} else {
 			$( '#'+ uploader.uploaderId + '-files' ).hide();
