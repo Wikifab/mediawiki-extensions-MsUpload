@@ -35,6 +35,14 @@ var MsUpload = {
 
 	unconfirmedReplacements: 0,
 	warningText: function ( fileItem, warning, uploader ) {
+
+		console.log('fileItem');
+		console.log(fileItem);
+		console.log(uploader.files[0]);
+		console.log(uploader.files[4]);
+		console.log('uploader');
+		console.log(uploader);
+
 		switch ( warning ) {
 			case '':
 			case '&nbsp;':
@@ -73,6 +81,94 @@ var MsUpload = {
 				if ( window.msuVars.confirmReplace ) {
 
 					MsUpload.unconfirmedReplacements++;
+
+					var file = uploader.files[uploader.files.length - 1];
+
+					var contextualFragment = document.createRange().createContextualFragment(file.li.warning.get(0).innerHTML);
+					var old_image = contextualFragment.querySelector('img');
+
+					$modal = $('#msUploadModal-2');
+
+					$modal_body = '';
+					$modal_body += '<div class="msu-conflicting-images">';
+					$modal_body += '<div class="msu-old-image"><span>Fichier existant</span><div class="description"><div class="file-title">' + file.name + '</div></div>' + old_image.outerHTML + '</div>';
+					$modal_body += '<div class="msu-new-image"><span>Nouveau fichier</span><div class="description"><div class="file-title">' + file.name + '</div></div></div>';
+					$modal_body += '</div>';
+					$modal_body += '<div class="actions">';
+					$modal_body += '<span>Que voulez vous faire ?</span>';
+					$modal_body += '<div class="">';
+					$modal_body += '<input type="radio" name="option" value="replace"> <label for="">Remplacer</label><br>';
+					$modal_body += '<input type="radio" name="option" value="rename"> <label for="">Téléverser avec un autre nom</label><br>';
+					$modal_body += '<input type="radio" name="option" value="ignore"> <label for="">Ignorer ce fichier</label><br>';
+					if (MsUpload.unconfirmedReplacements > 1){
+						$modal_body += '<p class="apply-to-all">Appliquer ce choix pour les ' + (MsUpload.unconfirmedReplacements - 1) + ' prochain(s) conflit(s)</p>';
+					}
+					$modal_body += '</div>';
+					$modal_body += '</div>';
+
+					$modal_footer = '';
+					$modal_footer += '<a><button id="msu-conflicting-images-confirm" type="button"  class="btn btn-primary">Valider</button></a>';
+
+					var currentItem = uploader.files.length - 1;
+
+					$('#msUploadModal-2').find('#msu-conflicting-images-confirm').click( function ( event ) {
+
+						currentItem--;
+
+						if ( currentItem === -1 ){
+							$('#msUploadModal-2').modal('hide');
+							return;
+						}
+
+						var file = uploader.files[ currentItem ];
+
+						var contextualFragment = document.createRange().createContextualFragment(file.li.warning.get(0).innerHTML);
+						var old_image = contextualFragment.querySelector('img');
+
+						$modal = $('#msUploadModal-2');
+
+						$modal_body = '';
+						$modal_body += '<div class="msu-conflicting-images">';
+						$modal_body += '<div class="msu-old-image"><span>Fichier existant</span><div class="description"><div class="file-title">' + file.name + '</div></div>' + old_image.outerHTML + '</div>';
+						$modal_body += '<div class="msu-new-image"><span>Nouveau fichier</span><div class="description"><div class="file-title">' + file.name + '</div></div></div>';
+						$modal_body += '</div>';
+						$modal_body += '<div class="actions">';
+						$modal_body += '<span>Que voulez vous faire ?</span>';
+						$modal_body += '<div class="">';
+						$modal_body += '<input type="radio" name="option" value="replace"> <label for="">Remplacer</label><br>';
+						$modal_body += '<input type="radio" name="option" value="rename"> <label for="">Téléverser avec un autre nom</label><br>';
+						$modal_body += '<input type="radio" name="option" value="ignore"> <label for="">Ignorer ce fichier</label><br>';
+						if (MsUpload.unconfirmedReplacements > 1){
+							$modal_body += '<p class="apply-to-all">Appliquer ce choix pour les ' + (MsUpload.unconfirmedReplacements - 1) + ' prochain(s) conflit(s)</p>';
+						}
+						$modal_body += '</div>';
+						$modal_body += '</div>';
+
+						$('#msUploadModal-2').find('.modal-body').html($modal_body);
+					});
+
+					if (fileItem.get(0).id === uploader.files[uploader.files.length - 1].id){
+
+						$('#msUploadModal-2').find('.modal-body').html($modal_body);
+
+						$('#msUploadModal-2').find('.modal-footer').html($modal_footer);
+					}
+
+					var new_file = $('#msUploadModal-2').find( '.msu-new-image' );
+
+					var new_image = new o.Image();
+
+					new_image.onload = function () {
+						this.embed( new_file.get( 0 ), {
+							width: 150,
+							height: 150,
+							crop: false
+						});
+					};
+
+					new_image.load( file.getSource() );
+
+					$('#msUploadModal-2').modal('show');
 
 					var title = $( fileItem.warning ).siblings( '.file-name' );
 
@@ -185,6 +281,9 @@ var MsUpload = {
 							});
 						};
 						image.load( file.getSource() );
+						console.log("checkextension image");
+						console.log(image);
+						console.log(image.size);
 						file.li.type.addClass( 'file-load' );
 					} catch ( event ) {
 						file.li.type.addClass( 'image' );
@@ -605,6 +704,9 @@ var MsUpload = {
 		//console.log('MmsUpload.onFileAdded');
 		$.each( files, function ( i, file ) {
 
+			console.log("onFilesAdded - file");
+			console.log(file);
+
 			
 			if (mw.config.get('wgPageName') != 'TestUploadPage') {
 				// remove specialChars
@@ -614,6 +716,8 @@ var MsUpload = {
 				// remove start of url if on creation page (keep only the string after the last '/')
 				// and change ":" in case a page in a namespace (ex Group:toto)
 				file.name = mw.config.get('wgPageName').replace(/(.*)\//g,"").replace(":","-") + '_' + file.name;
+				console.log("onFilesAdded - file (name)");
+				console.log(file);
 			}
 
 			// iOS6 by SLBoat
