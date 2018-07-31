@@ -36,13 +36,6 @@ var MsUpload = {
 	unconfirmedReplacements: 0,
 	warningText: function ( fileItem, warning, uploader ) {
 
-		console.log('fileItem');
-		console.log(fileItem);
-		console.log(uploader.files[0]);
-		console.log(uploader.files[4]);
-		console.log('uploader');
-		console.log(uploader);
-
 		switch ( warning ) {
 			case '':
 			case '&nbsp;':
@@ -77,84 +70,182 @@ var MsUpload = {
 					$( fileItem.warning ).find( 'div.thumb' ).hide();
 				});
 
-				// If a file with the same name already exists, add a checkbox to confirm the replacement
-				if ( window.msuVars.confirmReplace ) {
+				var getModal = function(){
+					return `<div class="modal fade" id="msu-conflicting-imgs" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						<div class="modal-dialog" role="document">
+						<div class="modal-content">
+						<div class="modal-header">` 
+						+ 
+						mw.msg( 'mmsupload-conflicting-imgs-modal-header' ) + `
+						</div>
+						<div class="modal-body">
+						</div>
 
-					MsUpload.unconfirmedReplacements++;
+						<div class="modal-footer">
+						</div>
 
-					var file = uploader.files[uploader.files.length - 1];
+						</div>
+						</div>
+						</div>`;
+				}
+
+				var getNextConflictingImage = function(file) {
 
 					var contextualFragment = document.createRange().createContextualFragment(file.li.warning.get(0).innerHTML);
 					var old_image = contextualFragment.querySelector('img');
 
-					$modal = $('#msUploadModal-2');
+					$modal = $('#msu-conflicting-imgs');
 
 					$modal_body = '';
 					$modal_body += '<div class="msu-conflicting-images">';
-					$modal_body += '<div class="msu-old-image"><span>Fichier existant</span><div class="description"><div class="file-title">' + file.name + '</div></div>' + old_image.outerHTML + '</div>';
-					$modal_body += '<div class="msu-new-image"><span>Nouveau fichier</span><div class="description"><div class="file-title">' + file.name + '</div></div></div>';
+					$modal_body += '<div class="msu-old-image"><span>' + mw.message('mmsupload-conflicting-imgs-modal-old-image-label').escaped() + '</span><div class="description"><div class="file-title">' + file.name + '</div></div>' + old_image.outerHTML + '</div>';
+					$modal_body += '<div class="msu-new-image"><span>' + mw.message('mmsupload-conflicting-imgs-modal-new-image-label').escaped() + '</span><div class="description"><div class="file-title">' + file.name + '</div></div></div>';
 					$modal_body += '</div>';
-					$modal_body += '<div class="actions">';
-					$modal_body += '<span>Que voulez vous faire ?</span>';
+					$modal_body += '<form id="msu-conflicting-images-actions">';
+					$modal_body += '<span>' + mw.message('mmsupload-conflicting-imgs-modal-whattodo').escaped() + '</span>';
 					$modal_body += '<div class="">';
-					$modal_body += '<input type="radio" name="option" value="replace"> <label for="">Remplacer</label><br>';
-					$modal_body += '<input type="radio" name="option" value="rename"> <label for="">Téléverser avec un autre nom</label><br>';
-					$modal_body += '<input type="radio" name="option" value="ignore"> <label for="">Ignorer ce fichier</label><br>';
+					$modal_body += '<input type="radio" name="option" value="replace" checked> <label for="">' + mw.msg('mmsupload-conflicting-imgs-modal-option-replace') + '</label><br>';
+					$modal_body += '<input id="msu-conflicting-images-new-file-name" type="radio" name="option" value="rename"> <label for="">' + mw.msg('mmsupload-conflicting-imgs-modal-option-rename') + '</label><br>';
+					$modal_body += '<div id="msu-conflicting-images-new-file-name-input" style="display: none;"><label for="">' + mw.msg('mmsupload-conflicting-imgs-modal-option-rename-input-label') + '</label><input type="text" name="option" value=""></div><br>';
+					$modal_body += '<input type="radio" name="option" value="ignore"> <label for="">' + mw.msg('mmsupload-conflicting-imgs-modal-option-ignore') + '</label><br>';
 					if (MsUpload.unconfirmedReplacements > 1){
-						$modal_body += '<p class="apply-to-all">Appliquer ce choix pour les ' + (MsUpload.unconfirmedReplacements - 1) + ' prochain(s) conflit(s)</p>';
+						$modal_body += '<p class="apply-to-all">' + mw.message( 'mmsupload-conflicting-imgs-modal-applytoall', (MsUpload.unconfirmedReplacements - 1) ).escaped() + '</p><input type="checkbox" name="apply-to-all">';
 					}
+					$modal_body += '</form>';
 					$modal_body += '</div>';
+
+					$('#msu-conflicting-imgs').find('.modal-body').html($modal_body);
+
+					var new_file = $('#msu-conflicting-imgs').find( '.msu-new-image' );
+
+					var new_image = new o.Image();
+
+					new_image.onload = function () {
+						this.embed( new_file.get( 0 ), {
+							width: 150,
+							height: 150,
+							crop: false
+						});
+					};
+
+					new_image.load( file.getSource() ); //get the thumbnail
+				};
+
+				var confirm = function(applyToAll){
+
+					var oRadio = document.getElementById("msu-conflicting-images-actions").elements['option'];
+					var selectedOption = 0;
+
+					for(var i = 0; i < oRadio.length; i++)
+					{
+						if(oRadio[i].checked)
+						{
+							selectedOption = oRadio[i].value;
+						}
+					}
+
+					if (selectedOption){
+						var file = uploader.files[ MsUpload.unconfirmedReplacements - 1 ];
+						switch (selectedOption) {
+						  case 'replace':
+						    break;
+						  case 'ignore':
+						  	uploader.removeFile( file );
+							if ( file.group === 'image' ) {
+								var index = $.inArray( file.name, MsUpload.galleryArray );
+								if ( index !== -1 ) {
+									MsUpload.galleryArray.splice( index, 1 );
+								}
+							}
+							file.li.fadeOut( 'fast', function () {
+								$( this ).remove();
+							});
+						  	break;
+						  case 'rename':
+						  	var value = $('#msu-conflicting-images-new-file-name-input').find('input').get(0).value;
+						  	if (!value){
+						  		$('#msu-conflicting-images-new-file-name-input').find('input').css('border', '1px solid red');
+						  		return;
+						  	}
+
+						  	file.name = value + '.' + file.extension;
+							//$( this ).prev().text( file.name );
+							MsUpload.checkUploadWarning( value, file.li, uploader );
+
+						    break;
+						  default:
+						}
+
+						MsUpload.unconfirmedReplacements--;
+
+						if ((MsUpload.unconfirmedReplacements - 1) < 0){
+							$('#msu-conflicting-imgs').modal('hide');
+							if(uploader.files.length > 0) uploader.start();
+							return;
+						}
+
+						//options for which apply for all are allowed
+						var allowedATA = ["replace", "ignore"];
+
+						if(applyToAll && (allowedATA.indexOf(selectedOption) > -1)){
+							//reiterate
+							$('#msu-conflicting-images-confirm').click();
+							return;
+						}
+
+						var file = uploader.files[ MsUpload.unconfirmedReplacements - 1 ];
+						getNextConflictingImage( file );
+					}
+				}
+
+				// If a file with the same name already exists, add a checkbox to confirm the replacement
+				if ( window.msuVars.confirmReplace ) {
+
+					if (!$('#msu-conflicting-imgs').length){
+						$('#mw-content-text').prepend(getModal());
+					}
+
+					MsUpload.unconfirmedReplacements++;
+
+					var file = uploader.files[MsUpload.unconfirmedReplacements - 1];
+
+					var contextualFragment = document.createRange().createContextualFragment(file.li.warning.get(0).innerHTML);
+
+					var old_image = contextualFragment.querySelector('img');
+
+					$modal = $('#msu-conflicting-imgs');
+
+					$modal_body = '';
+					$modal_body += '<div class="msu-conflicting-images">';
+					$modal_body += '<div class="msu-old-image"><span>' + mw.message('mmsupload-conflicting-imgs-modal-old-image-label').escaped() + '</span><div class="description"><div class="file-title">' + file.name + '</div></div>' + old_image.outerHTML + '</div>';
+					$modal_body += '<div class="msu-new-image"><span>' + mw.message('mmsupload-conflicting-imgs-modal-new-image-label').escaped() + '</span><div class="description"><div class="file-title">' + file.name + '</div></div></div>';
 					$modal_body += '</div>';
+					$modal_body += '<form id="msu-conflicting-images-actions">';
+					$modal_body += '<span>' + mw.message('mmsupload-conflicting-imgs-modal-whattodo').escaped() + '</span>';
+					$modal_body += '<div class="">';
+					$modal_body += '<input type="radio" name="option" value="replace" checked> <label for="">' + mw.msg('mmsupload-conflicting-imgs-modal-option-replace') + '</label><br>';
+					$modal_body += '<input id="msu-conflicting-images-new-file-name" type="radio" name="option" value="rename"> <label for="">' + mw.msg('mmsupload-conflicting-imgs-modal-option-rename') + '</label><br>';
+					$modal_body += '<div id="msu-conflicting-images-new-file-name-input" style="display: none;"><label for="">' + mw.msg('mmsupload-conflicting-imgs-modal-option-rename-input-label') + '</label><input type="text" name="option" value=""></div><br>';
+					$modal_body += '<input type="radio" name="option" value="ignore"> <label for="">' + mw.msg('mmsupload-conflicting-imgs-modal-option-ignore') + '</label><br>';
+					if (MsUpload.unconfirmedReplacements > 1){
+						$modal_body += '<p class="apply-to-all">' + mw.message( 'mmsupload-conflicting-imgs-modal-applytoall', (MsUpload.unconfirmedReplacements - 1) ).escaped() + '</p><input type="checkbox" name="apply-to-all">';
+					}
+					$modal_body += '</form>';
+					$modal_body += '</div>';
+
+					$('#msu-conflicting-imgs').find('.modal-body').html($modal_body);
 
 					$modal_footer = '';
 					$modal_footer += '<a><button id="msu-conflicting-images-confirm" type="button"  class="btn btn-primary">Valider</button></a>';
 
-					var currentItem = uploader.files.length - 1;
+					$('#msu-conflicting-imgs').find('.modal-footer').html($modal_footer);
 
-					$('#msUploadModal-2').find('#msu-conflicting-images-confirm').click( function ( event ) {
+					$('#msu-conflicting-images-confirm').click( function( event ) {
+						var applyToAll = document.getElementById("msu-conflicting-images-actions").elements['apply-to-all'];
+						applyToAll && applyToAll.checked ? confirm( true ) : confirm();
+					} );
 
-						currentItem--;
-
-						if ( currentItem === -1 ){
-							$('#msUploadModal-2').modal('hide');
-							return;
-						}
-
-						var file = uploader.files[ currentItem ];
-
-						var contextualFragment = document.createRange().createContextualFragment(file.li.warning.get(0).innerHTML);
-						var old_image = contextualFragment.querySelector('img');
-
-						$modal = $('#msUploadModal-2');
-
-						$modal_body = '';
-						$modal_body += '<div class="msu-conflicting-images">';
-						$modal_body += '<div class="msu-old-image"><span>Fichier existant</span><div class="description"><div class="file-title">' + file.name + '</div></div>' + old_image.outerHTML + '</div>';
-						$modal_body += '<div class="msu-new-image"><span>Nouveau fichier</span><div class="description"><div class="file-title">' + file.name + '</div></div></div>';
-						$modal_body += '</div>';
-						$modal_body += '<div class="actions">';
-						$modal_body += '<span>Que voulez vous faire ?</span>';
-						$modal_body += '<div class="">';
-						$modal_body += '<input type="radio" name="option" value="replace"> <label for="">Remplacer</label><br>';
-						$modal_body += '<input type="radio" name="option" value="rename"> <label for="">Téléverser avec un autre nom</label><br>';
-						$modal_body += '<input type="radio" name="option" value="ignore"> <label for="">Ignorer ce fichier</label><br>';
-						if (MsUpload.unconfirmedReplacements > 1){
-							$modal_body += '<p class="apply-to-all">Appliquer ce choix pour les ' + (MsUpload.unconfirmedReplacements - 1) + ' prochain(s) conflit(s)</p>';
-						}
-						$modal_body += '</div>';
-						$modal_body += '</div>';
-
-						$('#msUploadModal-2').find('.modal-body').html($modal_body);
-					});
-
-					if (fileItem.get(0).id === uploader.files[uploader.files.length - 1].id){
-
-						$('#msUploadModal-2').find('.modal-body').html($modal_body);
-
-						$('#msUploadModal-2').find('.modal-footer').html($modal_footer);
-					}
-
-					var new_file = $('#msUploadModal-2').find( '.msu-new-image' );
+					var new_file = $('#msu-conflicting-imgs').find( '.msu-new-image' );
 
 					var new_image = new o.Image();
 
@@ -168,7 +259,13 @@ var MsUpload = {
 
 					new_image.load( file.getSource() );
 
-					$('#msUploadModal-2').modal('show');
+					//the only way to close the modal should be by clicking on confirm
+					$('#msu-conflicting-imgs').modal({
+						backdrop: 'static',
+  						keyboard: false
+					});
+
+					$('#msu-conflicting-imgs').modal('show');
 
 					var title = $( fileItem.warning ).siblings( '.file-name' );
 
@@ -281,9 +378,6 @@ var MsUpload = {
 							});
 						};
 						image.load( file.getSource() );
-						console.log("checkextension image");
-						console.log(image);
-						console.log(image.size);
 						file.li.type.addClass( 'file-load' );
 					} catch ( event ) {
 						file.li.type.addClass( 'image' );
@@ -369,7 +463,6 @@ var MsUpload = {
 		// Add them to the DOM
 		startButton.append(loadingButton, uploadBtn, txtUploadBtn);
 		bottomDiv.append( startButton );
-		console.log(startButton);
 		//bottomDiv.append( galleryInsert, filesInsert, linksInsert, cleanAll );
 		uploadDiv.append( statusDiv, uploadDrop, uploadList, bottomDiv );
 		uploadDrop.prepend( uploadButton );
@@ -816,7 +909,6 @@ var MsUpload = {
 			if ( result.error ) {
 				errorMessage = result.error.info;
 				errorCode = result.error.code;
-				console.log(errorMessage);
 				if(mw.msg( 'msu-upload-error-' + errorCode ).substring(0, 1) != '<' ) {
 					errorMessage = mw.msg( 'msu-upload-error-' + errorCode );
 				}

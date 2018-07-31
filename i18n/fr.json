@@ -31,5 +31,14 @@
 	"msu-messagetitle-file-too-large" : "Le fichier dépasse la taille autorisée !",
 	"msu-upload-error-file-too-large": "Attention, le media que vous essayez d'uploader est supérieur à la taille maximale autorisée ( $1 Mo ).",
 	"msu-upload-nbfile-exceed": "Nombre limite de fichiers par étape dépassé. Veuillez en supprimer.",
-	"close": "Fermer"
+	"close": "Fermer",
+	"mmsupload-conflicting-imgs-modal-header" : "Un fichier avec le même nom existe déjà",
+	"mmsupload-conflicting-imgs-modal-old-image-label" : "Fichier existant",
+	"mmsupload-conflicting-imgs-modal-new-image-label" : "Nouveau fichier",
+	"mmsupload-conflicting-imgs-modal-whattodo" : "Que voulez-vous faire ?",
+	"mmsupload-conflicting-imgs-modal-option-replace" : "Remplacer",
+	"mmsupload-conflicting-imgs-modal-option-rename" : "Téléverser avec un autre nom",
+	"mmsupload-conflicting-imgs-modal-option-rename-input-label" : "Nouveau nom",
+	"mmsupload-conflicting-imgs-modal-option-ignore": "Ignorer ce fichier",
+	"mmsupload-conflicting-imgs-modal-applytoall": "Appliquer ce choix pour les $1 prochains conflits"
 }
