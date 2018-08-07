@@ -266,24 +266,23 @@
 	background-size: 38px;
 }
 
-.msuploadContainer .formmediagallery li:first-child .pfImagePreviewWrapper span.video-player,
-.msuploadContainer .formmediagallery li:first-child .pfImagePreviewWrapper span.stl-file {
-    position: absolute;
-    z-index: 0;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 100%;
+.msuploadContainer .formmediagallery {
+	min-height: 250px;
 }
 
-.msuploadContainer .formmediagallery li:first-child .pfImagePreviewWrapper span.video-player{
-	background-image: url(images/msu-play-big.png);
-	background-position: center;
+.msuploadContainer.msuploadContainerTall,
+.msuploadContainer.msuploadContainerMedium {
+    float:left;
+    width:100%;
+    padding-bottom: 0px;
 }
 
-.msuploadContainer .formmediagallery li:first-child .pfImagePreviewWrapper span.stl-file{
-	background-image: url(images/msu-3D.png);
-	margin: 5px;
-	background-size: auto;
+.msuploadContainer.msuploadContainerTall .formmediagallery {
+    min-height: 220px;
+}
+
+.msuploadContainer.msuploadContainerMedium .formmediagallery {
+    min-height: 162px;
 }
 
 #PageGallery span.video-player,
