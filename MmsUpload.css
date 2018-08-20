@@ -281,8 +281,12 @@
     min-height: 220px;
 }
 
-.msuploadContainer.msuploadContainerMedium .formmediagallery {
-    min-height: 162px;
+.msuploadContainer.msuploadContainerTall .formmediagallery li,
+.msuploadContainer.msuploadContainerTall .formmediagallery li img,
+.msuploadContainer.msuploadContainerTall .formmediagallery div.add-new-file-slot {
+    min-height: 220px;
+    width:100%;
+    margin: 0;
 }
 
 #PageGallery span.video-player,
