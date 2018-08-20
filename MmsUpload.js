@@ -1219,25 +1219,23 @@ var ConflictingFilesModal = {
 				</div>
 				<form class="actions">
 					<div class="text">` + mw.message('mmsupload-conflicting-imgs-modal-whattodo').escaped() + `</div>
-					
+					<input type="radio" name="option" id="replace-o" value="replace" checked> <label for="replace-o">` + mw.msg('mmsupload-conflicting-imgs-modal-option-replace') + `</label><br>
+					<div class="rename-container">
+						<input id="rename-o" type="radio" name="option" value="rename"> <label for="rename-o">` + mw.msg('mmsupload-conflicting-imgs-modal-option-rename') + `</label>
+						<label for="rename-t">` + mw.msg('mmsupload-conflicting-imgs-modal-option-rename-input-label') + `</label><input id="rename-t" type="text" name="option" value="">
+					</div>
+					<input type="radio" name="option" value="ignore-o"> <label for="ignore-o">` + mw.msg('mmsupload-conflicting-imgs-modal-option-ignore') + `</label>
 				</form>
-				` + this.form + `
 			</div>
 
 			<div class="modal-footer">
-				` + this.submitButton + `
+				<a><button id="msu-conflicting-images-confirm" type="button" class="btn btn-primary"></button></a>
 			</div>
 
 			</div>
 			</div>
 			</div>`,
 	conflictingFileItems: [],
-	currentConflict: {
-		oldFile: $('div'),
-		newFile: $('div')
-	},
-	applyToAll: $('input').attr('type', 'checkbox').addClass('apply-to-all').insertBefore(`<p class="apply-to-all">` + mw.message( 'mmsupload-conflicting-imgs-modal-applytoall', (MsUpload.unconfirmedReplacements - 1) ).escaped() + `</p>`),
-	submitButton: $('a').html('<button id="msu-conflicting-images-confirm" type="button"  class="btn btn-primary">Valider</button>'),
 	init: function () {
 		this.submitButton.click( function( event ) {
 			this.applyToAll.checked ? this.submit( true ) : this.submit();
@@ -1271,6 +1269,9 @@ var ConflictingFilesModal = {
 		if (!file){
 			return;
 		}
+
+		let oldFile = $('#msu-conflicting-imgs .images .old-image');
+		let newFile = $('#msu-conflicting-imgs .images .new-image');
 
 		this.currentConflict.oldFile = `<div class="msu-old-image"><span>` + mw.message('mmsupload-conflicting-imgs-modal-old-image-label').escaped() + `</span><div class="description"><div class="file-title">` + file.name + `</div></div>' + old_image.outerHTML + '</div>`;
 		this.currentConflict.newFile = `<div class="msu-new-image"><span>` + mw.message('mmsupload-conflicting-imgs-modal-new-image-label').escaped() + `</span><div class="description"><div class="file-title">` + file.name + `</div></div></div>`;
