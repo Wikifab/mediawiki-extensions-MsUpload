@@ -40,5 +40,6 @@
 	"mmsupload-conflicting-imgs-modal-option-rename" : "Téléverser avec un autre nom",
 	"mmsupload-conflicting-imgs-modal-option-rename-input-label" : "Nouveau nom",
 	"mmsupload-conflicting-imgs-modal-option-ignore": "Ignorer ce fichier",
-	"mmsupload-conflicting-imgs-modal-applytoall": "Appliquer ce choix pour les $1 prochains conflits"
+	"mmsupload-conflicting-imgs-modal-applytoall": "Appliquer ce choix pour les $1 prochains conflits",
+	"mmsupload-conflicting-imgs-modal-submit": "Valider"
 }
