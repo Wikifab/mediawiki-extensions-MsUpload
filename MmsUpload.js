@@ -15,7 +15,7 @@ var CFModal = {
 					'<div class="replace-o"><input type="radio" name="option" id="replace-o" value="replace" checked> <label for="replace-o">' + mw.msg('mmsupload-conflicting-imgs-modal-option-replace') + '</label></div>' +
 					'<div class="rename-o">' +
 						'<input id="rename-o" type="radio" name="option" value="rename"> <label for="rename-o">' + mw.msg('mmsupload-conflicting-imgs-modal-option-rename') + '</label>' +
-						'<div class="rename-input" style="display:none;"><label for="rename-t">' + mw.msg('mmsupload-conflicting-imgs-modal-option-rename-input-label') + '</label><input id="rename-t" type="text" name="option" value=""></div>' +
+						'<div class="rename-input" style="display:none;"><label for="rename-t">' + mw.msg('mmsupload-conflicting-imgs-modal-option-rename-input-label') + '</label><input id="rename-t" type="text" value=""></div>' +
 					'</div>' +
 					'<div class="ignore-o"><input type="radio" name="option" value="ignore" id="ignore-o"> <label for="ignore-o">' + mw.msg('mmsupload-conflicting-imgs-modal-option-ignore') + '</label></div>' +
 					'<div class="apply-to-all"><input type="checkbox" name="apply-to-all"><label for="apply-to-all"></label></div>' +
@@ -37,11 +37,14 @@ var CFModal = {
 
 			$('#msu-conflicting-images-confirm' ).click( function () { CFModal.submit(); } );
 
-			$( '#msu-conflicting-imgs form.actions [name="option"]' ).change( function (e) {
-				if ( this.value == 'rename' ) {
+			$( '#msu-conflicting-imgs form.actions [name="option"]' ).click( function () {
+
+				if ( this.value == 'rename' && this.checked ) {
 					$( '#msu-conflicting-imgs form.actions .rename-input' ).show();
+					$( '#msu-conflicting-imgs form.actions .apply-to-all' ).hide();
 				} else {
 					$( '#msu-conflicting-imgs form.actions .rename-input' ).hide();
+					$( '#msu-conflicting-imgs form.actions .apply-to-all' ).show();
 				}
 			} );
 		}
