@@ -785,7 +785,7 @@ var MsUpload = {
 		} catch( error ) {
 			MsUpload.fileError( uploader, file, 'Error: ' + success.response.replace( /(<([^>]+)>)/ig, '' ) ); // Remove html tags
 		}
-		uploader.removeFile( file ); // For preventing a second upload afterwards
+		//uploader.removeFile( file ); // For preventing a second upload afterwards
 
 		$( '#'+ uploader.uploaderId + '-loading-button' ).hide();
 		$( '#'+ uploader.uploaderId + '-upload-btn' ).show();
