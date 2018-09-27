@@ -41,5 +41,7 @@
 	"mmsupload-conflicting-imgs-modal-option-rename-input-label" : "Nouveau nom",
 	"mmsupload-conflicting-imgs-modal-option-ignore": "Ignorer ce fichier",
 	"mmsupload-conflicting-imgs-modal-applytoall": "Appliquer ce choix pour les $1 prochains conflits",
-	"mmsupload-conflicting-imgs-modal-submit": "Valider"
+	"mmsupload-conflicting-imgs-modal-submit": "Valider",
+	"mmsupload-conflicting-imgs-modal-filename-already-taken" : "Nom de fichier déjà pris. Essayez-en un autre.",
+	"mmsupload-conflicting-imgs-modal-field-must-not-be-empty" : "Ce champ ne doit pas être vide."
 }

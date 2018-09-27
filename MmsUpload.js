@@ -1,25 +1,31 @@
 var CFModal = {
 
 	modal: '<div class="modal fade" id="msu-conflicting-imgs" tabindex="-1" role="dialog" aria-labelledby="msu-conflicting-imgs">' +
-			'<div class="modal-dialog" role="document">' +
+			'<div class="modal-dialog modal-lg" role="document">' +
 			'<div class="modal-content">' +
 			'<div class="modal-header">' + mw.msg( 'mmsupload-conflicting-imgs-modal-header' ) + '</div>' +
 			'<div class="modal-body">' +
-				'<div class="images">' +
-					'<div class="old-image"><div class="label">' + mw.message('mmsupload-conflicting-imgs-modal-old-image-label').escaped() + '</div><div class="description"><div class="filename"></div></div><div class="image"></div></div>' +
-					'<div class="new-image"><div class="label">' + mw.message('mmsupload-conflicting-imgs-modal-new-image-label').escaped() + '</div><div class="description"><div class="filename"></div></div><div class="image"></div></div>' +
-				'</div>' +
-				'<form class="actions">' +
-					'<input id="fileid" name="fileid" type="hidden" value="">' +
-					'<div class="text">' + mw.message('mmsupload-conflicting-imgs-modal-whattodo').escaped() + '</div>' +
-					'<div class="replace-o"><input type="radio" name="option" id="replace-o" value="replace" checked> <label for="replace-o">' + mw.msg('mmsupload-conflicting-imgs-modal-option-replace') + '</label></div>' +
-					'<div class="rename-o">' +
-						'<input id="rename-o" type="radio" name="option" value="rename"> <label for="rename-o">' + mw.msg('mmsupload-conflicting-imgs-modal-option-rename') + '</label>' +
-						'<div class="rename-input" style="display:none;"><label for="rename-t">' + mw.msg('mmsupload-conflicting-imgs-modal-option-rename-input-label') + '</label><input id="rename-t" type="text" value=""></div>' +
+				'<div class="row">' +
+					'<div class="images col-sm-6">' +
+						'<div class="old-image col-xs-12"><div><strong>' + mw.message('mmsupload-conflicting-imgs-modal-old-image-label').escaped() + '</strong></div><div class="image col-xs-5"></div><div class="description col-xs-7"><div class="filename"></div></div></div>' +
+						'<div class="new-image col-xs-12"><div><strong>' + mw.message('mmsupload-conflicting-imgs-modal-new-image-label').escaped() + '</strong></div><div class="image col-xs-5"></div><div class="description col-xs-7"><div class="filename"></div></div></div>' +
 					'</div>' +
-					'<div class="ignore-o"><input type="radio" name="option" value="ignore" id="ignore-o"> <label for="ignore-o">' + mw.msg('mmsupload-conflicting-imgs-modal-option-ignore') + '</label></div>' +
-					'<div class="apply-to-all"><input type="checkbox" name="apply-to-all"><label for="apply-to-all"></label></div>' +
-				'</form>' +
+					'<div class="col-sm-6">' +
+						'<p><strong>' + mw.message('mmsupload-conflicting-imgs-modal-whattodo').escaped() + '</strong></p>' +
+						'<form class="actions form-horizontal col-xs-12">' +
+							'<input id="fileid" name="fileid" type="hidden" value="">' +
+							'<div class="top">' +
+								'<div class="replace-o"><label><input type="radio" name="option" id="replace-o" value="replace" checked> ' + mw.msg('mmsupload-conflicting-imgs-modal-option-replace') + '</label></div>' +
+								'<div class="rename-o"><label><input type="radio" name="option" id="rename-o" value="rename" > ' + mw.msg('mmsupload-conflicting-imgs-modal-option-rename') + '</label></div>' +
+								'<div class="rename-input form-group" style="display: none;"><div class="col-sm-4"><label for="rename-t">' + mw.msg('mmsupload-conflicting-imgs-modal-option-rename-input-label') + '</label></div><div class="col-sm-6"><input class="form-control" id="rename-t" type="text" value=""></div></div>' +
+								'<div class="ignore-o"><label><input type="radio" name="option" id="ignore-o" value="ignore" > ' + mw.msg('mmsupload-conflicting-imgs-modal-option-ignore') + '</label></div>' +
+							'</div>' +
+							'<div class="bottom apply-to-all-o form-group" style="display: none;">' +
+								'<div class="apply-to-all"><input type="checkbox" name="apply-to-all"><label></label></div>' +
+							'</div>' +
+						'</form>' +
+					'</div>' +
+				'</div>' +
 			'</div>' +
 
 			'<div class="modal-footer">' +
@@ -30,72 +36,125 @@ var CFModal = {
 			'</div>' +
 			'</div>',
 	warningTexts: [],
-	open: function () {
+	isInit: false,
+	init: function () {
 
-		if ( !$( '#msu-conflicting-imgs' ).length ){
-			$('#mw-content-text').prepend( CFModal.modal );
+		if ( !CFModal.isInit ){
 
-			$('#msu-conflicting-images-confirm' ).click( function () { CFModal.submit(); } );
+			//the modal hasn't been added to the html content yet
+			if ( !$( '#msu-conflicting-imgs' ).length ){
+				//prepend the modal to the html content
+				$('#mw-content-text').prepend( CFModal.modal ); 
 
-			$( '#msu-conflicting-imgs form.actions [name="option"]' ).click( function () {
+				$('#msu-conflicting-images-confirm' ).click( function () { CFModal.submit(); } );
 
-				if ( this.value == 'rename' && this.checked ) {
-					$( '#msu-conflicting-imgs form.actions .rename-input' ).show();
-					$( '#msu-conflicting-imgs form.actions .apply-to-all' ).hide();
-				} else {
-					$( '#msu-conflicting-imgs form.actions .rename-input' ).hide();
-					$( '#msu-conflicting-imgs form.actions .apply-to-all' ).show();
-				}
-			} );
-		}
+				$( '#msu-conflicting-imgs form.actions [name="option"]' ).click( function () {
 
-		if ( !($('#msu-conflicting-imgs').data('bs.modal') || {}).isShown ) {
-			//the only way to close the modal should be by clicking on confirm
-			$('#msu-conflicting-imgs').modal({
-				backdrop: 'static',
-				keyboard: false
-			});
+					if ( this.value == 'rename' && this.checked ) {
+						$( '#msu-conflicting-imgs form.actions .rename-input' ).show();
+						$( '#msu-conflicting-imgs form.actions .apply-to-all' ).hide();
+					} else {
+						$( '#msu-conflicting-imgs form.actions .rename-input' ).hide();
+						$( '#msu-conflicting-imgs form.actions .apply-to-all' ).show();
+					}
+				} );
+			}
 
-			$('#msu-conflicting-imgs').modal('show');
+			// if modal not open yet
+			if ( !($('#msu-conflicting-imgs').data('bs.modal') || {}).isShown ) {
+				//the only way to close the modal is by clicking on confirm
+				$('#msu-conflicting-imgs').modal({
+					backdrop: 'static',
+					keyboard: false
+				});
+
+				$('#msu-conflicting-imgs').modal('show');
+			}
+
+			CFModal.isInit = true;
 		}
 	},
-	addWarningText: function ( fileItem, warning ) {
+	alreadyHasFile: function ( fileItem ) {
 
-		var contains = false;
+		var alreadyHasFile = false;
 
 		$.each( CFModal.warningTexts, function( key, value ) {
 		  if ( value.fileItem.attr( 'id' ) === fileItem.attr( 'id' ) ){
-		  	contains = true;
+		  	alreadyHasFile = true;
 		  }
 		});
 
-		if ( !contains ){
-			CFModal.warningTexts.push( { fileItem : fileItem, warning: warning } );
+		return alreadyHasFile;
+	},
+	warningText: function ( fileItem, warning ) {
+
+		if ( CFModal.alreadyHasFile( fileItem ) ){
+			return;
 		}
 
+		if (!CFModal.isInit) {
+
+			CFModal.init();
+
+			CFModal.warningTexts.push( { fileItem : fileItem, warning: warning } );
+
+			CFModal.next();
+
+			return;
+		}
+
+		CFModal.warningTexts.push( { fileItem : fileItem, warning: warning } );
+
+		//update apply to all text
 		if ( CFModal.warningTexts.length > 1 ) {
 			$('#msu-conflicting-imgs div.apply-to-all label').html( mw.message( 'mmsupload-conflicting-imgs-modal-applytoall', (CFModal.warningTexts.length - 1) ).escaped() );
-			$('#msu-conflicting-imgs div.apply-to-all').show();
+			$('#msu-conflicting-imgs div.apply-to-all-o').show();
 			return;
 		} else {
-			$('#msu-conflicting-imgs div.apply-to-all').hide();
+			$('#msu-conflicting-imgs div.apply-to-all-o').hide();
 		}
-
-
 	},
-	isInit: false,
-	init: function () {
-		if ( !CFModal.isInit ){
-			CFModal.iteration();
-			CFModal.isInit = true;
-		}
+	// we add another function for checkFileName (besides Msupload.checkUploadWarning)
+	// because the request must be performed synchronously to prevent the uploader to 
+	// send the files if the last file triggers a new conflict 
+	checkFilename: function ( filename, fileItem, uploader ) {
+		var isConflicting = false;
+		$.ajax({ url: mw.util.wikiScript( 'api' ), async: false, dataType: 'json', type: 'POST',
+		data: {
+			format: 'json',
+			action: 'query',
+			titles: 'File:' + filename,
+			prop: 'imageinfo',
+			iiprop: 'uploadwarning'
+		}, success: function ( data ) {
+			if ( data && data.query && data.query.pages ) {
+				var pages = data.query.pages;
+				$.each( pages, function ( index, value ) {
+
+					if (index == -1) {
+						return false;
+					}
+
+					isConflicting = true;
+					return false; // Break out
+				});
+				
+			} else {
+				MsUpload.warningText( fileItem, 'Error: Unknown result from API', uploader );
+			}
+		}, error: function () {
+			MsUpload.warningText( fileItem, 'Error: Request failed', uploader );
+		}});
+
+		return isConflicting;
 	},
 	resetForm: function () {
 		$('#rename-t').val( '' );
 		$('.rename-input').hide();
 		document.getElementById("replace-o").checked = true;
 	},
-	iteration: function () {
+	//move on to the next file, display the first file if called for the first time
+	next: function () {
 
 		CFModal.resetForm();
 
@@ -130,8 +189,8 @@ var CFModal = {
 
 		newImage.onload = function () {
 			this.embed( $( '#msu-conflicting-imgs .images .new-image .image' ).get( 0 ), {
-				width: 150,
-				height: 150,
+				width: 200,
+				height: 200,
 				crop: false
 			});
 		};
@@ -140,6 +199,7 @@ var CFModal = {
 	},
 	submit: function () {
 
+		var isConflicting = false;
 		var fileId = document.getElementById('fileid').value;
 		var selectedOption = 0;
 		var applyToAll = $( '#msu-conflicting-imgs form.actions input[name=apply-to-all]' ).is(':checked');
@@ -178,6 +238,7 @@ var CFModal = {
 			if ( file ) {
 				switch (selectedOption) {
 				  case 'replace':
+				  	//nothing to do here, no action = replace
 				    break;
 				  case 'ignore':
 
@@ -195,12 +256,19 @@ var CFModal = {
 					file.li.fadeOut( 'fast', function () {
 						$( this ).remove();
 					});
+
 				  	break;
 				  case 'rename':
 
 				  	var value = $('#rename-t').val();
 				  	if (!value){
-				  		//$('#msu-conflicting-imgs .rename-o .rename-t').css('border', '1px solid red');
+				  		$('#rename-t').after('<span class="help-block">' + mw.message( 'mmsupload-conflicting-imgs-modal-field-must-not-be-empty' ) + '</span>');
+						$( '.rename-input' ).addClass('has-error');
+
+						$('#rename-t').one('keydown', function () {
+							$(this).next('.help-block').remove();
+							$( '.rename-input' ).removeClass('has-error');
+						});
 				  		return;
 				  	}
 
@@ -209,34 +277,50 @@ var CFModal = {
 
 				  	if ($('[data-filename="' + fileInitialName + '"]')) $('[data-filename="' + fileInitialName + '"]').attr('data-filename', file.name);
 
-					//$( this ).prev().text( file.name );
 					uploader.trigger( 'FileNameChanged', file, fileInitialName );
-					var ok = MsUpload.checkUploadWarning( value, file.li, uploader);
+					isConflicting = CFModal.checkFilename( file.name, file.li, uploader );
+					//isConflicting = MsUpload.checkUploadWarning( value, file.li, uploader);
 
 				    break;
 				  default:
+				}
+
+				if ( isConflicting ) {
+					//we do nothing but add a message error to the input for renaming the file
+					$('#rename-t').after('<span class="help-block">' + mw.message( 'mmsupload-conflicting-imgs-modal-filename-already-taken' ) + '</span>');
+					$( '.rename-input' ).addClass('has-error');
+
+					$('#rename-t').one('keydown', function () {
+						$(this).next('.help-block').html('');
+						$( '.rename-input' ).removeClass('has-error');
+					});
+
+					return;
 				}
 
 				//remove it from warningTexts
 			  	if ( fileItemKey !== null ) {
 			  		CFModal.warningTexts.splice( fileItemKey, 1 );
 
+			  		//update the text for apply to all 
 			  		if ( CFModal.warningTexts.length > 1 ) {
-						$('#msu-conflicting-imgs div.apply-to-all label').html( mw.message( 'mmsupload-conflicting-imgs-modal-applytoall', (CFModal.warningTexts.length - 1) ).escaped() );
-						$('#msu-conflicting-imgs div.apply-to-all').show();
+						$('#msu-conflicting-imgs div.apply-to-all-o label').html( mw.message( 'mmsupload-conflicting-imgs-modal-applytoall', (CFModal.warningTexts.length - 1) ).escaped() );
+						$('#msu-conflicting-imgs div.apply-to-all-o').show();
 					} else {
-						$('#msu-conflicting-imgs div.apply-to-all').hide();
+						$('#msu-conflicting-imgs div.apply-to-all-o').hide();
 					}
 			  	}
 
-				if ( CFModal.warningTexts.length <= 0 ){
-					$('#msu-conflicting-imgs').modal('hide');
+				if ( CFModal.warningTexts.length <= 0 ){ // ready for starting the upload
+					
 					uploader.start();
-					CFModal.isInit = false;
+
+					CFModal.close();
+
 					return;
 				}
 
-				CFModal.iteration();
+				CFModal.next();
 
 				if( applyToAll && (["replace", "ignore"].indexOf(selectedOption) > -1) ){
 					//reiterate
@@ -245,6 +329,11 @@ var CFModal = {
 				}
 			}
 		}
+	},
+	close: function (){
+
+		$('#msu-conflicting-imgs').modal('hide');
+		CFModal.isInit = false;
 	}
 }
 
@@ -315,9 +404,7 @@ var MsUpload = {
 					break; // Make it work for German too. Must be done this way because the error response doesn't include an error code.
 				}
 
-				MsUpload.cfModal.open();
-				MsUpload.cfModal.addWarningText( fileItem, warning );
-				MsUpload.cfModal.init();
+				MsUpload.cfModal.warningText( fileItem, warning );
 
 				break;
 		}
@@ -337,17 +424,13 @@ var MsUpload = {
 			if ( data && data.query && data.query.pages ) {
 				var pages = data.query.pages;
 				$.each( pages, function ( index, value ) {
-					console.log("checkUploadWarning - success");
-					console.log(uploader);
 					MsUpload.warningText( fileItem, value.imageinfo[0].html, uploader ); // Pass on the warning message
 					return false; // Break out
 				});
 			} else {
-				console.log("checkUploadWarning - success 2");
 				MsUpload.warningText( fileItem, 'Error: Unknown result from API', uploader );
 			}
 		}, error: function () {
-			console.log("checkUploadWarning - error");
 			MsUpload.warningText( fileItem, 'Error: Request failed', uploader );
 		}});
 	},
@@ -839,9 +922,6 @@ var MsUpload = {
 		//console.log('MmsUpload.onFileAdded');
 		$.each( files, function ( i, file ) {
 
-			console.log("onFilesAdded - file");
-			console.log(file);
-
 			
 			if (mw.config.get('wgPageName') != 'TestUploadPage') {
 				// remove specialChars
@@ -851,8 +931,6 @@ var MsUpload = {
 				// remove start of url if on creation page (keep only the string after the last '/')
 				// and change ":" in case a page in a namespace (ex Group:toto)
 				file.name = mw.config.get('wgPageName').replace(/(.*)\//g,"").replace(":","-") + '_' + file.name;
-				console.log("onFilesAdded - file (name)");
-				console.log(file);
 			}
 
 			// iOS6 by SLBoat

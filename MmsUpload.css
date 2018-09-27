@@ -497,3 +497,26 @@
 	    max-width: 230px;
 	}
 }
+
+#msu-conflicting-imgs .old-image .image img, 
+#msu-conflicting-imgs .new-image .image canvas{
+	width: 100%;
+	height: auto;
+}
+
+#msu-conflicting-imgs .actions {
+	border: 2px solid #aeaeae;
+	border-radius: 12px;
+	background-color: #eeeeee;
+}
+
+#msu-conflicting-imgs .actions .top {
+	padding: 8px;
+}
+
+#msu-conflicting-imgs .bottom {
+	padding: 8px;
+	border-top: 1px solid #aeaeae;
+}
+
+
