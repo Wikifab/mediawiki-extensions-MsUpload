@@ -377,6 +377,8 @@ var MsUpload = {
 	cfModal: CFModal,
 	warningText: function ( fileItem, warning, uploader ) {
 
+		console.log(uploader);
+
 		switch ( warning ) {
 			case '':
 			case '&nbsp;':
