@@ -62,8 +62,6 @@ $wgResourceModules['ext.MsUpload'] = array(
 		'mmsupload-conflicting-imgs-modal-option-ignore',
 		'mmsupload-conflicting-imgs-modal-applytoall',
 		'mmsupload-conflicting-imgs-modal-submit',
-		'mmsupload-conflicting-imgs-modal-applytoall',
-		'mmsupload-conflicting-imgs-modal-submit',
 		'mmsupload-conflicting-imgs-modal-field-must-not-be-empty',
 		'mmsupload-conflicting-imgs-modal-filename-already-taken'
 
