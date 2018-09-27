@@ -61,7 +61,10 @@ $wgResourceModules['ext.MsUpload'] = array(
 		'mmsupload-conflicting-imgs-modal-option-rename-input-label',
 		'mmsupload-conflicting-imgs-modal-option-ignore',
 		'mmsupload-conflicting-imgs-modal-applytoall',
+		'mmsupload-conflicting-imgs-modal-submit',
+		'mmsupload-conflicting-imgs-modal-applytoall',
 		'mmsupload-conflicting-imgs-modal-submit'
+
 	),
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'MmsUpload',
