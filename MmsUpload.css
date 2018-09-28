@@ -222,20 +222,22 @@
 }
 
 .msupload-list .file .file-cancel {
-	background: url(images/msu-close.png) no-repeat 0 0;
+	background: url(images/msu-close.png) no-repeat 4px 5px;
 	cursor: pointer;
-	float: right;
-    height: 26px;
-    width: 26px;
-	margin-left: 5px;
-	padding: 5px 10px;
+    float: right;
+    height: 32px;
+    width: 32px;
+    margin-left: 5px;
     position: absolute;
     right: 6px;
     top: 6px;
+    background-color: #fff;
+    border-radius: 100%;
+	opacity: 0.7; 
 }
 
 .msupload-list .file .file-cancel:hover {
-	opacity: 0.7; 
+	opacity: 1; 
 }
 
 .msuploadContainer .moxie-shim-html5 {
