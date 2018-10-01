@@ -504,14 +504,20 @@
 	height: auto;
 }
 
-#msu-conflicting-imgs .actions {
-	border: 2px solid #aeaeae;
-	border-radius: 12px;
-	background-color: #eeeeee;
+.rename-input label {
+	font-weight: normal;
+	margin-right: 5px;
 }
 
-#msu-conflicting-imgs .actions .top {
-	padding: 8px;
+#msu-conflicting-imgs .actions label {
+	margin-bottom: 10px;
+}
+
+#msu-conflicting-imgs .actions {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f1f1f1;
+    padding: 15px;
 }
 
 #msu-conflicting-imgs .bottom {
