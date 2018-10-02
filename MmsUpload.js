@@ -6,18 +6,18 @@ var CFModal = {
 			'<div class="modal-header">' + mw.msg( 'mmsupload-conflicting-imgs-modal-header' ) + '</div>' +
 			'<div class="modal-body">' +
 				'<div class="row">' +
-					'<div class="images col-sm-6">' +
-						'<div class="old-image col-xs-12"><div><strong>' + mw.message('mmsupload-conflicting-imgs-modal-old-image-label').escaped() + '</strong></div><div class="image col-xs-5"></div><div class="description col-xs-7"><div class="filename"></div></div></div>' +
-						'<div class="new-image col-xs-12"><div><strong>' + mw.message('mmsupload-conflicting-imgs-modal-new-image-label').escaped() + '</strong></div><div class="image col-xs-5"></div><div class="description col-xs-7"><div class="filename"></div></div></div>' +
+					'<div class="col-sm-6 images">' +
+						'<h4 class="old-image">' + mw.message('mmsupload-conflicting-imgs-modal-old-image-label').escaped() + '</h4><div class="row"><div class="image col-xs-5"></div><div class="description col-xs-7"><div class="filename"></div></div></div>' +
+						'<h4 class="new-image">' + mw.message('mmsupload-conflicting-imgs-modal-new-image-label').escaped() + '</h4><div class="row"><div class="image col-xs-5"></div><div class="description col-xs-7"><div class="filename"></div></div></div>' +
 					'</div>' +
 					'<div class="col-sm-6">' +
-						'<p><strong>' + mw.message('mmsupload-conflicting-imgs-modal-whattodo').escaped() + '</strong></p>' +
-						'<form class="actions form-horizontal col-xs-12">' +
+						'<h4>' + mw.message('mmsupload-conflicting-imgs-modal-whattodo').escaped() + '</h4>' +
+						'<form class="actions form-horizontal">' +
 							'<input id="fileid" name="fileid" type="hidden" value="">' +
 							'<div class="top">' +
 								'<div class="replace-o"><label><input type="radio" name="option" id="replace-o" value="replace" checked> ' + mw.msg('mmsupload-conflicting-imgs-modal-option-replace') + '</label></div>' +
 								'<div class="rename-o"><label><input type="radio" name="option" id="rename-o" value="rename" > ' + mw.msg('mmsupload-conflicting-imgs-modal-option-rename') + '</label></div>' +
-								'<div class="rename-input form-group" style="display: none;"><div class="col-sm-4"><label for="rename-t">' + mw.msg('mmsupload-conflicting-imgs-modal-option-rename-input-label') + '</label></div><div class="col-sm-6"><input class="form-control" id="rename-t" type="text" value=""></div></div>' +
+								'<div class="rename-input form-inline" style="display: none;"><label for="rename-t">' + mw.msg('mmsupload-conflicting-imgs-modal-option-rename-input-label') + '</label><input class="form-control" id="rename-t" type="text" value=""></div>' +
 								'<div class="ignore-o"><label><input type="radio" name="option" id="ignore-o" value="ignore" > ' + mw.msg('mmsupload-conflicting-imgs-modal-option-ignore') + '</label></div>' +
 							'</div>' +
 							'<div class="bottom apply-to-all-o form-group" style="display: none;">' +
