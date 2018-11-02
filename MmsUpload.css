@@ -27,7 +27,7 @@
 } 
 
 .msupload-div a {
-	cursor: pointer;
+	cursor: zoom-in;
 }
 
 .msupload-div.nodragdrop {
@@ -304,10 +304,10 @@
 }
 
 .msupload-list .file .file-warning {
-    color: #ff8600;
     font-size: 90%;
     width: 100%;
     float: left;
+    padding: 10px 5px 0;
 }
 
 .msupload-list .file .file-warning input[type="checkbox"] {
@@ -318,12 +318,12 @@
 	font-family: FontAwesome;
 	content: "\f06a";
     margin-right: 5px;
-    color: red;
+    color: #ff8600;
 }
 
 .msupload-list .file .file-warning p {
 	display: inline;
-	margin-top: 10px;
+	margin-bottom: 5px;
     float: left;
     width: 100%;
 }
@@ -333,6 +333,9 @@
 	position: absolute;
 	right: 0px;
 	bottom: 0px;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    border-radius: 3px;
+    background: #fff;
 }
 .msupload-list .file .file-warning div.thumbinner {
 	background: none;
@@ -412,6 +415,11 @@
 
 .msupload-list .file-upload {
     width: 100%;
+    border-top: 1px solid #ddd;
+    padding: 10px;
+}
+
+.msupload-list .file-upload:last-child {
     border-bottom: 1px solid #ddd;
 }
 
@@ -424,6 +432,7 @@
     border: 1px solid #ccc;
     position: relative;
     cursor: pointer;
+    padding: 0;
     overflow: hidden;
 }
 
