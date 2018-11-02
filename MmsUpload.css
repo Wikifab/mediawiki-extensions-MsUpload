@@ -58,7 +58,6 @@
 
 .msupload-list .file {
     margin: 0;
-    padding: 10px;
     list-style: none;
     position: relative;
     float: left;
@@ -381,13 +380,13 @@
 .msupload-bottom {
 	float: left;
 	transition: all ease .15s;
-	padding: 10px;
     width: 100%;
 }
 
 .msupload-bottom a {
     width: 100%;
-    padding: 6px 12px 6px 9px;
+    padding: 8px;
+    font-size: 1em;
 }
 
 .msupload-bottom a .fa {
@@ -415,25 +414,9 @@
 	background-color: #ccc;
 }
 
-.msupload-list .file-existing .file:first-of-type .file-thumb {
-	padding: 0px;
-    max-width: 100%;
-    position: relative;
-}
-
 .msupload-list .file .file-thumb {
     padding: 0px;
     width: 100%;
-    height: 100%;
-    border: 1px solid #999;
-}
-
-.msupload-list .file .file-thumb:hover {
-    border: 1px solid #fff;
-}
-
-.msupload-list .file-upload:first-child {
-    border-top: 1px solid #ddd;
 }
 
 .msupload-list .file-upload {
