@@ -495,31 +495,3 @@
 	    max-width: 230px;
 	}
 }
-
-#msu-conflicting-imgs .old-image .image img, 
-#msu-conflicting-imgs .new-image .image canvas{
-	width: 100%;
-	height: auto;
-}
-
-.rename-input label {
-	font-weight: normal;
-	margin-right: 5px;
-}
-
-#msu-conflicting-imgs .actions label {
-	margin-bottom: 10px;
-}
-
-#msu-conflicting-imgs .actions {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #f1f1f1;
-    padding: 15px;
-}
-
-#msu-conflicting-imgs .bottom {
-	padding: 8px;
-	border-top: 1px solid #aeaeae;
-}
-

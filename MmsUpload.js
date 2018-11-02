@@ -1,342 +1,3 @@
-var CFModal = {
-
-	modal: '<div class="modal fade" id="msu-conflicting-imgs" tabindex="-1" role="dialog" aria-labelledby="msu-conflicting-imgs">' +
-			'<div class="modal-dialog modal-lg" role="document">' +
-			'<div class="modal-content">' +
-			'<div class="modal-header">' + mw.msg( 'mmsupload-conflicting-imgs-modal-header' ) + '</div>' +
-			'<div class="modal-body">' +
-				'<div class="row">' +
-					'<div class="col-sm-6 images">' +
-						'<h4 class="old-image">' + mw.message('mmsupload-conflicting-imgs-modal-old-image-label').escaped() + '</h4><div class="row"><div class="image col-xs-5"></div><div class="description col-xs-7"><div class="filename"></div></div></div>' +
-						'<h4 class="new-image">' + mw.message('mmsupload-conflicting-imgs-modal-new-image-label').escaped() + '</h4><div class="row"><div class="image col-xs-5"></div><div class="description col-xs-7"><div class="filename"></div></div></div>' +
-					'</div>' +
-					'<div class="col-sm-6">' +
-						'<h4>' + mw.message('mmsupload-conflicting-imgs-modal-whattodo').escaped() + '</h4>' +
-						'<form class="actions form-horizontal">' +
-							'<input id="fileid" name="fileid" type="hidden" value="">' +
-							'<div class="top">' +
-								'<div class="replace-o"><label><input type="radio" name="option" id="replace-o" value="replace" checked> ' + mw.msg('mmsupload-conflicting-imgs-modal-option-replace') + '</label></div>' +
-								'<div class="rename-o"><label><input type="radio" name="option" id="rename-o" value="rename" > ' + mw.msg('mmsupload-conflicting-imgs-modal-option-rename') + '</label></div>' +
-								'<div class="rename-input form-inline" style="display: none;"><label for="rename-t">' + mw.msg('mmsupload-conflicting-imgs-modal-option-rename-input-label') + '</label><input class="form-control" id="rename-t" type="text" value=""></div>' +
-								'<div class="ignore-o"><label><input type="radio" name="option" id="ignore-o" value="ignore" > ' + mw.msg('mmsupload-conflicting-imgs-modal-option-ignore') + '</label></div>' +
-							'</div>' +
-							'<div class="bottom apply-to-all-o form-group" style="display: none;">' +
-								'<div class="apply-to-all"><input type="checkbox" name="apply-to-all"><label></label></div>' +
-							'</div>' +
-						'</form>' +
-					'</div>' +
-				'</div>' +
-			'</div>' +
-
-			'<div class="modal-footer">' +
-				'<a><button id="msu-conflicting-images-confirm" type="button" class="btn btn-primary">' + mw.msg('mmsupload-conflicting-imgs-modal-submit') + '</button></a>' +
-			'</div>' +
-
-			'</div>' +
-			'</div>' +
-			'</div>',
-	warningTexts: [],
-	isInit: false,
-	init: function () {
-
-		if ( !CFModal.isInit ){
-
-			//the modal hasn't been added to the html content yet
-			if ( !$( '#msu-conflicting-imgs' ).length ){
-				//prepend the modal to the html content
-				$('#mw-content-text').prepend( CFModal.modal ); 
-
-				$('#msu-conflicting-images-confirm' ).click( function () { CFModal.submit(); } );
-
-				$( '#msu-conflicting-imgs form.actions [name="option"]' ).click( function () {
-
-					if ( this.value == 'rename' && this.checked ) {
-						$( '#msu-conflicting-imgs form.actions .rename-input' ).show();
-						$( '#msu-conflicting-imgs form.actions .apply-to-all' ).hide();
-					} else {
-						$( '#msu-conflicting-imgs form.actions .rename-input' ).hide();
-						$( '#msu-conflicting-imgs form.actions .apply-to-all' ).show();
-					}
-				} );
-			}
-
-			// if modal not open yet
-			if ( !($('#msu-conflicting-imgs').data('bs.modal') || {}).isShown ) {
-				//the only way to close the modal is by clicking on confirm
-				$('#msu-conflicting-imgs').modal({
-					backdrop: 'static',
-					keyboard: false
-				});
-
-				$('#msu-conflicting-imgs').modal('show');
-			}
-
-			CFModal.isInit = true;
-		}
-	},
-	alreadyHasFile: function ( fileItem ) {
-
-		var alreadyHasFile = false;
-
-		$.each( CFModal.warningTexts, function( key, value ) {
-		  if ( value.fileItem.attr( 'id' ) === fileItem.attr( 'id' ) ){
-		  	alreadyHasFile = true;
-		  }
-		});
-
-		return alreadyHasFile;
-	},
-	warningText: function ( fileItem, warning ) {
-
-		if ( CFModal.alreadyHasFile( fileItem ) ){
-			return;
-		}
-
-		if (!CFModal.isInit) {
-
-			CFModal.init();
-
-			CFModal.warningTexts.push( { fileItem : fileItem, warning: warning } );
-
-			CFModal.next();
-
-			return;
-		}
-
-		CFModal.warningTexts.push( { fileItem : fileItem, warning: warning } );
-
-		//update apply to all text
-		if ( CFModal.warningTexts.length > 1 ) {
-			$('#msu-conflicting-imgs div.apply-to-all label').html( mw.message( 'mmsupload-conflicting-imgs-modal-applytoall', (CFModal.warningTexts.length - 1) ).escaped() );
-			$('#msu-conflicting-imgs div.apply-to-all-o').show();
-			return;
-		} else {
-			$('#msu-conflicting-imgs div.apply-to-all-o').hide();
-		}
-	},
-	// we add another function for checkFileName (besides Msupload.checkUploadWarning)
-	// because the request must be performed synchronously to prevent the uploader to 
-	// send the files if the last file triggers a new conflict 
-	checkFilename: function ( filename, fileItem, uploader ) {
-		var isConflicting = false;
-		$.ajax({ url: mw.util.wikiScript( 'api' ), async: false, dataType: 'json', type: 'POST',
-		data: {
-			format: 'json',
-			action: 'query',
-			titles: 'File:' + filename,
-			prop: 'imageinfo',
-			iiprop: 'uploadwarning'
-		}, success: function ( data ) {
-			if ( data && data.query && data.query.pages ) {
-				var pages = data.query.pages;
-				$.each( pages, function ( index, value ) {
-
-					if (index == -1) {
-						return false;
-					}
-
-					isConflicting = true;
-					return false; // Break out
-				});
-				
-			} else {
-				MsUpload.warningText( fileItem, 'Error: Unknown result from API', uploader );
-			}
-		}, error: function () {
-			MsUpload.warningText( fileItem, 'Error: Request failed', uploader );
-		}});
-
-		return isConflicting;
-	},
-	resetForm: function () {
-		$('#rename-t').val( '' );
-		$('.rename-input').hide();
-		document.getElementById("replace-o").checked = true;
-	},
-	//move on to the next file, display the first file if called for the first time
-	next: function () {
-
-		CFModal.resetForm();
-
-		var fileItem = CFModal.warningTexts[ CFModal.warningTexts.length - 1 ].fileItem;
-		var file = null;
-
-		$.each( uploader.files, function( key, value ) {
-		  if ( value.id === fileItem.attr( 'id' ) ){
-		  	file = value;
-		  }
-		});
-
-		if (!file){
-			return;
-		}
-
-		document.getElementById('fileid').value = file.id;
-
-		$( '#msu-conflicting-imgs .images .old-image .filename' ).html( file.name );
-		$( '#msu-conflicting-imgs .images .new-image .filename' ).html( file.name );
-
-		var contextualFragment = document.createRange().createContextualFragment( file.li.warning.get(0).innerHTML );
-		var old_image = contextualFragment.querySelector( 'img' );
-
-		if ( old_image ){
-			$( '#msu-conflicting-imgs .images .old-image .image' ).html( old_image.outerHTML );
-		}
-
-		$( '#msu-conflicting-imgs .images .new-image .image' ).html('');
-
-		var newImage = new o.Image();
-
-		newImage.onload = function () {
-			this.embed( $( '#msu-conflicting-imgs .images .new-image .image' ).get( 0 ), {
-				width: 200,
-				height: 200,
-				crop: false
-			});
-		};
-
-		newImage.load( file.getSource() ); //get the thumbnail
-	},
-	submit: function () {
-
-		var isConflicting = false;
-		var fileId = document.getElementById('fileid').value;
-		var selectedOption = 0;
-		var applyToAll = $( '#msu-conflicting-imgs form.actions input[name=apply-to-all]' ).is(':checked');
-		var oRadio = $( '#msu-conflicting-imgs form.actions' )[0].elements['option'];
-
-		for(var i = 0; i < oRadio.length; i++)
-		{
-			if(oRadio[i].checked)
-			{
-				selectedOption = oRadio[i].value;
-			}
-		}
-
-		if (selectedOption){
-
-			//get the corresponding keys for the arrays uploader
-			var uploaderFileKey = null;
-			var fileItemKey = null;
-			var file = null;
-
-			$.each( CFModal.warningTexts, function( key, value ) {
-			  if ( value.fileItem.attr( 'id' ) === fileId ){
-			  	fileItemKey = key;
-			  	return false;
-			  }
-			});
-
-			$.each( uploader.files, function( key, value ) {
-			  if ( value.id === fileId ){
-			  	uploaderFileKey = key;
-			  	file = uploader.files[ key ];
-			  	return false;
-			  }
-			});
-
-			if ( file ) {
-				switch (selectedOption) {
-				  case 'replace':
-				  	//nothing to do here, no action = replace
-				    break;
-				  case 'ignore':
-
-				  	//remove it from uploader
-				  	uploader.removeFile( file );
-
-				  	//remove it from side gallery
-					if ( file.group === 'image' ) {
-						var index = $.inArray( file.name, MsUpload.galleryArray );
-						if ( index !== -1 ) {
-							MsUpload.galleryArray.splice( index, 1 );
-						}
-					}
-
-					file.li.fadeOut( 'fast', function () {
-						$( this ).remove();
-					});
-
-				  	break;
-				  case 'rename':
-
-				  	var value = $('#rename-t').val();
-				  	if (!value){
-				  		$('#rename-t').after('<span class="help-block">' + mw.message( 'mmsupload-conflicting-imgs-modal-field-must-not-be-empty' ) + '</span>');
-						$( '.rename-input' ).addClass('has-error');
-
-						$('#rename-t').one('keydown', function () {
-							$(this).next('.help-block').remove();
-							$( '.rename-input' ).removeClass('has-error');
-						});
-				  		return;
-				  	}
-
-				  	var fileInitialName = file.name;
-				  	file.name = value + '.' + file.extension;
-
-				  	if ($('[data-filename="' + fileInitialName + '"]')) $('[data-filename="' + fileInitialName + '"]').attr('data-filename', file.name);
-
-					uploader.trigger( 'FileNameChanged', file, fileInitialName );
-					isConflicting = CFModal.checkFilename( file.name, file.li, uploader );
-					//isConflicting = MsUpload.checkUploadWarning( value, file.li, uploader);
-
-				    break;
-				  default:
-				}
-
-				if ( isConflicting ) {
-					//we do nothing but add a message error to the input for renaming the file
-					$('#rename-t').after('<span class="help-block">' + mw.message( 'mmsupload-conflicting-imgs-modal-filename-already-taken' ) + '</span>');
-					$( '.rename-input' ).addClass('has-error');
-
-					$('#rename-t').one('keydown', function () {
-						$(this).next('.help-block').html('');
-						$( '.rename-input' ).removeClass('has-error');
-					});
-
-					return;
-				}
-
-				//remove it from warningTexts
-			  	if ( fileItemKey !== null ) {
-			  		CFModal.warningTexts.splice( fileItemKey, 1 );
-
-			  		//update the text for apply to all 
-			  		if ( CFModal.warningTexts.length > 1 ) {
-						$('#msu-conflicting-imgs div.apply-to-all-o label').html( mw.message( 'mmsupload-conflicting-imgs-modal-applytoall', (CFModal.warningTexts.length - 1) ).escaped() );
-						$('#msu-conflicting-imgs div.apply-to-all-o').show();
-					} else {
-						$('#msu-conflicting-imgs div.apply-to-all-o').hide();
-					}
-			  	}
-
-				if ( CFModal.warningTexts.length <= 0 ){ // ready for starting the upload
-					
-					uploader.start();
-
-					CFModal.close();
-
-					return;
-				}
-
-				CFModal.next();
-
-				if( applyToAll && (["replace", "ignore"].indexOf(selectedOption) > -1) ){
-					//reiterate
-					CFModal.submit();
-					return;
-				}
-			}
-		}
-	},
-	close: function (){
-
-		$('#msu-conflicting-imgs').modal('hide');
-		CFModal.isInit = false;
-	}
-}
-
 var MsUpload = {
 
 	fileError: function ( uploader, file, errorText ) {
@@ -373,12 +34,7 @@ var MsUpload = {
 	},
 
 	unconfirmedReplacements: 0,
-	conflictingFileItems: [],
-	cfModal: CFModal,
 	warningText: function ( fileItem, warning, uploader ) {
-
-		console.log(uploader);
-
 		switch ( warning ) {
 			case '':
 			case '&nbsp;':
@@ -406,8 +62,32 @@ var MsUpload = {
 					break; // Make it work for German too. Must be done this way because the error response doesn't include an error code.
 				}
 
-				MsUpload.cfModal.warningText( fileItem, warning );
+				// When hovering over the link to the file about to be replaced, show the thumbnail
+				$( fileItem.warning ).find( 'a' ).mouseover( function () {
+					$( fileItem.warning ).find( 'div.thumb' ).show();
+				}).mouseout( function () {
+					$( fileItem.warning ).find( 'div.thumb' ).hide();
+				});
 
+				// If a file with the same name already exists, add a checkbox to confirm the replacement
+				if ( window.msuVars.confirmReplace ) {
+
+					MsUpload.unconfirmedReplacements++;
+
+					var title = $( fileItem.warning ).siblings( '.file-name' );
+
+					var checkbox = $( '<input>' ).attr( 'type', 'checkbox' ).click( function ( event ) {
+						if ( $( this ).is( ':checked' ) ) {
+							title.show().next().hide();
+							MsUpload.unconfirmedReplacements--;
+						} else {
+							title.hide().next().show().select();
+							MsUpload.unconfirmedReplacements++;
+						}
+						uploader.trigger( 'CheckFiles' );
+					});
+					$( '<label>' ).append( checkbox ).append( mw.msg( 'msu-replace-file' ) ).appendTo( fileItem.warning );
+				}
 				break;
 		}
 		uploader.trigger( 'CheckFiles' );
@@ -590,6 +270,7 @@ var MsUpload = {
 		// Add them to the DOM
 		startButton.append(loadingButton, uploadBtn, txtUploadBtn);
 		bottomDiv.append( startButton );
+		console.log(startButton);
 		//bottomDiv.append( galleryInsert, filesInsert, linksInsert, cleanAll );
 		uploadDiv.append( statusDiv, uploadDrop, uploadList, bottomDiv );
 		uploadDrop.prepend( uploadButton );
@@ -924,9 +605,6 @@ var MsUpload = {
 		//console.log('MmsUpload.onFileAdded');
 		$.each( files, function ( i, file ) {
 
-			console.log("onFilesAdded - file");
-			console.log(file);
-
 			
 			if (mw.config.get('wgPageName') != 'TestUploadPage') {
 				// remove specialChars
@@ -936,8 +614,6 @@ var MsUpload = {
 				// remove start of url if on creation page (keep only the string after the last '/')
 				// and change ":" in case a page in a namespace (ex Group:toto)
 				file.name = mw.config.get('wgPageName').replace(/(.*)\//g,"").replace(":","-") + '_' + file.name;
-				console.log("onFilesAdded - file (name)");
-				console.log(file);
 			}
 
 			// iOS6 by SLBoat
@@ -1036,6 +712,7 @@ var MsUpload = {
 			if ( result.error ) {
 				errorMessage = result.error.info;
 				errorCode = result.error.code;
+				console.log(errorMessage);
 				if(mw.msg( 'msu-upload-error-' + errorCode ).substring(0, 1) != '<' ) {
 					errorMessage = mw.msg( 'msu-upload-error-' + errorCode );
 				}
@@ -1250,7 +927,13 @@ var MsUpload = {
 		$('.' + window.msuVars.secondaryWrapperClass).parents('.msuploadContainer').each(function () {
 			MsUpload.initDropableArea(this);
 		});
+
+
+
 	}
+
+
+
 };
 
 $( MsUpload.init );
@@ -1261,3 +944,6 @@ window.MsUpload = MsUpload;
 msUploadReload = function () {
 	$( MsUpload.createMultipleUploader );
 };
+
+
+

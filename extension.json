@@ -45,17 +45,7 @@
 				"msu-dropzone",
 				"msu-comment",
 				"msu-upload-nbfile-exceed",
-				"msu-upload-error-file-too-large",
-				"mmsupload-conflicting-imgs-modal-header",
-				"mmsupload-conflicting-imgs-modal-old-image-label",
-				"mmsupload-conflicting-imgs-modal-new-image-label",
-				"mmsupload-conflicting-imgs-modal-whattodo",
-				"mmsupload-conflicting-imgs-modal-option-replace",
-				"mmsupload-conflicting-imgs-modal-option-rename",
-				"mmsupload-conflicting-imgs-modal-option-rename-input-label",
-				"mmsupload-conflicting-imgs-modal-option-ignore",
-				"mmsupload-conflicting-imgs-modal-applytoall",
-				"mmsupload-conflicting-imgs-modal-submit"
+				"msu-upload-error-file-too-large"
 			]
 		}
 	},
