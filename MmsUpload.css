@@ -332,18 +332,24 @@
 
 .msupload-list .file .file-warning div.thumb {
 	display: none;
-	position: absolute;
-	right: 0px;
-	bottom: 0px;
-	box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    border-radius: 3px;
-    background: #fff;
+    position: absolute;
+    right: 50%;
+    top: 0px;
+    margin: 0;
+    filter: drop-shadow(0px -1px 5px rgba(0,0,0,0.25));
 }
+
 .msupload-list .file .file-warning div.thumbinner {
 	background: none;
 	border: none;
 	overflow: visible;
 	padding: 0;
+	background: #fff;
+    width: auto !important;
+    max-width: 400px !important;
+    background-repeat: no-repeat;
+    background-image: url(images/tooltip-triangle-white.png);
+    background-position: bottom center;
 }
 
 .msupload-list .file .file-extension {
