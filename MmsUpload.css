@@ -58,10 +58,9 @@
 
 .msupload-list .file {
     margin: 0;
-    padding: 5px;
+    padding: 10px;
     list-style: none;
     position: relative;
-    width: 25%;
     float: left;
     background: #ccc;
 }
@@ -149,8 +148,8 @@
     left: inherit;
     position: inherit;
     float: left;
-    margin: 4px;
-    border: 1Px solid #ccc;
+    margin-right: 10px;
+    border: 1px solid #ccc;
 }
 
 .msupload-div .msupload-list .file .stl{
@@ -163,48 +162,52 @@
 
 .msupload-list .file .file-load canvas {
 	display: block;
-	max-width: 28px;
-	min-height: 28px;
+	max-width: 33px;
+	min-height: 33px;
 }
 
-.msupload-list .file .file-name {
+.msupload-list .file .file-name,
+.msupload-list .file .file-name-input {
     font-weight: bold;
-    margin-top: 4px;
     float: left;
-    font-size: 13.5px;
-    max-width: 107px;
+    font-size: 14px;
+    width: 100%;
+    height: 35px;
+    padding-left: 7px 8px;
+    max-width: calc(100% - 150px);
     cursor: text;
-    background: #f7f7f7;
+    background: #fff;
     overflow: hidden;
     white-space: nowrap;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.msupload-list .file .file-name-input {
+	padding: 7px 36px 7px 8px;
 }
 
 .msupload-loading-button {
 	color:#fff;
 }
 
-.msupload-list .file-upload .file-name {
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
-
 .msupload-list .file-upload .file-name-input {
-    padding: 4px 30px 4px 4px;
     border: 1px solid #ccc;
     border-radius: 3px;
 }
 
-.msupload-list .file .file-name:hover, .msupload-list .file-upload .file-name-input:hover {
-	background-color: #ffffff;
+.msupload-list .file .file-name:hover,
+.msupload-list .file .file-name:active,
+.msupload-list .file .file-name-input:hover,
+.msupload-list .file .file-name-input:active {
+	border:1px solid blue;
 }
 
 .msupload-list .file .file-size {
-	margin: 0 7px;
-	color: #666;
+    color: #666;
     float: left;
-    padding-top: 5px;
-    margin: 0 4px;
+    margin-top: 6px;
+    margin-left: 7px;
 }
 
 .msupload-list .file .file-progress-state {
@@ -222,18 +225,15 @@
 }
 
 .msupload-list .file .file-cancel {
-	background: url(images/msu-close.png) no-repeat 4px 5px;
-	cursor: pointer;
+	background: url(images/msu-close.png) no-repeat 0 0;
+    cursor: pointer;
     float: right;
-    height: 32px;
-    width: 32px;
+    height: 26px;
+    width: 26px;
     margin-left: 5px;
-    position: absolute;
-    right: 6px;
-    top: 6px;
-    background-color: #fff;
-    border-radius: 100%;
-	opacity: 0.7; 
+    float: right;
+    margin-top: 6px;
+    opacity: 0.4;
 }
 
 .msupload-list .file .file-cancel:hover {
@@ -314,9 +314,8 @@
 }
 
 .msupload-list .file .file-warning {
-    color: #666;
-    font-size: 80%;
-    font-style: italic;
+    color: #ff8600;
+    font-size: 90%;
     width: 100%;
     float: left;
 }
@@ -325,8 +324,18 @@
 	margin-right:4px;
 }
 
+.msupload-list .file .file-warning p:before {
+	font-family: FontAwesome;
+	content: "\f06a";
+    margin-right: 5px;
+    color: red;
+}
+
 .msupload-list .file .file-warning p {
 	display: inline;
+	margin-top: 10px;
+    float: left;
+    width: 100%;
 }
 
 .msupload-list .file .file-warning div.thumb {
@@ -342,29 +351,13 @@
 	padding: 0;
 }
 
-.msupload-list .file .file-name-input {
-	background: white;
-	display: inline;
-	font: inherit;
-	font-weight: bold;
-	line-height: normal;
-	margin-top: 4px;
-	outline: none;
-    padding: 6px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    float: left;
-    font-size: 13.5px;
-    max-width: 107px;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
 .msupload-list .file .file-extension {
-    padding: 11px 0px 0px 2px;
+    margin-top: 8px;
     float: left;
-    color: #777;
+    color: #999;
     font-size: .9em;
+    position: absolute;
+    margin-left: -34px;
 }
 
 .col-pic-detail .msupload-list .file .file-name, .col-pic-detail .msupload-list .file .file-name-input {
@@ -428,11 +421,6 @@
     position: relative;
 }
 
-.msupload-list .file:first-of-type {
-	padding:0px;
-	width:100%;
-}
-
 .msupload-list .file .file-thumb {
     padding: 0px;
     width: 100%;
@@ -444,11 +432,17 @@
     border: 1px solid #fff;
 }
 
+.msupload-list .file-upload:first-child {
+    border-top: 1px solid #ddd;
+}
+
 .msupload-list .file-upload {
     width: 100%;
-    background: #fff;
-    border-bottom: 1px solid #ccc;
-    margin-top: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+#MediaManagerUploader .msupload-list li.file-upload:nth-of-type(odd) {
+    background-color: rgba(0,0,0,.05);
 }
 
 .msupload-list .green {
@@ -461,6 +455,7 @@
 #wikiEditor-section-advanced .options {
 	z-index: 1;
 }
+
 
 @media (max-width: 992px) {
 	.msupload-list .file .file-name {
