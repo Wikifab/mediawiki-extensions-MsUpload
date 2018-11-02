@@ -61,7 +61,6 @@
     list-style: none;
     position: relative;
     float: left;
-    background: #ccc;
 }
 
 .msupload-list .file-existing .file:first-of-type {
@@ -172,13 +171,13 @@
     font-size: 14px;
     width: 100%;
     height: 35px;
-    padding-left: 7px 8px;
+    padding: 7px 8px;
     max-width: calc(100% - 150px);
     cursor: text;
     background: #fff;
     overflow: hidden;
     white-space: nowrap;
-    border: 1px solid #ccc;
+    border:1px solid #ddd;
     border-radius: 3px;
 }
 
@@ -190,16 +189,8 @@
 	color:#fff;
 }
 
-.msupload-list .file-upload .file-name-input {
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
-
-.msupload-list .file .file-name:hover,
-.msupload-list .file .file-name:active,
-.msupload-list .file .file-name-input:hover,
-.msupload-list .file .file-name-input:active {
-	border:1px solid blue;
+.msupload-list .file-upload .file-name-input:focus {
+    border-color: #52bad5;
 }
 
 .msupload-list .file .file-size {
@@ -381,6 +372,7 @@
 	float: left;
 	transition: all ease .15s;
     width: 100%;
+    margin-top: 15px;
 }
 
 .msupload-bottom a {
@@ -415,7 +407,6 @@
 }
 
 .msupload-list .file .file-thumb {
-    padding: 0px;
     width: 100%;
 }
 
@@ -424,15 +415,24 @@
     border-bottom: 1px solid #ddd;
 }
 
-#MediaManagerUploader .msupload-list li.file-upload:nth-of-type(odd) {
-    background-color: rgba(0,0,0,.05);
+.msupload-list .file-upload.green {
+    height: 150px;
+    width: 25%;
+    display: inline-block;
+    vertical-align: top;
+    margin: 5px;
+    border: 1px solid #ccc;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
 }
 
-.msupload-list .green {
-    width: 25%;
-    background: #a8dba8;
-    border-bottom: none;
-    margin-top: 0px;
+.msupload-list .file.green .file-thumb {
+	height:100%;
+}
+
+#MediaManagerUploader .msupload-list li.file-upload:nth-of-type(odd) {
+    background-color: rgba(0,0,0,.05);
 }
 
 #wikiEditor-section-advanced .options {
