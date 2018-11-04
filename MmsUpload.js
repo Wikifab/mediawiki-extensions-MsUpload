@@ -767,7 +767,7 @@ var MsUpload = {
 					$(file.li).find('.file-type').hide();
 					$(file.li).find('.file-name').hide();
 
-					MsUpload.addRemoveButton(uploader, file.li);
+					//MsUpload.addRemoveButton(uploader, file.li);
 				}
 
 				if ( file.cat && mw.config.get( 'wgNamespaceNumber' ) === 14 ) { // Should the categroy be set?
