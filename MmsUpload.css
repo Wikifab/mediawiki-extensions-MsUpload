@@ -176,7 +176,7 @@
     width: 100%;
     height: 35px;
     padding: 7px 8px;
-    max-width: calc(100% - 150px);
+    max-width: calc(100% - 165px);
     cursor: text;
     background: #fff;
     overflow: hidden;
@@ -200,13 +200,12 @@
 .msupload-list .file .file-size {
     color: #666;
     float: left;
-    margin-top: 6px;
+    margin-top: 7px;
     margin-left: 7px;
 }
 
 .msupload-list .file .file-progress-state {
-	margin-right: 40px;
-	margin-top: 4px;
+	margin-top: 7px;
 	float:right;
 }
 
