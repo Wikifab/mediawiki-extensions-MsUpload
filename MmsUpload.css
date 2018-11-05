@@ -237,8 +237,8 @@
 	display:none;
 }
 
-.msuploadContainer .formmediagallery li .pfImagePreviewWrapper span.video-player,
-.msuploadContainer .formmediagallery li .pfImagePreviewWrapper span.stl-file{
+#MsUpload span.video-player,
+#MsUpload span.stl-file{
     position: absolute;
     z-index: 0;
     background-repeat: no-repeat;
@@ -246,12 +246,12 @@
     height: 100%;
 }
 
-.msuploadContainer .formmediagallery li .pfImagePreviewWrapper span.video-player{
+#MsUpload span.video-player{
 	background-image: url(images/msu-play-verysmall.png);
 	background-position: center;
 }
 
-.msuploadContainer .formmediagallery li .pfImagePreviewWrapper span.stl-file{
+#MsUpload span.stl-file{
 	background-image: url(images/msu-3D.png);
 	margin: 5px;
 	background-size: 38px;
@@ -280,8 +280,8 @@
     margin: 0;
 }
 
-#PageGallery span.video-player,
-#PageGallery span.stl-file {
+#MsUpload span.video-player,
+#MsUpload span.stl-file {
     position: absolute;
     z-index: 0;
     background-repeat: no-repeat;
@@ -289,12 +289,12 @@
     height: 100%;
 }
 
-#PageGallery span.video-player{
+#MsUpload span.video-player{
 	background-image: url(images/msu-play-small.png);
 	background-position: center;
 }
 
-#PageGallery span.stl-file{
+#MsUpload span.stl-file{
 	background-image: url(images/msu-3D.png);
 	margin: 5px;
 	background-size: auto;
