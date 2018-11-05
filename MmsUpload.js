@@ -253,7 +253,7 @@ var MsUpload = {
 		// Define the GUI elements
 		var uploadDiv = $( '<div>' ).attr({ 'id':  uploaderId + '-div', 'class': 'msupload-div'} ),
 			uploadContainer = $( '<div>' ).attr({ 'id': uploaderId + '-container', 'class': 'start-loading', 'title': mw.msg( 'msu-button-title' ) }),
-			uploadButton = $( '<button>' ).attr({ 'id': uploaderId + '-select', 'class': 'msupload-select'} ).html('<i class="fa fa-folder-open" aria-hidden="true">' + mw.msg("msu-button-title") +'</i>'),
+			uploadButton = $( '<button>' ).attr({ 'id': uploaderId + '-select', 'class': 'msupload-select btn'} ).html('<i class="fa fa-folder-open" aria-hidden="true"></i>' + mw.msg("msu-button-title")),
 			statusDiv = $( '<div>' ).attr({ 'id': uploaderId + '-status', 'class': 'msupload-status'} ).hide(),
 			uploadList = $( '<ul>' ).attr({ 'id': uploaderId + '-list', 'class': 'msupload-list'} ),
 			bottomDiv = $( '<div>' ).attr({ 'id': uploaderId + '-bottom', 'class': 'msupload-bottom'} ).hide(),
