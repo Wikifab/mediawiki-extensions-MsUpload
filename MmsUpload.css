@@ -7,8 +7,19 @@
 	background: url(images/msu-loading.png) no-repeat 5px 5px;
 }
 
-.msupload-select {
-	cursor: pointer;
+button.msupload-select {
+    cursor: pointer;
+    font-size: 16px;
+    color: #555;
+    border: 1px solid #ccc;
+}
+
+button.msupload-select:focus {
+	outline: 0;
+}
+
+button.msupload-select i {
+	margin-right:5px;
 }
 
 .msupload-div {
@@ -26,7 +37,7 @@
 
 .msupload-dropzone {
 	margin: 0 0 10px;
-	padding: 10px 5px;
+	padding: 20px 5px 10px;
 	border: 2px dashed #c2ccd4;
 	text-align: center;
 	min-height: 20px;
