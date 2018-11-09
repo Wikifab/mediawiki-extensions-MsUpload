@@ -265,7 +265,7 @@ var MsUpload = {
 			galleryInsert = $( '<a>' ).attr({ 'id': uploaderId + '-insert-gallery', 'class': 'msupload-insert-gallery'} ).hide(),
 			filesInsert = $( '<a>' ).attr({ 'id': uploaderId + '-insert-files', 'class': 'msupload-insert-files'} ).hide(),
 			linksInsert = $( '<a>' ).attr({ 'id': uploaderId + '-insert-links', 'class': 'msupload-insert-links'} ).hide(),
-			uploadDrop = $( '<div>' ).attr({ 'id': uploaderId + '-dropzone' , 'class': 'msupload-dropzone'}).text(mw.msg( 'msu-dropzone' )).hide();
+			uploadDrop = $( '<div>' ).attr({ 'id': uploaderId + '-dropzone' , 'class': 'msupload-dropzone'}).html( '<p>' + mw.msg( 'msu-dropzone' ) + '</p>').hide();
 
 		// Add them to the DOM
 		startButton.append(loadingButton, uploadBtn, txtUploadBtn);
@@ -522,7 +522,7 @@ var MsUpload = {
 			galleryInsert = $( '<a>' ).attr( 'id', 'msupload-insert-gallery' ).hide(),
 			filesInsert = $( '<a>' ).attr( 'id', 'msupload-insert-files' ).hide(),
 			linksInsert = $( '<a>' ).attr( 'id', 'msupload-insert-links' ).hide(),
-			uploadDrop = $( '<div>' ).attr( 'id', 'msupload-dropzone' ).text(mw.msg( 'msu-dropzone' )).hide();
+			uploadDrop = $( '<div>' ).attr( 'id', 'msupload-dropzone' ).html('<p>' + mw.msg( 'msu-dropzone' ) + '</p>').hide();
 
 		// Add them to the DOM
 		bottomDiv.append( startButton, cleanAll, galleryInsert, filesInsert, linksInsert );
