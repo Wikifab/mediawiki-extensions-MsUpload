@@ -12,9 +12,11 @@ button.msupload-select {
     font-size: 16px;
     color: #555;
     border: 1px solid #ccc;
+    margin-bottom: 10px;
 }
 
-button.msupload-select:focus {
+button.msupload-select:focus,
+button.msupload-select:active:focus {
 	outline: 0;
 }
 
@@ -37,7 +39,7 @@ button.msupload-select i {
 
 .msupload-dropzone {
 	margin: 0 0 10px;
-	padding: 20px 5px 10px;
+	padding: 25px 5px 10px;
 	border: 2px dashed #c2ccd4;
 	text-align: center;
 	min-height: 20px;
