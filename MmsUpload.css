@@ -32,7 +32,12 @@
 	min-height: 20px;
 	color: #777;
 	background:#fafbfc;
-	cursor: move; /* fallback if grab cursor is unsupported */
+}
+
+.msupload-dropzone.dropOverActive {
+	border: 2px solid #52bad5;
+    background: #e8f7fc;
+    cursor: move;
     cursor: grab;
     cursor: -moz-grab;
     cursor: -webkit-grab;
