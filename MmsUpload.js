@@ -191,7 +191,7 @@ var MsUpload = {
 					}
 					break;
 
-				case 'mov': case 'avi':
+				case 'mov': case 'avi': case 'mp4':
 					file.group = 'video';
 					file.li.type.addClass( 'video' );
 					break;
@@ -673,7 +673,8 @@ var MsUpload = {
 		file.li.title.text( file.name ).show(); // Show title
 		$( '#' + file.id + ' .file-name-input' ).hide(); // Hide the file name input
 		$( '#' + file.id + ' .file-extension' ).hide(); // Hide the file extension
-		var comment = mw.msg( 'msu-comment' ) +  ' on [[' + mw.config.get('wgPageName') + ']]';
+		//var comment = mw.msg( 'msu-comment' ) +  ' on [[' + mw.config.get('wgPageName') + ']]';
+		var comment = file.name.replace(/\.[^/.]+$/, "");
 		uploader.settings.multipart_params = {
 			'filename': file.name,
 			'token': mw.user.tokens.get( 'editToken' ),
