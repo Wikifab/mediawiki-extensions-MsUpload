@@ -279,6 +279,7 @@ span.stl-file{
 .msuploadContainer.msuploadContainerTall .formmediagallery li img,
 .msuploadContainer.msuploadContainerTall .formmediagallery div.add-new-file-slot {
     min-height: 220px;
+    width: 100%;
 }
 
 .group-logo-upload.msuploadContainer.msuploadContainerTall .formmediagallery li,
