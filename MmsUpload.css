@@ -275,19 +275,10 @@ span.stl-file{
 	background-size: 38px;
 }
 
-.msuploadContainer.msuploadContainerTall,
-.msuploadContainer.msuploadContainerMedium {
-    float:left;
-    width:100%;
-    padding-bottom: 0px;
-}
-
 .msuploadContainer.msuploadContainerTall .formmediagallery li,
 .msuploadContainer.msuploadContainerTall .formmediagallery li img,
 .msuploadContainer.msuploadContainerTall .formmediagallery div.add-new-file-slot {
     min-height: 220px;
-    width:100%;
-    margin: 0;
 }
 
 .group-logo-upload.msuploadContainer.msuploadContainerTall .formmediagallery li,
