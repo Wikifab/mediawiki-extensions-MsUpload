@@ -282,16 +282,18 @@ span.stl-file{
     padding-bottom: 0px;
 }
 
-.msuploadContainer.msuploadContainerTall .formmediagallery {
-    min-height: 220px;
-}
-
 .msuploadContainer.msuploadContainerTall .formmediagallery li,
 .msuploadContainer.msuploadContainerTall .formmediagallery li img,
 .msuploadContainer.msuploadContainerTall .formmediagallery div.add-new-file-slot {
     min-height: 220px;
     width:100%;
     margin: 0;
+}
+
+.group-logo-upload.msuploadContainer.msuploadContainerTall .formmediagallery li,
+.group-logo-upload.msuploadContainer.msuploadContainerTall .formmediagallery li img,
+.group-logo-upload.msuploadContainer.msuploadContainerTall .formmediagallery div.add-new-file-slot {
+    min-height: 140px;
 }
 
 span.video-player,
