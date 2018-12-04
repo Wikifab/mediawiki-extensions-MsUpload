@@ -270,7 +270,6 @@ var MsUpload = {
 		// Add them to the DOM
 		startButton.append(loadingButton, uploadBtn, txtUploadBtn);
 		bottomDiv.append( startButton );
-		console.log(startButton);
 		//bottomDiv.append( galleryInsert, filesInsert, linksInsert, cleanAll );
 		uploadDiv.append( statusDiv, uploadDrop, uploadList, bottomDiv );
 		uploadDrop.prepend( uploadButton );
