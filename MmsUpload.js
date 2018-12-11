@@ -191,7 +191,7 @@ var MsUpload = {
 					}
 					break;
 
-				case 'mov': case 'avi': case 'mp4':
+				case 'mov': case 'avi': case 'mp4' case 'webm':
 					file.group = 'video';
 					file.li.type.addClass( 'video' );
 					break;
@@ -358,7 +358,7 @@ var MsUpload = {
 
 	isVideo: function (imageurl) {
 		fileExt = imageurl.split('.').pop().toLowerCase();
-		videoExtensions = ['mp4','webm'];
+		videoExtensions = ['mp4','webm', 'mov', 'avi'];
 		if (videoExtensions.indexOf(fileExt) == -1) {
 			return false;
 		} else {
@@ -604,11 +604,11 @@ var MsUpload = {
 		//console.log('MmsUpload.onFileAdded');
 		$.each( files, function ( i, file ) {
 
-
+			
 			if (mw.config.get('wgPageName') != 'TestUploadPage') {
 				// remove specialChars
 				file.name = file.name.replace(/[^A-Za-z0-9\-_\.:]+/g,"_");
-
+	
 				// prefix with page name
 				// remove start of url if on creation page (keep only the string after the last '/')
 				// and change ":" in case a page in a namespace (ex Group:toto)
@@ -633,18 +633,18 @@ var MsUpload = {
 
 
 			MsUpload.checkExtension( file, uploader );
-
+			
 			// check file size :
 			var maxFileSize = window.msuVars.fileUploadMaxSize;
 			if (maxFileSize > 0 && file.size > maxFileSize * 1024*1024) {
 				$('#msUploadModal').modal('show');
 				MsUpload.fileError( uploader, file, mw.msg( 'msu-ext-too_big' ));
-
+				
 				setTimeout(function () {
 					uploader.removeFile(file);
 					file.li.remove();
 				}, 500);
-
+				
 			}
 		});
 		uploader.refresh(); // Reposition Flash/Silverlight
@@ -730,9 +730,9 @@ var MsUpload = {
 						$('<span>').addClass('video-player').prependTo(file.li);
 					} else if(MsUpload.isStl(imageUrl)){
 
-						/* The site will query the file which was uploaded and not the thumbnail
+						/* The site will query the file which was uploaded and not the thumbnail 
 						(generated after the page is sent) resulting in the stl file not being properly
-						displayed.
+						displayed. 
 						*/
 
 						//if stl, query to the db which fetch the file created on-the-fly
@@ -756,8 +756,8 @@ var MsUpload = {
 								var thumbnail = pages[firstkey]['imageinfo'][0]['thumburl'];
 								$( '<img>' ).addClass( 'file-thumb' ).attr('src', thumbnail).prependTo( file.li );
 								$('<span>').addClass('stl-file').prependTo(file.li);
-
-
+								
+								
 							}
 						});
 					} else {
@@ -831,12 +831,9 @@ var MsUpload = {
 		var filesLength = uploader.files.length,
 			listLength = $( '#'+ uploader.uploaderId + '-list li' ).length;
 
-		//file.status = plupload.[QUEUED || UPLOADING || FAILED || DONE]
-		var waitingFiles = uploader.files.filter(function (x) {
-			return x.status == plupload.QUEUED;
-		});
 		mw.log( 'files: ' + filesLength + ', gallery: ' + MsUpload.galleryArray.length + ', list: ' + listLength );
-		if ( waitingFiles.length > 0 ) {
+
+		if ( filesLength ) {
 			$( '#'+ uploader.uploaderId + '-bottom' ).show();
 			if ( filesLength === 1 ) {
 				$( '#'+ uploader.uploaderId + '-txt-upload-btn' ).text(mw.msg( 'msu-upload-this' ));
