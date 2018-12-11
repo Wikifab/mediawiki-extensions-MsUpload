@@ -191,7 +191,7 @@ var MsUpload = {
 					}
 					break;
 
-				case 'mov': case 'avi': case 'mp4' case 'webm':
+				case 'mov': case 'avi': case 'mp4': case 'webm':
 					file.group = 'video';
 					file.li.type.addClass( 'video' );
 					break;
@@ -384,8 +384,9 @@ var MsUpload = {
 		if (imageurl) {
 			if (MsUpload.isVideo(imageurl)) {
 				//if this is a video
-				$( '<video>' ).addClass( 'file-thumb' ).attr('src',imageurl).attr('width','100%').appendTo( li );
-				$('<span>').addClass('video-player').prependTo(li);
+				var $div = $('<div>').addClass('videofile');
+				$( '<video>' ).addClass( 'file-thumb' ).attr('src',imageurl).attr('width','100%').prependTo( $div );
+				$div.appendTo( li );
 			} else {
 				$( '<img>' ).addClass( 'file-thumb' ).attr('src',imageurl).appendTo( li );
 			}
@@ -726,8 +727,9 @@ var MsUpload = {
 				if (imageUrl) {
 					if (MsUpload.isVideo(imageUrl)) {
 						//if this is a video
-						$( '<video>' ).addClass( 'file-thumb' ).attr('src',imageUrl).attr('width','100%').prependTo( file.li );
-						$('<span>').addClass('video-player').prependTo(file.li);
+						var $div = $('<div>').addClass('videofile');
+						$( '<video>' ).addClass( 'file-thumb' ).attr('src',imageUrl).attr('width','100%').prependTo( $div );
+						$div.prependTo(file.li);
 					} else if(MsUpload.isStl(imageUrl)){
 
 						/* The site will query the file which was uploaded and not the thumbnail 
