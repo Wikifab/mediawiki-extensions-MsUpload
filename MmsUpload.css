@@ -7,18 +7,21 @@
 	background: url(images/msu-loading.png) no-repeat 5px 5px;
 }
 
-.msupload-select {
-	float:right;
-	background: url(images/msu-upload-button.png) no-repeat 1px 2px;
-    width: 32px;
-    height: 29px;
-    top: -4px;
-	cursor: pointer;
+button.msupload-select {
+    cursor: pointer;
+    font-size: 16px;
+    color: #555;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
 }
 
-.msupload-select:hover, .msuploadContainer .buttonBar .select-file:hover {
-	opacity: 0.7; 
-	zoom: 1;
+button.msupload-select:focus,
+button.msupload-select:active:focus {
+	outline: 0;
+}
+
+button.msupload-select i {
+	margin-right:5px;
 }
 
 .msupload-div {
@@ -26,8 +29,8 @@
 	z-index: 0;
 } 
 
-.msupload-div a {
-	cursor: pointer;
+.msupload-div .thumbinner a {
+	cursor: zoom-in;
 }
 
 .msupload-div.nodragdrop {
@@ -36,12 +39,21 @@
 
 .msupload-dropzone {
 	margin: 0 0 10px;
-	padding: 10px 5px;
-	border: 1px dashed #777;
+	padding: 25px 5px 10px;
+	border: 2px dashed #c2ccd4;
 	text-align: center;
 	min-height: 20px;
 	color: #777;
-	background:#f1f1f1;
+	background:#fafbfc;
+}
+
+.msupload-dropzone.dropOverActive {
+	border: 2px solid #52bad5;
+    background: #e8f7fc;
+    cursor: move;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
 }
 
 .drop-over {
@@ -58,12 +70,9 @@
 
 .msupload-list .file {
     margin: 0;
-    padding: 5px;
     list-style: none;
     position: relative;
-    width: 25%;
     float: left;
-    background: #ccc;
 }
 
 .msupload-list .file-existing .file:first-of-type {
@@ -84,9 +93,11 @@
     top: 2%;
 }
 
-.mw-body ul.msupload-list {
+#MsUpload ul.msupload-list {
 	margin-bottom:0px;
-	padding-left:0px;	
+	padding-left:0px;
+	margin-left: -5px;
+	margin-right: -5px;
 }
 
 .msupload-list .green {
@@ -94,7 +105,15 @@
 }
 
 .msupload-list .yellow {
-	background: #f9cdad;
+	border-left: #f9cdad;
+}
+
+.msupload-list .yellow:before {
+    font-family: FontAwesome;
+    content: "\f06a";
+    margin-right: 5px;
+    color: #ff8600;
+    float: right;
 }
 
 .msupload-list .red {
@@ -149,8 +168,8 @@
     left: inherit;
     position: inherit;
     float: left;
-    margin: 4px;
-    border: 1Px solid #ccc;
+    margin-right: 10px;
+    border: 1px solid #ccc;
 }
 
 .msupload-div .msupload-list .file .stl{
@@ -163,53 +182,48 @@
 
 .msupload-list .file .file-load canvas {
 	display: block;
-	max-width: 28px;
-	min-height: 28px;
+	max-width: 33px;
+	min-height: 33px;
 }
 
-.msupload-list .file .file-name {
+.msupload-list .file .file-name,
+.msupload-list .file .file-name-input {
     font-weight: bold;
-    margin-top: 4px;
     float: left;
-    font-size: 13.5px;
-    max-width: 107px;
+    font-size: 14px;
+    width: 100%;
+    height: 35px;
+    padding: 7px 8px;
+    max-width: calc(100% - 165px);
     cursor: text;
-    background: #f7f7f7;
+    background: #fff;
     overflow: hidden;
     white-space: nowrap;
+    border:1px solid #ddd;
+    border-radius: 3px;
+}
+
+.msupload-list .file .file-name-input {
+	padding: 7px 36px 7px 8px;
 }
 
 .msupload-loading-button {
 	color:#fff;
 }
 
-.msupload-list .file-upload .file-name {
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
-
-.msupload-list .file-upload .file-name-input {
-    padding: 4px 30px 4px 4px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
-
-.msupload-list .file .file-name:hover, .msupload-list .file-upload .file-name-input:hover {
-	background-color: #ffffff;
+.msupload-list .file-upload .file-name-input:focus {
+    border-color: #52bad5;
 }
 
 .msupload-list .file .file-size {
-	margin: 0 7px;
-	color: #666;
+    color: #666;
     float: left;
-    padding-top: 5px;
-    margin: 0 4px;
+    margin-top: 7px;
+    margin-left: 7px;
 }
 
 .msupload-list .file .file-progress-state {
-	margin-right: 40px;
-	margin-top: 4px;
+	margin-top: 7px;
 	float:right;
 }
 
@@ -223,31 +237,26 @@
 
 .msupload-list .file .file-cancel {
 	background: url(images/msu-close.png) no-repeat 0 0;
-	cursor: pointer;
-	float: right;
+    cursor: pointer;
+    float: right;
     height: 26px;
     width: 26px;
-	margin-left: 5px;
-	padding: 5px 10px;
-    position: absolute;
-    right: 6px;
-    top: 6px;
+    margin-left: 5px;
+    float: right;
+    margin-top: 6px;
+    opacity: 0.4;
 }
 
 .msupload-list .file .file-cancel:hover {
-	opacity: 0.7; 
-}
-
-.msuploadContainer {
-	margin-bottom: 10px;
+	opacity: 1; 
 }
 
 .msuploadContainer .moxie-shim-html5 {
 	display:none;
 }
 
-.msuploadContainer .formmediagallery li .pfImagePreviewWrapper span.video-player,
-.msuploadContainer .formmediagallery li .pfImagePreviewWrapper span.stl-file{
+span.video-player,
+span.stl-file{
     position: absolute;
     z-index: 0;
     background-repeat: no-repeat;
@@ -255,42 +264,32 @@
     height: 100%;
 }
 
-.msuploadContainer .formmediagallery li .pfImagePreviewWrapper span.video-player{
+span.video-player{
 	background-image: url(images/msu-play-verysmall.png);
 	background-position: center;
 }
 
-.msuploadContainer .formmediagallery li .pfImagePreviewWrapper span.stl-file{
+span.stl-file{
 	background-image: url(images/msu-3D.png);
 	margin: 5px;
 	background-size: 38px;
-}
-
-.msuploadContainer .formmediagallery {
-	min-height: 250px;
-}
-
-.msuploadContainer.msuploadContainerTall,
-.msuploadContainer.msuploadContainerMedium {
-    float:left;
-    width:100%;
-    padding-bottom: 0px;
-}
-
-.msuploadContainer.msuploadContainerTall .formmediagallery {
-    min-height: 220px;
 }
 
 .msuploadContainer.msuploadContainerTall .formmediagallery li,
 .msuploadContainer.msuploadContainerTall .formmediagallery li img,
 .msuploadContainer.msuploadContainerTall .formmediagallery div.add-new-file-slot {
     min-height: 220px;
-    width:100%;
-    margin: 0;
+    width: 100%;
 }
 
-#PageGallery span.video-player,
-#PageGallery span.stl-file {
+.group-logo-upload.msuploadContainer.msuploadContainerTall .formmediagallery li,
+.group-logo-upload.msuploadContainer.msuploadContainerTall .formmediagallery li img,
+.group-logo-upload.msuploadContainer.msuploadContainerTall .formmediagallery div.add-new-file-slot {
+    min-height: 140px;
+}
+
+span.video-player,
+span.stl-file {
     position: absolute;
     z-index: 0;
     background-repeat: no-repeat;
@@ -298,12 +297,12 @@
     height: 100%;
 }
 
-#PageGallery span.video-player{
+span.video-player{
 	background-image: url(images/msu-play-small.png);
 	background-position: center;
 }
 
-#PageGallery span.stl-file{
+span.stl-file{
 	background-image: url(images/msu-3D.png);
 	margin: 5px;
 	background-size: auto;
@@ -316,57 +315,60 @@
 }
 
 .msupload-list .file .file-warning {
-    color: #666;
-    font-size: 80%;
-    font-style: italic;
+	font-size: 0.95em;
     width: 100%;
     float: left;
+    padding: 0px 5px;
 }
 
 .msupload-list .file .file-warning input[type="checkbox"] {
 	margin-right:4px;
 }
 
+.msupload-list .file .file-warning p:before {
+	font-family: FontAwesome;
+	content: "\f06a";
+    margin-right: 5px;
+    color: #ff8600;
+}
+
 .msupload-list .file .file-warning p {
 	display: inline;
+	margin-bottom: 5px;
+    float: left;
+    width: 100%;
+    padding-top:10px;
 }
 
 .msupload-list .file .file-warning div.thumb {
 	display: none;
-	position: absolute;
-	right: 0px;
-	bottom: 0px;
+    position: absolute;
+    right: 50%;
+    top: 0px;
+    margin: 0;
+    filter: drop-shadow(0px -1px 5px rgba(0,0,0,0.25));
 }
+
 .msupload-list .file .file-warning div.thumbinner {
 	background: none;
 	border: none;
 	overflow: visible;
 	padding: 0;
-}
-
-.msupload-list .file .file-name-input {
-	background: white;
-	display: inline;
-	font: inherit;
-	font-weight: bold;
-	line-height: normal;
-	margin-top: 4px;
-	outline: none;
-    padding: 6px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    float: left;
-    font-size: 13.5px;
-    max-width: 107px;
-    overflow: hidden;
-    white-space: nowrap;
+	background: #fff;
+    width: auto !important;
+    max-width: 400px !important;
+    background-repeat: no-repeat;
+    background-image: url(images/tooltip-triangle-white.png);
+    background-position: bottom center;
 }
 
 .msupload-list .file .file-extension {
-    padding: 11px 0px 0px 2px;
+    margin-top: 8px;
     float: left;
-    color: #777;
+    color: #999;
     font-size: .9em;
+    position: absolute;
+    margin-left: -34px;
 }
 
 .col-pic-detail .msupload-list .file .file-name, .col-pic-detail .msupload-list .file .file-name-input {
@@ -390,13 +392,14 @@
 .msupload-bottom {
 	float: left;
 	transition: all ease .15s;
-	padding: 10px;
     width: 100%;
+    margin-top: 10px;
 }
 
 .msupload-bottom a {
     width: 100%;
-    padding: 6px 12px 6px 9px;
+    padding: 8px;
+    font-size: 1.05em;
 }
 
 .msupload-bottom a .fa {
@@ -424,45 +427,46 @@
 	background-color: #ccc;
 }
 
-.msupload-list .file-existing .file:first-of-type .file-thumb {
-	padding: 0px;
-    max-width: 100%;
-    position: relative;
-}
-
-.msupload-list .file:first-of-type {
-	padding:0px;
-	width:100%;
-}
-
 .msupload-list .file .file-thumb {
-    padding: 0px;
     width: 100%;
-    height: 100%;
-    border: 1px solid #999;
-}
-
-.msupload-list .file .file-thumb:hover {
-    border: 1px solid #fff;
 }
 
 .msupload-list .file-upload {
     width: 100%;
-    background: #fff;
-    border-bottom: 1px solid #ccc;
-    margin-top: 5px;
+    border-top: 1px solid #ddd;
+    padding: 10px;
 }
 
-.msupload-list .green {
-    width: 25%;
-    background: #a8dba8;
-    border-bottom: none;
-    margin-top: 0px;
+.msupload-list .file-upload:last-child {
+    border-bottom: 1px solid #ddd;
+}
+
+.msupload-list .file-upload.green {
+    height: 150px;
+    width: auto;
+    display: inline-block;
+    vertical-align: top;
+    margin: 5px;
+    border: 1px solid #ccc;
+    position: relative;
+    cursor: pointer;
+    padding: 0;
+    overflow: hidden;
+}
+
+.msupload-list .file.green .file-thumb {
+    height: 100%;
+    width: auto;
+}
+
+#MediaManagerUploader .msupload-list li.file-upload:nth-of-type(odd) {
+    background-color: rgba(0,0,0,.05);
 }
 
 #wikiEditor-section-advanced .options {
 	z-index: 1;
 }
+
 
 @media (max-width: 992px) {
 	.msupload-list .file .file-name {
@@ -496,6 +500,7 @@
 	.msupload-list .file .file-name {
 	    max-width: 230px;
 	}
+<<<<<<< HEAD
 }
 
 #msu-conflicting-imgs .old-image .image img, 

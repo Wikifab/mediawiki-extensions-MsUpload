@@ -57,7 +57,8 @@
 				"mmsupload-conflicting-imgs-modal-applytoall",
 				"mmsupload-conflicting-imgs-modal-submit",
 				"mmsupload-conflicting-imgs-modal-field-must-not-be-empty",
-				"mmsupload-conflicting-imgs-modal-filename-already-taken"
+				"mmsupload-conflicting-imgs-modal-filename-already-taken",
+				"msu-upload-error-file-too-large"
 			]
 		}
 	},

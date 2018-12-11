@@ -43,5 +43,8 @@
 	"mmsupload-conflicting-imgs-modal-applytoall": "Appliquer ce choix pour les $1 prochains conflits",
 	"mmsupload-conflicting-imgs-modal-submit": "Valider",
 	"mmsupload-conflicting-imgs-modal-filename-already-taken" : "Nom de fichier déjà pris. Essayez-en un autre.",
-	"mmsupload-conflicting-imgs-modal-field-must-not-be-empty" : "Ce champ ne doit pas être vide."
+	"mmsupload-conflicting-imgs-modal-field-must-not-be-empty" : "Ce champ ne doit pas être vide.",
+	"msu-upload-error-fileexists-no-change":"Ce fichier existe déjà et n'a donc pas été importé. Utilisez l'onglet recherche pour le retrouver.",
+	"msu-upload-error-badtoken":"Une erreur est survenue. Vérifiez que vous êtes bien connecté."
+
 }

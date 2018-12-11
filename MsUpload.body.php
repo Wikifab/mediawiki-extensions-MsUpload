@@ -9,7 +9,6 @@ class MsUpload {
 			self::start();
 			$isStarted = true;
 		}
-
 	}
 
 	static function start() {
