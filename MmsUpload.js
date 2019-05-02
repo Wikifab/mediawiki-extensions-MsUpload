@@ -142,7 +142,10 @@ var MsUpload = {
 		}).change( function () {
 			file.name = this.value + '.' + file.extension;
 			$( this ).prev().text( file.name );
-			MsUpload.unconfirmedReplacements = 0; // Hack! If the user renames a file to avoid replacing it, this forces the Upload button to appear, but it also does when a user just renames a file that wasn't about to replace another
+			var checkbox = $(this).siblings('.file-warning').find('input');
+			if(checkbox.length && !checkbox.is( ':checked' )){
+				MsUpload.unconfirmedReplacements--; //Decrement only if image already exists and replace checkbox is not checked
+			}
 			MsUpload.checkUploadWarning( this.value, file.li, uploader );
 		}).keydown( function ( event ) {
 			// For convenience, when pressing enter, save the new title
