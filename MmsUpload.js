@@ -206,6 +206,10 @@ var MsUpload = {
 
 			file.li.cancel = $( '<span>' ).attr({ 'class': 'file-cancel', 'title': mw.msg( 'msu-cancel-upload' ) });
 			file.li.cancel.click( function () {
+				var checkbox = $(this).siblings('.file-warning').find('input');
+				if(checkbox.length && !checkbox.is( ':checked' )){
+					MsUpload.unconfirmedReplacements--;
+				}
 				uploader.removeFile( file );
 				if ( file.group === 'image' ) {
 					var index = $.inArray( file.name, MsUpload.galleryArray );
