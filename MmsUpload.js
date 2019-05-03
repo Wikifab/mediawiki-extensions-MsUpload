@@ -613,7 +613,7 @@ var MsUpload = {
 				// prefix with page name
 				// remove start of url if on creation page (keep only the string after the last '/')
 				// and change ":" in case a page in a namespace (ex Group:toto)
-				file.name = mw.config.get('wgPageName').replace(/(.*)\//g,"").replace(":","-") + '_' + file.name;
+				file.name = mw.config.get('wgPageName').replace(/(.*)\//g,"").replace(":","-").replace(/[^A-Za-z0-9\-_\.:]+/g,"_") + '_' + file.name;
 			}
 
 			// iOS6 by SLBoat
@@ -791,6 +791,11 @@ var MsUpload = {
 
 		$( '#'+ uploader.uploaderId + '-loading-button' ).hide();
 		$( '#'+ uploader.uploaderId + '-upload-btn' ).show();
+
+
+		for(var i = 0; i < uploader.files.length; i++){
+			uploader.files.shift();
+		}
 	},
 
 	addImageToFormsInputs: function (uploader, file) {
