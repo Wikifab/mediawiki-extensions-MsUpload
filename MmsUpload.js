@@ -799,10 +799,7 @@ var MsUpload = {
 		$( '#'+ uploader.uploaderId + '-loading-button' ).hide();
 		$( '#'+ uploader.uploaderId + '-upload-btn' ).show();
 
-
-		for(var i = 0; i < uploader.files.length; i++){
-			uploader.files.shift();
-		}
+		uploader.removeFile( file );
 	},
 
 	addImageToFormsInputs: function (uploader, file) {
