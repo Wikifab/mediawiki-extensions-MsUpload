@@ -142,7 +142,10 @@ var MsUpload = {
 		}).change( function () {
 			file.name = this.value + '.' + file.extension;
 			$( this ).prev().text( file.name );
-			MsUpload.unconfirmedReplacements = 0; // Hack! If the user renames a file to avoid replacing it, this forces the Upload button to appear, but it also does when a user just renames a file that wasn't about to replace another
+			var checkbox = $(this).siblings('.file-warning').find('input');
+			if(checkbox.length && !checkbox.is( ':checked' )){
+				MsUpload.unconfirmedReplacements--; //Decrement only if image already exists and replace checkbox is not checked
+			}
 			MsUpload.checkUploadWarning( this.value, file.li, uploader );
 		}).keydown( function ( event ) {
 			// For convenience, when pressing enter, save the new title
@@ -206,6 +209,10 @@ var MsUpload = {
 
 			file.li.cancel = $( '<span>' ).attr({ 'class': 'file-cancel', 'title': mw.msg( 'msu-cancel-upload' ) });
 			file.li.cancel.click( function () {
+				var checkbox = $(this).siblings('.file-warning').find('input');
+				if(checkbox.length && !checkbox.is( ':checked' )){
+					MsUpload.unconfirmedReplacements--;
+				}
 				uploader.removeFile( file );
 				if ( file.group === 'image' ) {
 					var index = $.inArray( file.name, MsUpload.galleryArray );
@@ -792,10 +799,7 @@ var MsUpload = {
 		$( '#'+ uploader.uploaderId + '-loading-button' ).hide();
 		$( '#'+ uploader.uploaderId + '-upload-btn' ).show();
 
-
-		for(var i = 0; i < uploader.files.length; i++){
-			uploader.files.shift();
-		}
+		uploader.removeFile( file );
 	},
 
 	addImageToFormsInputs: function (uploader, file) {
