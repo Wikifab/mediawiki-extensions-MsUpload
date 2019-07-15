@@ -634,9 +634,11 @@ var MsUpload = {
 
 			var fileName = file.name.split('.');
 			var fileExtension = fileName[1];
-			fileName = fileName[0];
-			fileExtension = fileExtension.toLowerCase();
-			file.name = fileName.concat('.', fileExtension);
+			if(fileExtension === 'STL'){
+				fileName = fileName[0];
+				fileExtension = fileExtension.toLowerCase();
+				file.name = fileName.concat('.', fileExtension);
+			}
 
 			file.li = $( '<li>' ).attr( 'id', file.id ).addClass( 'file' ).addClass( 'file-upload' ).appendTo( $( '#'+ uploader.uploaderId + '-list' ) );
 			file.li.type = $( '<span>' ).addClass( 'file-type' ).appendTo( file.li );
