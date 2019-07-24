@@ -29,7 +29,7 @@
 	"msu-comment": "Fichier téléversé avec MsUpload",
 	"msu-remove-image": "Supprimer l'image de la gallerie",
 	"msu-messagetitle-file-too-large" : "Le fichier dépasse la taille autorisée !",
-	"msu-upload-error-file-too-large": "Attention, le media que vous essayez d'uploader est supérieur à la taille maximale autorisée ( $1 Mo ).",
+	"msu-upload-error-file-too-large": "Attention, le media que vous essayez d'uploader est supérieur à la taille maximale autorisée.",
 	"msu-upload-nbfile-exceed": "Nombre limite de fichiers par étape dépassé. Veuillez en supprimer.",
 	"close": "Fermer",
 	"msu-upload-error-fileexists-no-change":"Ce fichier existe déjà et n'a donc pas été importé. Utilisez l'onglet recherche pour le retrouver.",
