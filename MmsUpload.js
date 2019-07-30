@@ -811,7 +811,7 @@ var MsUpload = {
 							}
 						});
 					} else {
-						var fileExt = imageUrl.split('.')[1].toLowerCase();
+						var fileExt = imageUrl.split('.').pop().toLowerCase();
 						var scriptPath = mw.config.get('wgScriptPath');
 						var src = '';
 						switch (fileExt) {
