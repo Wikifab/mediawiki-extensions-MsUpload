@@ -121,11 +121,32 @@ button.msupload-select i {
 	background: #1d4568;
 }
 
+.msupload-list .file .fa {
+	margin-right: 5px;
+}
+
+.msupload-list .file .fa-file-word-o {
+    color: #0a6ad5;
+}
+
+.msupload-list .file .fa-file-pdf-o {
+    color: red;
+}
+
+.msupload-list .file .fa-file-excel-o {
+    color: green;
+}
+
+.msupload-list .file .fa-file-powerpoint-o {
+    color: orange;
+}
+
 .msupload-list .file .file-type {
 	padding: 10px;
 	background: url(images/msu-globe.png) no-repeat 0 0;
 	overflow: hidden;
 	position: absolute;
+	display: none;
 }
 
 .msupload-list .file .image {
@@ -320,6 +341,7 @@ span.stl-file{
     width: 100%;
     float: left;
     padding: 0px 5px;
+    word-break: break-all;
 }
 
 .msupload-list .file .file-warning input[type="checkbox"] {
