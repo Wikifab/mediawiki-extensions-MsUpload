@@ -816,25 +816,25 @@ var MsUpload = {
 						var src = '';
 						switch (fileExt) {
 							case 'pdf':
-								src = scriptPath + '/images/file-icon/dokit_icon_file_pdf.jpg';
+								src = scriptPath + '/extensions/MmsUpload/images/dokit_icon_file_pdf.jpg';
 								break;
 							case 'jpg': case 'jpeg': case 'png': case 'gif': case 'bmp': case 'tif': case 'tiff':
 								src = imageUrl;
 								break;
 							case 'doc': case 'docx':
-								src =  scriptPath + '/images/file-icon/dokit_icon_file_word.jpg';
+								src =  scriptPath + '/extensions/MmsUpload/images/dokit_icon_file_word.jpg';
 								break;
 							case 'ppt': case 'pptx':
-								src =  scriptPath + '/images/file-icon/dokit_icon_file_powerpoint.jpg';
+								src =  scriptPath + '/extensions/MmsUpload/images/dokit_icon_file_powerpoint.jpg';
 								break;
 							case 'xls': case 'xlsx':
-								src = scriptPath + '/images/file-icon/dokit_icon_file_excel.jpg';
+								src = scriptPath + '/extensions/MmsUpload/images/dokit_icon_file_excel.jpg';
 								break;
 							case 'rar': case 'zip': case 'gz': case 'tgz':
-								src = scriptPath + '/images/file-icon/dokit_icon_file_archive.jpg';
+								src = scriptPath + '/extensions/MmsUpload/images/dokit_icon_file_archive.jpg';
 								break;
 							default:
-								src = scriptPath + '/images/file-icon/dokit_icon_file_all.jpg';
+								src = scriptPath + '/extensions/MmsUpload/images/dokit_icon_file_all.jpg';
 						}
 						$( '<img>' ).addClass( 'file-thumb' ).attr('src',src).prependTo( file.li );
 					}
