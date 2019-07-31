@@ -633,9 +633,9 @@ var MsUpload = {
 			}
 
 			var fileName = file.name.split('.');
-			var fileExtension = fileName[1];
+			var fileExtension = fileName.pop();
 			if(fileExtension === 'STL'){
-				fileName = fileName[0];
+				fileName = fileName.join('.');
 				fileExtension = fileExtension.toLowerCase();
 				file.name = fileName.concat('.', fileExtension);
 			}
