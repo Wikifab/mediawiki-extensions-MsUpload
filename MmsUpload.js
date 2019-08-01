@@ -631,9 +631,50 @@ var MsUpload = {
 					file.name = fileNameApple + '_' + i + '.' + file.name.split( '.' ).pop(); // image_Y-M-D_0.jpg
 				}
 			}
+
+			var fileName = file.name.split('.');
+			var fileExtension = fileName.pop();
+			if(fileExtension === 'STL'){
+				fileName = fileName.join('.');
+				fileExtension = fileExtension.toLowerCase();
+				file.name = fileName.concat('.', fileExtension);
+			}
+
+			switch (fileExtension) {
+				case 'pdf':
+					file.icon = '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>';
+					break;
+				case 'jpg': case 'jpeg': case 'png': case 'gif': case 'bmp': case 'tif': case 'tiff':
+					file.icon = '<i class="fa fa-file-image-o" aria-hidden="true"></i>';
+					break;
+				case 'doc': case 'docx':
+					file.icon = '<i class="fa fa-file-word-o" aria-hidden="true"></i>';
+					break;
+				case 'ppt': case 'pptx':
+					file.icon = '<i class="fa fa-file-powerpoint-o" aria-hidden="true"></i>';
+					break;
+				case 'xls': case 'xlsx':
+					file.icon = '<i class="fa fa-file-excel-o" aria-hidden="true"></i>';
+					break;
+				case 'odt': case 'txt':
+					file.icon = '<i class="fa fa-file-text-o" aria-hidden="true"></i>';
+					break;
+				case 'mov': case 'avi': case 'mp4': case 'webm':
+					file.icon = '<i class="fa fa-file-video-o" aria-hidden="true"></i>';
+					break;
+				case 'rar': case 'zip': case 'gz': case 'tgz':
+					file.icon = '<i class="fa fa-file-archive-o" aria-hidden="true"></i>';
+					break;
+				case 'stl':
+					file.icon = '<i class="fa fa-cube" aria-hidden="true"></i>';
+					break;
+				default:
+					file.icon = '<i class="fa fa-file-o" aria-hidden="true"></i>';
+			}
+
 			file.li = $( '<li>' ).attr( 'id', file.id ).addClass( 'file' ).addClass( 'file-upload' ).appendTo( $( '#'+ uploader.uploaderId + '-list' ) );
 			file.li.type = $( '<span>' ).addClass( 'file-type' ).appendTo( file.li );
-			file.li.title = $( '<span>' ).addClass( 'file-name' ).text( file.name ).appendTo( file.li );
+			file.li.title = $( '<span>' ).addClass( 'file-name' ).text( file.name ).prepend(file.icon).appendTo( file.li );
 			file.li.size = $( '<span>' ).addClass( 'file-size' ).text( plupload.formatSize( file.size ) ).appendTo( file.li );
 			file.li.loading = $( '<span>' ).addClass( 'file-loading' ).appendTo( file.li );
 			file.li.warning = $( '<span>' ).addClass( 'file-warning' ).appendTo( file.li );
@@ -770,7 +811,32 @@ var MsUpload = {
 							}
 						});
 					} else {
-						$( '<img>' ).addClass( 'file-thumb' ).attr('src',imageUrl).prependTo( file.li );
+						var fileExt = imageUrl.split('.').pop().toLowerCase();
+						var scriptPath = mw.config.get('wgScriptPath');
+						var src = '';
+						switch (fileExt) {
+							case 'pdf':
+								src = scriptPath + '/extensions/MmsUpload/images/dokit_icon_file_pdf.jpg';
+								break;
+							case 'jpg': case 'jpeg': case 'png': case 'gif': case 'bmp': case 'tif': case 'tiff':
+								src = imageUrl;
+								break;
+							case 'doc': case 'docx':
+								src =  scriptPath + '/extensions/MmsUpload/images/dokit_icon_file_word.jpg';
+								break;
+							case 'ppt': case 'pptx':
+								src =  scriptPath + '/extensions/MmsUpload/images/dokit_icon_file_powerpoint.jpg';
+								break;
+							case 'xls': case 'xlsx':
+								src = scriptPath + '/extensions/MmsUpload/images/dokit_icon_file_excel.jpg';
+								break;
+							case 'rar': case 'zip': case 'gz': case 'tgz':
+								src = scriptPath + '/extensions/MmsUpload/images/dokit_icon_file_archive.jpg';
+								break;
+							default:
+								src = scriptPath + '/extensions/MmsUpload/images/dokit_icon_file_all.jpg';
+						}
+						$( '<img>' ).addClass( 'file-thumb' ).attr('src',src).prependTo( file.li );
 					}
 
 					$(file.li).find('.file-type').hide();
